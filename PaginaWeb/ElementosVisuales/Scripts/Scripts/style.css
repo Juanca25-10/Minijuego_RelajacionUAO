@@ -1,0 +1,434 @@
+/* style.css */
+
+/* RESET BÁSICO Y CONFIGURACIÓN GLOBAL */
+:root {
+    /* --- COLORES BASADOS EN EL DISEÑO UAO --- */
+    --color-primary: #9C1F37; /* Rojo Institucional / Maroon */
+    --color-secondary: #1E1E1E; /* Negro casi puro para el texto */
+    --color-background: #FFFFFF; /* Blanco puro para elementos que flotan (card) */
+    --color-dark-surface: #F5F5F5; /* Superficie gris claro/blanco roto para contraste (mid-section) */
+    --color-subtle-background: #F9F9F9; /* Gris muy claro para el fondo principal */
+    --color-light-text: #FFFFFF;
+    --font-family-main: 'Inter', sans-serif;
+    --transition-speed: 0.4s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-main);
+    color: var(--color-secondary);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    
+    /* === CAMBIO CLAVE: FONDO CON DEGRADADO RADIAL SUTIL === */
+    /* Crea un punto de luz sutil en el centro de la página, dándole profundidad */
+    background: radial-gradient(circle at center, var(--color-background) 0%, var(--color-subtle-background) 100%);
+    transition: background-image 0.5s ease;
+    /* Ajustamos el tamaño para que sea un efecto de fondo que se repite o cubre bien */
+    min-height: 100vh;
+    /* =========================================== */
+}
+
+/* UTILIDADES Y TRANSICIONES SUAVES (SMOOTH) */
+a, button {
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+.section-padding {
+    padding: 100px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 1. HEADER */
+#main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: var(--color-background);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--color-secondary);
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: var(--color-primary);
+}
+
+.cta-btn {
+    padding: 10px 25px;
+    border: 2px solid var(--color-primary);
+    background-color: transparent;
+    color: var(--color-primary);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto Hover DINÁMICO para botones */
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary);
+    transform: translateX(-100%);
+    transition: transform var(--transition-speed) ease-in-out;
+    z-index: 1;
+}
+
+.cta-btn:hover::before {
+    transform: translateX(0);
+}
+
+.cta-btn span {
+    position: relative;
+    z-index: 2;
+    transition: color var(--transition-speed) ease-in-out;
+}
+
+.cta-btn:hover {
+    color: var(--color-light-text);
+    border-color: var(--color-primary);
+}
+
+/* 2. HERO SECTION */
+#hero-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    min-height: 60vh;
+    position: relative;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+}
+
+.greeting {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-secondary);
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    max-width: 80%;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+/* Imagen y Overlay (Líneas 100-110 aprox.) */
+.hero-image-overlay {
+    /* Gradiente suave para dar profundidad en la esquina, usando el NUEVO color de fondo */
+    background: radial-gradient(circle at 70% 30%, rgba(156, 31, 55, 0.05) 0%, rgba(249, 249, 249, 0) 50%);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%; /* Ligeramente más grande */
+    height: 100%;
+    z-index: 1;
+    /* QUITAMOS el clip-path para que el patrón de puntos del body sea visible detrás */
+    /* clip-path: polygon(100% 0, 100% 100%, 0% 100%, 20% 0); */ 
+}
+
+/* STATS GRID */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+    max-width: 600px;
+}
+
+.stat-item {
+    border-left: 1px solid #CCC;
+    padding-left: 15px;
+}
+
+.stat-id {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.stat-description {
+    font-size: 0.9rem;
+    color: var(--color-secondary);
+}
+
+.trust-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+/* 3. MID SECTION */
+#mid-section {
+    background-color: var(--color-dark-surface);
+}
+
+.mid-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+}
+
+.bio {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.mid-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.image-box {
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #EEE;
+}
+
+.image-box img {
+    filter: none;
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+}
+
+.image-box img:hover {
+    transform: scale(1.05);
+    filter: none;
+}
+
+/* RESPONSIVE BÁSICO */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+    }
+    .hero-image-overlay {
+        width: 100%;
+        height: 80%;
+        top: 20%;
+        left: 0;
+        clip-path: none;
+        opacity: 0.1;
+    }
+    .text-container {
+        padding-bottom: 200px;
+    }
+    .mid-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 4. FUNCIONALIDAD DE DATA-CARD (Pop-up Dinámico) */
+
+#data-card-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+#data-card-container.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.data-card {
+    background: var(--color-background);
+    border: 1px solid #EEE;
+    padding: 20px;
+    width: 280px;
+    border-radius: 8px;
+    /* === NUEVA SOMBRA: SIMULACIÓN DE RELIEVE SUAVE === */
+    box-shadow: 
+        5px 5px 15px rgba(0, 0, 0, 0.05),  /* Sombra oscura y exterior */
+        -5px -5px 15px rgba(255, 255, 255, 0.8); /* Sombra clara/luz para el efecto 3D */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card-stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 15px;
+}
+
+.card-stats p {
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+}
+
+.card-cta {
+    padding: 8px 15px;
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-light-text);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.card-cta:hover {
+    opacity: 0.8;
+}
+
+.hover-activator {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.hover-activator:hover {
+    background-color: var(--color-dark-surface);
+}
+
+/* 5. PROJECTS SECTION (Adaptada a las funcionalidades del proyecto) */
+#projects-section {
+    background-color: var(--color-background);
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.project-item {
+    background-color: var(--color-dark-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    border: 1px solid #EAEAEA;
+    text-align: center;
+}
+
+.project-item:hover {
+    box-shadow: 0 10px 40px rgba(156, 31, 55, 0.15);
+}
+
+.project-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    padding: 10px;
+}
+
+.project-info {
+    padding: 20px;
+}
+
+.project-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin-bottom: 5px;
+}
+
+.project-info .price {
+    display: none;
+}
+
+.buy-btn {
+    width: auto;
+    margin: 10px auto 0;
+    padding: 8px 20px;
+    font-size: 1rem;
+    border: 1px solid var(--color-primary);
+    background-color: transparent;
+    color: var(--color-primary);
+}
+
+.buy-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-light-text);
+}

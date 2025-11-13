@@ -1,0 +1,58 @@
+{
+    "header": {
+        "logo": "UAO Stress App",
+        "nav_links": [
+            {"text": "Inicio", "url": "#hero-section"},
+            {"text": "El Problema", "url": "#mid-section"},
+            {"text": "Funcionalidades", "url": "#projects-section"}
+        ],
+        "cta_button": "¡Comienza Ahora!"
+    },
+    "hero_section": {
+        "greeting": "UAO Stress App",
+        "title": "Estrés Estudiantil",
+        "tagline": "Una aplicación web diseñada para estudiantes de Ingeniería Multimedia de la UAO, enfocada en la gestión de actividades y la promoción de un ambiente de aprendizaje saludable.",
+        "trust_text": "Este proyecto aborda el problema del estrés experimentado por los estudiantes de Ingeniería Multimedia durante el periodo académico.",
+        "stats": [
+            {
+                "id": "01",
+                "description": "Gestión de Actividades"
+            },
+            {
+                "id": "02",
+                "description": "Técnicas de Relajación" 
+            },
+            {
+                "id": "03",
+                "description": "Mini Juego Anti-estrés" 
+            },
+            {
+                "id": "04",
+                "description": "Accesibilidad Web" 
+            }
+        ]
+    },
+    "mid_section": {
+        "title_part1": "El Contexto",
+        "title_part2": "del Problema",
+        "bio_text": "Se ha demostrado que los estudiantes de ingeniería están sometidos a niveles significativos de estrés. Nuestro objetivo es crear una solución adaptativa que mejore el rendimiento académico y el bienestar emocional.",
+        "mid_cta": "Ver Propuesta Teórica"
+    },
+    "projects_section": {
+        "title": "Prototipo & Modelo",
+        "projects": [
+            {
+                "name": "Propuesta Teórica",
+                "price": "50%",
+                "image_url": "images/project-1.png",
+                "cta": "Descargar Documento"
+            },
+            {
+                "name": "Modelo Prototipo",
+                "price": "50%",
+                "image_url": "images/project-2.png",
+                "cta": "Ir a la Demo"
+            }
+        ]
+    }
+}
