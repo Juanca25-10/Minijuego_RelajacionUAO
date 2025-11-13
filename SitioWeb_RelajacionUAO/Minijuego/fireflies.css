@@ -1,0 +1,113 @@
+/* --- Estilos del Overlay y Componentes del Minijuego --- */
+
+/* 1. Canvas del Juego (Capa de Overlay) */
+#firefly-game-canvas {
+    /* CAMBIO CLAVE: Posicionamiento absoluto para que se dimensione al documento completo */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* El ancho sigue siendo el de la ventana */
+    
+    /* La altura será dinámica (Document Height), definida por JS */
+    
+    /* Z-Index MUY ALTO para garantizar que esté encima de todo el contenido del sitio */
+    z-index: 9999; 
+    
+    /* Inicialmente oculto */
+    display: none; 
+    
+    /* Cursor por defecto: Ninguno, el juego dibujará el cursor de red */
+    cursor: none;
+    
+    background-color: transparent; 
+    transition: background-color 0.5s ease;
+
+    /* CAMBIO CLAVE: Deshabilitado por defecto para que los clics pasen al contenido */
+    pointer-events: none; 
+}
+
+/* Estado Activo: Se muestra el Canvas y captura el click */
+#firefly-game-canvas.active {
+    display: block;
+    /* Habilita el canvas para capturar el mouse y bloquear clics al contenido debajo */
+    pointer-events: auto; 
+}
+
+/* 2. Botón Flotante (Toggle) */
+#firefly-toggle-btn {
+    /* El botón debe seguir fijo a la ventana para ser accesible siempre */
+    position: fixed;
+    bottom: 20px;
+    
+    /* CENTRADO HORIZONTALMENTE */
+    left: 50%;
+    transform: translateX(-50%); 
+    
+    /* Z-Index para que esté visible */
+    z-index: 10000; 
+    
+    /* Estilo del botón (Tarro de Luciérnagas) */
+    width: 80px; 
+    height: 80px;
+    border-radius: 50%;
+    background-color: transparent; 
+    border: none; 
+    box-shadow: none; 
+    
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0; 
+}
+
+#firefly-toggle-btn:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* Iconos dentro del botón */
+.icon-jar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    
+    background-image: url('https://placehold.co/80x80/6c5ce7/ffffff?text=JAR'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    box-shadow: 0 0 15px rgba(255, 255, 100, 0.8);
+    border-radius: 50%;
+}
+
+.icon-close {
+    font-weight: 900; 
+    font-size: 30px;
+    color: #f7f7f7;
+    text-shadow: 0 0 5px #000;
+    transition: transform 0.2s;
+}
+
+/* Estado Activo: Estilo cuando el juego está corriendo */
+#firefly-toggle-btn.active {
+    background-color: #dc2626; 
+    border-radius: 50%;
+    border: 3px solid #f7f7f7;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.9);
+}
+
+#firefly-toggle-btn.active:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+/* Oculta la imagen del tarro cuando la X está visible */
+#firefly-toggle-btn.active .icon-jar {
+    display: none;
+}
+
+/* Muestra la X cuando el botón está activo */
+#firefly-toggle-btn.active .icon-close {
+    display: block !important; 
+}

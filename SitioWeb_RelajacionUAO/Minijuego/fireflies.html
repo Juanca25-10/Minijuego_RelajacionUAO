@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio Web con Minijuego de Luciérnagas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="fireflies.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- SE ELIMINÓ LA REFERENCIA A TONE.JS -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; }
+        .content-card {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Contenido de Simulación del Sitio Web -->
+    <header class="bg-indigo-600 text-white p-4 shadow-md">
+        <h1 class="text-3xl font-bold">Plataforma de Gestión Académica</h1>
+        <p class="text-sm opacity-80">Simulando el contenido principal de la web</p>
+    </header>
+
+    <div class="content-card">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Tareas Pendientes (Ejemplo)</h2>
+        <p class="text-gray-600 mb-6">El minijuego de luciérnagas se encuentra disponible en el botón flotante inferior. Los elementos del juego (luciérnagas y red) están representados por figuras básicas (círculos) por ahora.</p>
+        <div class="space-y-3">
+            <div class="p-3 bg-red-100 border border-red-300 rounded-lg">Estudiar cálculo (Prioridad Alta)</div>
+            <div class="p-3 bg-yellow-100 border border-yellow-300 rounded-lg">Investigar tema de tesis (Prioridad Media)</div>
+            <div class="p-3 bg-green-100 border border-green-300 rounded-lg">Revisar horario semanal (Prioridad Baja)</div>
+        </div>
+    </div>
+    
+    <!-- 2. CONTENIDO DE RELLENO GRANDE (Para forzar el scroll) -->
+    <div class="content-card">
+        <h3 class="text-xl font-bold mb-3 text-indigo-700">Sección Adicional 1: Avance del Proyecto</h3>
+        <p class="text-gray-700 mb-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div class="h-48 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
+            Gráfico de Progreso (Placeholder)
+        </div>
+    </div>
+    
+    <div class="content-card">
+        <h3 class="text-xl font-bold mb-3 text-indigo-700">Sección Adicional 2: Detalles y Documentación</h3>
+        <p class="text-gray-700 mb-4">
+            Proin in ligula nec felis egestas tempor. Nulla facilisi. Sed malesuada leo id arcu euismod, non facilisis quam scelerisque. 
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+            Aliquam erat volutpat. Nam euismod libero id libero luctus, ac iaculis sapien commodo. Fusce non erat id mauris malesuada bibendum.
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+        </p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+            <li>Revisión de la documentación (30/06)</li>
+            <li>Pruebas de integración (05/07)</li>
+            <li>Despliegue inicial (10/07)</li>
+        </ul>
+    </div>
+
+    <div class="content-card">
+        <h3 class="text-xl font-bold mb-3 text-indigo-700">Sección Adicional 3: Contacto</h3>
+        <p class="text-gray-700 mb-4">
+            Asegúrate de que el minijuego de luciérnagas siga funcionando correctamente cuando navegues hasta esta parte inferior de la página. 
+            La propiedad `position: fixed` tanto en el canvas como en el botón asegura que permanezcan en su lugar en la ventana del navegador.
+        </p>
+        <div class="h-96 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
+            Pie de página / Área de gran altura para garantizar scroll.
+        </div>
+    </div>
+    <!-- FIN DEL CONTENIDO DE RELLENO -->
+
+    <!-- 3. Contenedor del Minijuego (Canvas) -->
+    <canvas id="firefly-game-canvas"></canvas>
+    
+    <!-- 4. Botón Flotante (Activador) -->
+    <button id="firefly-toggle-btn" title="Iniciar Descanso Activo">
+        <span class="icon-jar"></span>
+        <span class="icon-close hidden">X</span>
+    </button>
+
+    <!-- 5. Enlace al Script de Lógica del Minijuego -->
+    <script src="fireflies.js"></script>
+</body>
+</html>
