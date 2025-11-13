@@ -28,6 +28,7 @@ body {
     /* === CAMBIO CLAVE: FONDO CON DEGRADADO RADIAL SUTIL === */
     /* Crea un punto de luz sutil en el centro de la página, dándole profundidad */
     background: radial-gradient(circle at center, var(--color-background) 0%, var(--color-subtle-background) 100%);
+    transition: background-image 0.5s ease;
     /* Ajustamos el tamaño para que sea un efecto de fondo que se repite o cubre bien */
     min-height: 100vh;
     /* =========================================== */

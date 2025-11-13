@@ -1,28 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Referencias a los elementos de la funcionalidad dinámica
+    // Referencias a elementos DOM
     const dataCardContainer = document.getElementById('data-card-container');
     const cardTitle = document.querySelector('.data-card .card-title');
     const cardSubtitle = document.querySelector('.data-card .card-subtitle');
     const cardDescription = document.querySelector('.data-card .card-description');
     const cardStats = document.querySelector('.data-card .card-stats');
-    const cardCta = document.querySelector('.data-card .card-cta');
+    const cardCta = document.querySelector('.data-card .card-cta'); // Referencia al botón a ocultar
     
     // Referencias para la animación de scroll
     const midGrid = document.querySelector('#mid-section .mid-grid');
     const projectsSectionTitle = document.querySelector('#projects-section .section-title');
     const projectGrid = document.querySelector('#projects-section .project-grid');
+    const midSection = document.getElementById('mid-section'); 
 
-    // Datos simulados para la tarjeta flotante, ajustados al proyecto
+    // --- 1. DATOS SIMULADOS PARA LA TARJETA FLOTANTE (mockCardData) ---
+    // Incluye las 4 funcionalidades clave del proyecto.
     const mockCardData = {
-        'Gestión de Actividades': {
-            title: 'Gestor de Tareas',
-            subtitle: 'Funcionalidad Core',
-            description: 'Permite a los estudiantes agregar, eliminar y marcar como realizadas sus tareas académicas para reducir la sensación de abrumo.',
-            stats: { Impacto: 'Alto', Complejidad: 'Media' }
-        },
-    };
+    'Gestión de Actividades': {
+        title: 'Gestor de Tareas',
+        subtitle: 'Funcionalidad Core',
+        description: 'Permite a los estudiantes agregar, eliminar y marcar como realizadas sus tareas académicas para reducir la sensación de abrumo.',
+        stats: { Impacto: 'Alto', Complejidad: 'Media' }
+    },
+    'Técnicas de Relajación': {
+        title: 'Video y Animación',
+        subtitle: 'Gestión Rápida de Estrés',
+        description: 'Proporciona un video o animación con técnicas rápidas para manejar situaciones estresantes.',
+        stats: { Impacto: 'Alto', Complejidad: 'Baja' }
+    },
+    'Mini Juego Anti-estrés': {
+        title: 'Herramienta Lúdica',
+        subtitle: 'Promoción del Bienestar',
+        description: 'Ofrece un mini juego que ayuda al estudiante a relajarse, promoviendo un ambiente de aprendizaje más saludable.',
+        stats: { Impacto: 'Medio', Complejidad: 'Alta' }
+    },
+    'Accesibilidad Web': {
+        title: 'Ubicación y Recursos',
+        subtitle: 'Requisito No Funcional',
+        description: 'Garantiza que la aplicación sea accesible con conexión a Internet y que use solo recursos y software gratuitos y libres.',
+        stats: { Impacto: 'Alto', Complejidad: 'Media' }
+    }
+};
 
-    // --- 1. FUNCIÓN PRINCIPAL PARA CARGAR Y RENDERIZAR LOS DATOS ---
+    // --- 2. FUNCIÓN PRINCIPAL PARA CARGAR Y RENDERIZAR LOS DATOS ---
     const loadDataAndRender = async () => {
         try {
             const response = await fetch('data.json');
@@ -32,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             renderHeader(data.header);
+            // Ahora renderHeroSection devuelve todos los activadores
             const activators = renderHeroSection(data.hero_section); 
             renderMidSection(data.mid_section);
             renderProjectsSection(data.projects_section);
@@ -44,8 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- 2. FUNCIONES DE RENDERIZADO (Header, Hero, Mid, Projects) ---
-    // (Estas funciones permanecen igual, no se repiten por brevedad)
+    // --- 3. FUNCIONES DE RENDERIZADO ---
     const renderHeader = (headerData) => {
         document.querySelector('.logo').textContent = headerData.logo;
         const navLinksContainer = document.querySelector('.nav-links');
@@ -59,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctaBtn.innerHTML = `<span>${headerData.cta_button}</span>`;
     };
 
+    // --- MODIFICADA: Aplica hover a TODOS los elementos ---
     const renderHeroSection = (heroData) => {
         document.querySelector('.greeting').textContent = heroData.greeting;
         document.querySelector('.title').textContent = heroData.title;
@@ -69,15 +90,15 @@ document.addEventListener('DOMContentLoaded', () => {
         statsContainer.innerHTML = '';
         const activators = [];
 
-        heroData.stats.forEach((stat, index) => {
+        heroData.stats.forEach((stat) => {
             const item = document.createElement('div');
             item.classList.add('stat-item');
             item.setAttribute('data-info', stat.description);
             
-            if (index === 0) {
-                item.classList.add('hover-activator');
-                activators.push(item);
-            }
+            // SE APLICA LA CLASE HOVER A TODOS LOS ELEMENTOS
+            item.classList.add('hover-activator');
+            activators.push(item);
+            // ------------------------------------------------
 
             item.innerHTML = `
                 <p class="stat-id">${stat.id}</p>
@@ -118,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     
-    // --- 3. FUNCIONES DE INTERACCIÓN (Hover y Card Position) ---
-    // (Estas funciones se mantienen igual)
+    // --- 4. FUNCIONES DE INTERACCIÓN (Hover y Card Position) ---
+    // --- MODIFICADA: Oculta el botón 'Ver Más' ---
     const connectHoverFunctionality = (activators) => {
         activators.forEach(activator => {
             const infoKey = activator.getAttribute('data-info');
@@ -131,7 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 cardTitle.textContent = data.title;
                 cardSubtitle.textContent = data.subtitle;
                 cardDescription.textContent = data.description;
-                cardCta.textContent = 'Ver Más';
+                
+                // OCULTAMOS EL BOTÓN 'VER MÁS'
+                cardCta.textContent = ''; 
+                cardCta.style.display = 'none'; 
+                // ---------------------------------
                 
                 cardStats.innerHTML = `
                     <p>${Object.keys(data.stats)[0]}: <strong>${data.stats[Object.keys(data.stats)[0]]}</strong></p>
@@ -144,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             activator.addEventListener('mouseleave', () => {
                 dataCardContainer.classList.remove('visible');
+                //cardCta.style.display = 'block'; // Aseguramos que se muestre si es usado en otro lado
             });
 
             activator.addEventListener('mousemove', (e) => {
@@ -177,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- 4. FUNCIÓN GENÉRICA DE ANIMACIÓN BASADA EN SCROLL (PARALLAX) ---
+    // --- 5. FUNCIÓN GENÉRICA DE ANIMACIÓN BASADA EN SCROLL (PARALLAX) ---
 
     const animateSectionOnScroll = (element, startY) => {
         if (!element) return;
@@ -185,47 +211,69 @@ document.addEventListener('DOMContentLoaded', () => {
         const elementTop = element.getBoundingClientRect().top;
         const viewportHeight = window.innerHeight;
 
-        // Punto de activación: cuando el 80% de la sección ha entrado al viewport
         const triggerPoint = viewportHeight * 0.8; 
 
         if (elementTop < triggerPoint) {
             const scrollDistance = triggerPoint - elementTop;
             
-            // Ajustes para efecto más visible: Velocidad 1.2, Opacidad 80
             let translateY = Math.min(startY, scrollDistance * 1.2); 
             let opacity = Math.min(1, scrollDistance / 80); 
 
-            // Aplicar la transformación (de startY a 0px)
             element.style.transform = `translateY(${startY - translateY}px)`;
             element.style.opacity = opacity;
 
         } else {
-            // Estado inicial (oculto y desplazado hacia abajo)
             element.style.transform = `translateY(${startY}px)`;
             element.style.opacity = '0';
         }
     };
     
-    // --- 5. FUNCIÓN ENVOLTORIO PARA LLAMAR AMBAS ANIMACIONES ---
-    const handleScrollAnimations = () => {
-        // Animación 1: Contenido de la sección intermedia (midGrid) - Empieza 50px abajo
-        animateSectionOnScroll(midGrid, 120);
+    // --- 6. FUNCIÓN DE DEGRADADO DINÁMICO (SUTIL Y FLUIDO) ---
 
-        // Animación 2: Título de Proyectos (projectsSectionTitle) - Empieza 40px abajo
+    const animateBackgroundGradient = () => {
+        if (!midSection) return;
+        
+        const scrollPos = window.scrollY;
+        const startPosition = midSection.offsetTop - (window.innerHeight / 2); 
+        
+        let progress = 0;
+        if (scrollPos > startPosition) {
+            // Rango de scroll sobre el cual ocurre el cambio (ajustable)
+            const scrollRange = 1000; 
+            progress = Math.min(1, (scrollPos - startPosition) / scrollRange);
+        }
+
+        // El alfa (transparencia) del color Rojo/Maroon (156, 31, 55).
+        // Modifica maxAlpha para cambiar la intensidad (ej: 0.15 - muy sutil, 0.50 - notable).
+        const maxAlpha = 0.30; 
+        const currentAlpha = progress * maxAlpha;
+
+        // Combina el degradado dinámico (superior) con el degradado radial base (inferior)
+        document.body.style.backgroundImage = `
+            linear-gradient(to bottom, rgba(156, 31, 55, ${currentAlpha}) 0%, rgba(156, 31, 55, 0) 100%),
+            radial-gradient(circle at center, var(--color-background) 0%, var(--color-subtle-background) 100%)
+        `;
+    };
+
+    // --- 7. FUNCIÓN ENVOLTORIO PARA LLAMAR TODAS LAS ANIMACIONES ---
+    const handleScrollEffects = () => {
+        // Animación de Parallax
+        animateSectionOnScroll(midGrid, 50);
         animateSectionOnScroll(projectsSectionTitle, 40);
-
-        // Animación 3: Cuadrícula de Proyectos (projectGrid) - Empieza 80px abajo (más dramático)
         animateSectionOnScroll(projectGrid, 20);
+
+        // Animación de Fondo Sutil
+        animateBackgroundGradient();
     };
 
 
-    // --- 6. INICIALIZACIÓN Y EVENT LISTENERS ---
+    // --- 8. INICIALIZACIÓN Y EVENT LISTENERS ---
 
     // Inicialización del estado CSS para todos los elementos animados
     const elementsToAnimate = [
         { element: midGrid, startY: 50, duration: 0.5 },
         { element: projectsSectionTitle, startY: 40, duration: 0.5 },
-        { element: projectGrid, startY: 80, duration: 0.6 } // La cuadrícula puede ser más lenta
+        { element: projectGrid, startY: 50, duration: 0.6 } 
     ];
 
     elementsToAnimate.forEach(({ element, startY, duration }) => {
@@ -239,9 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicia la carga de datos
     loadDataAndRender();
     
-    // Llama a la función de animación una vez al inicio
-    handleScrollAnimations();
+    // Llama a las funciones de animación una vez al inicio para establecer el estado
+    handleScrollEffects();
 
     // Escuchar el evento de scroll en la ventana para actualizar la animación
-    window.addEventListener('scroll', handleScrollAnimations);
+    window.addEventListener('scroll', handleScrollEffects);
 });
