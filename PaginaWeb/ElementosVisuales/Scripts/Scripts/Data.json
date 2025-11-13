@@ -1,0 +1,52 @@
+{
+  "header": {
+    "logo": "UAO Stress App",
+    "nav_links": [
+      {"text": "Inicio", "url": "#home"},
+      {"text": "El Proyecto", "url": "#mid-section"},
+      {"text": "Funcionalidades", "url": "#projects-section"}
+    ],
+    "cta_button": "Ver Propuesta"
+  },
+  "hero_section": {
+    "greeting": "Proyecto ASM UAO",
+    "title": "Sistema Adaptativo para Gestión del Estrés Estudiantil",
+    "tagline": "Una aplicación web diseñada para estudiantes de Ingeniería Multimedia de la UAO, enfocada en la gestión de actividades y la promoción de un ambiente de aprendizaje saludable y equilibrado.",
+    "stats": [
+      {"id": "01", "description": "Gestión de Actividades"},
+      {"id": "02", "description": "Técnicas de Relajación"},
+      {"id": "03", "description": "Mini Juego Anti-estrés"},
+      {"id": "04", "description": "Accesibilidad Web"}
+    ],
+    "trust_text": "Propuesta desarrollada para la asignatura Arquitectura de Sistemas Multimedia (ASM)"
+  },
+  "mid_section": {
+    "title_part1": "El Contexto del Problema",
+    "title_part2": "Abordando el Estrés en Ingeniería Multimedia UAO",
+    "bio_text": "Los estudiantes de ingeniería están sometidos a niveles significativos de estrés que pueden impactar su rendimiento académico[cite: 125]. Nuestra solución es un sistema que utiliza un enfoque multimedia para mitigar este problema, integrando gestión de tareas y herramientas de relajación en una única plataforma.",
+    "mid_cta": "Ver Metodología"
+  },
+  "projects_section": {
+    "title": "Principales Funcionalidades del Sistema",
+    "projects": [
+      {
+        "name": "Gestor de Tareas",
+        "price": "Actividades",
+        "cta": "Organizar",
+        "image_url": "https://via.placeholder.com/400x400/9C1F37/FFFFFF?text=Gestor+Tareas"
+      },
+      {
+        "name": "Video de Relajación Rápida",
+        "price": "Multimedia",
+        "cta": "Visualizar",
+        "image_url": "https://via.placeholder.com/400x400/9C1F37/FFFFFF?text=Video+Anti-estrés"
+      },
+      {
+        "name": "Mini Juego Anti-estrés",
+        "price": "Interactividad",
+        "cta": "Jugar",
+        "image_url": "https://via.placeholder.com/400x400/9C1F37/FFFFFF?text=Mini+Juego"
+      }
+    ]
+  }
+}
