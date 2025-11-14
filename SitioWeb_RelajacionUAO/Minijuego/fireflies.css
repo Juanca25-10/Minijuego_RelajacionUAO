@@ -1,113 +1,104 @@
-/* --- Estilos del Overlay y Componentes del Minijuego --- */
-
-/* 1. Canvas del Juego (Capa de Overlay) */
+/* ------------------------------------------------------------------ */
+/* CANVAS DEL JUEGO */
+/* ------------------------------------------------------------------ */
 #firefly-game-canvas {
-    /* CAMBIO CLAVE: Posicionamiento absoluto para que se dimensione al documento completo */
-    position: absolute;
+    position: fixed; /* CAMBIO CLAVE: Volver a 'fixed' */
     top: 0;
     left: 0;
-    width: 100vw; /* El ancho sigue siendo el de la ventana */
-    
-    /* La altura será dinámica (Document Height), definida por JS */
-    
-    /* Z-Index MUY ALTO para garantizar que esté encima de todo el contenido del sitio */
-    z-index: 9999; 
-    
-    /* Inicialmente oculto */
-    display: none; 
-    
-    /* Cursor por defecto: Ninguno, el juego dibujará el cursor de red */
-    cursor: none;
-    
-    background-color: transparent; 
-    transition: background-color 0.5s ease;
-
-    /* CAMBIO CLAVE: Deshabilitado por defecto para que los clics pasen al contenido */
-    pointer-events: none; 
+    width: 100vw;
+    /* La altura debe ser la de la ventana visible (viewport) */
+    height: 100vh; 
+    z-index: 999; 
+    pointer-events: none;
+    background: transparent;
+    display: block;
 }
 
-/* Estado Activo: Se muestra el Canvas y captura el click */
-#firefly-game-canvas.active {
-    display: block;
-    /* Habilita el canvas para capturar el mouse y bloquear clics al contenido debajo */
+/* Cuando el juego está activo, el body cambia el cursor */
+.crosshair-cursor #firefly-game-canvas {
     pointer-events: auto; 
 }
 
-/* 2. Botón Flotante (Toggle) */
+/* ------------------------------------------------------------------ */
+/* BOTÓN FLOTANTE (Toggle) */
+/* ------------------------------------------------------------------ */
 #firefly-toggle-btn {
-    /* El botón debe seguir fijo a la ventana para ser accesible siempre */
-    position: fixed;
+    position: fixed; /* Mantiene la posición fija en la pantalla */
+    
+    /* --- CAMBIOS PARA CENTRAR EN LA PARTE INFERIOR --- */
     bottom: 20px;
+    left: 50%; /* Lo muevo al 50% del ancho de la pantalla */
+    transform: translateX(-50%); /* Lo desplazo hacia la izquierda la mitad de su propio ancho para centrarlo */
+    /* El "right: 20px" original se elimina para que no interfiera */
     
-    /* CENTRADO HORIZONTALMENTE */
-    left: 50%;
-    transform: translateX(-50%); 
-    
-    /* Z-Index para que esté visible */
-    z-index: 10000; 
-    
-    /* Estilo del botón (Tarro de Luciérnagas) */
-    width: 80px; 
-    height: 80px;
-    border-radius: 50%;
-    background-color: transparent; 
-    border: none; 
-    box-shadow: none; 
-    
-    transition: transform 0.2s;
+    width: 60px; 
+    height: 60px;
+    z-index: 1000; 
+    border: none;
+    padding: 0;
+    background: transparent; 
+    cursor: pointer;
+    transition: transform 0.2s ease; 
+    border-radius: 50%; 
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    font-size: 24px;
-    padding: 0; 
+    overflow: hidden; 
+}
+
+@media (min-width: 768px) {
+    #firefly-toggle-btn {
+        width: 80px; 
+        height: 80px;
+    }
 }
 
 #firefly-toggle-btn:hover {
-    transform: translateX(-50%) scale(1.05);
+    transform: scale(1.1) translateX(-50%); /* Mantiene el centrado mientras escala */
+    /* Se mantiene la eliminación del box-shadow */
 }
 
-/* Iconos dentro del botón */
-.icon-jar {
-    display: block;
+#firefly-toggle-btn.active {
+    background-color: transparent;
+    transform: scale(1.05) translateX(-50%); /* Mantiene el centrado mientras escala */
+}
+
+/* Estilos de las imágenes dentro del botón */
+#firefly-toggle-btn img {
     width: 100%;
     height: 100%;
-    
-    background-image: url('https://placehold.co/80x80/6c5ce7/ffffff?text=JAR'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    box-shadow: 0 0 15px rgba(255, 255, 100, 0.8);
-    border-radius: 50%;
+    object-fit: contain; 
 }
 
-.icon-close {
-    font-weight: 900; 
-    font-size: 30px;
-    color: #f7f7f7;
-    text-shadow: 0 0 5px #000;
-    transition: transform 0.2s;
+.hidden {
+    display: none !important;
 }
 
-/* Estado Activo: Estilo cuando el juego está corriendo */
-#firefly-toggle-btn.active {
-    background-color: #dc2626; 
-    border-radius: 50%;
-    border: 3px solid #f7f7f7;
-    box-shadow: 0 0 20px rgba(220, 38, 38, 0.9);
+
+/* Tooltip (Texto flotante al hacer hover) */
+#firefly-toggle-btn {
+    position: relative; /* Sigue siendo relativo para el tooltip */
 }
 
-#firefly-toggle-btn.active:hover {
-    transform: translateX(-50%) scale(1.1);
+.tooltip-text {
+    visibility: hidden;
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; 
+    left: 50%;
+    margin-left: -75px; 
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
 }
 
-/* Oculta la imagen del tarro cuando la X está visible */
-#firefly-toggle-btn.active .icon-jar {
-    display: none;
-}
-
-/* Muestra la X cuando el botón está activo */
-#firefly-toggle-btn.active .icon-close {
-    display: block !important; 
+#firefly-toggle-btn:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
