@@ -22,128 +22,345 @@
         .delay-2 { animation-delay: 0.3s; }
         .delay-3 { animation-delay: 0.5s; }
 
-        /* Estilos del Banner (Se mantiene) */
+        /* --- ESTILOS DEL BANNER (ACTUALIZADOS) --- */
         .subpage-banner-v6 {
             background-color: var(--color-dark-surface);
             color: var(--color-secondary);
-            padding: 80px 5%;
+            padding: 100px 5%;
             text-align: center;
             border-radius: 12px;
             margin: 0 1%; 
         }
-        .subpage-banner-v6 .title { font-size: 3rem; }
-
-        /* --- NUEVO CSS PARA GESTOR DE TAREAS --- */
-        /* Contenedor principal de la app de tareas */
-        .todo-app-container {
-            max-width: 900px;
+        .subpage-banner-v6 .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        .subpage-banner-v6 .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-secondary);
+            border-radius: 2px;
+        }
+        .subpage-banner-v6 .tagline {
+            font-size: 1.25rem;
+            color: #555;
+            max-width: 600px;
             margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- LAYOUT DE 2 COLUMNAS (Se mantiene) --- */
+        .gestion-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; 
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1024px) {
+            .gestion-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- CSS PARA CALENDARIO (Se mantiene) --- */
+        .calendar-container {
             background-color: var(--color-background);
             border: 1px solid #EAEAEA; 
             border-radius: 12px; 
             box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
-            padding: 30px;
+            padding: 25px;
+            align-self: start; 
         }
-        
-        /* Barra de progreso */
-        .progress-bar-container {
-            margin-bottom: 25px;
-        }
-        .progress-bar-label {
+        .calendar-header {
             display: flex;
             justify-content: space-between;
-            font-weight: 600;
-            margin-bottom: 8px;
+            align-items: center;
+            margin-bottom: 20px;
         }
-        .progress-bar-bg {
-            width: 100%;
-            height: 10px;
+        .calendar-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-secondary);
+            margin: 0;
+        }
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-primary);
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .calendar-nav button:hover {
             background-color: var(--color-dark-surface);
-            border-radius: 10px;
-            overflow: hidden;
         }
-        .progress-bar-fill {
-            width: 40%; /* Ejemplo de progreso */
-            height: 100%;
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px; 
+        }
+        .calendar-day-name {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .calendar-day {
+            padding: 10px 5px; 
+            text-align: center;
+            border: 1px solid transparent; 
+            border-radius: 8px;
+            font-weight: 600;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .calendar-day:hover:not(.other-month) {
+            background-color: var(--color-subtle-background);
+            border-color: var(--color-primary);
+        }
+        .calendar-day.other-month {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .calendar-day.today {
             background-color: var(--color-primary);
-            border-radius: 10px;
-            transition: width 0.5s ease;
+            color: var(--color-light-text);
+            border-color: var(--color-primary);
         }
+        .calendar-day.selected {
+            background-color: #1E1E1E;
+            color: var(--color-light-text);
+            border-color: #1E1E1E;
+        }
+        .calendar-day .task-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .calendar-day.today .task-dot {
+            background-color: var(--color-light-text);
+        }
+
+        /* --- CSS PARA TARJETAS DE TAREA (Se mantiene) --- */
+        .task-list-container { }
         
-        /* Formulario para añadir tareas */
-        .add-task-form {
-            display: flex;
-            gap: 15px;
+        .add-task-button-container {
             margin-bottom: 30px;
         }
-        .add-task-form input[type="text"] {
+        #open-task-modal-btn {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+        .task-card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .task-card {
+            background-color: var(--color-background);
+            border: 1px solid #EAEAEA; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(156, 31, 55, 0.15);
+        }
+        .task-card-content { padding: 20px; }
+        .task-card-content h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+        .task-card-content p {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .task-card-details {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .task-card-details span { margin-right: 5px; }
+        .task-card-attachment {
+            padding: 5px 10px;
+            background: var(--color-dark-surface);
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .task-card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #EAEAEA;
+            background-color: var(--color-subtle-background);
+            border-radius: 0 0 12px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .task-card-footer .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        .task-card-footer label {
             flex-grow: 1;
+            margin-left: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #333;
+        }
+        .task-card-footer input[type="checkbox"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--color-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+        }
+        .task-card-footer input[type="checkbox"]:checked {
+            background-color: var(--color-primary);
+        }
+        .task-card-footer input[type="checkbox"]:checked::before {
+            content: '✔';
+            color: white;
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            font-size: 16px;
+        }
+        .delete-btn {
+            background: none;
+            border: 1px solid #ddd;
+            color: var(--color-primary);
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .delete-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-light-text);
+            border-color: var(--color-primary);
+        }
+        .task-card.completed { opacity: 0.7; }
+        .task-card.completed h3,
+        .task-card.completed p,
+        .task-card.completed label,
+        .task-card.completed .task-card-details {
+            text-decoration: line-through;
+        }
+
+        /* --- CSS PARA EL MODAL DE AÑADIR TAREA (Se mantiene) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: none; 
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: var(--color-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 800px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .modal-form-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .modal-form-col h2 {
+            color: var(--color-primary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .modal-form-col label {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: -5px;
+        }
+        .modal-form-col input[type="text"] {
+            width: 100%;
             padding: 12px 15px;
             border: 1px solid #EAEAEA;
             border-radius: 8px;
             font-family: var(--font-family-main);
             font-size: 1rem;
         }
-        .add-task-form .cta-btn {
-            white-space: nowrap; /* Evita que el texto del botón se rompa */
+        .modal-form-col textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #EAEAEA;
+            border-radius: 8px;
+            font-family: var(--font-family-main);
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 80px;
         }
-        
-        /* Lista de Tareas */
-        .task-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 10px;
-            border-bottom: 1px solid #EAEAEA;
-            transition: background-color 0.3s ease;
-        }
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        .task-item:hover {
-            background-color: var(--color-subtle-background);
-        }
-        .task-item label {
-            flex-grow: 1;
-            margin-left: 15px;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-        /* Checkbox personalizado */
-        .task-item input[type="checkbox"] {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--color-primary);
-            border-radius: 4px;
-            cursor: pointer;
-            position: relative;
-        }
-        .task-item input[type="checkbox"]:checked {
-            background-color: var(--color-primary);
-        }
-        .task-item input[type="checkbox"]:checked::before {
-            content: '✔';
-            color: white;
-            position: absolute;
-            top: -2px;
-            left: 2px;
-            font-size: 14px;
-        }
-        .task-item.completed label {
-            text-decoration: line-through;
-            opacity: 0.6;
+        .modal-form-col .cta-btn {
+            width: 100%;
+            margin-top: 10px;
         }
 
+        /* CSS para Tareas de Ejemplo (Ocultar) */
+        .example-task { display: none; }
     </style>
 </head>
 <body>
     
-    <div id="data-card-container" class="hidden"></div>
+    <div id="data-card-container" class="hidden">
+        <div class="data-card">
+            <h3 class="card-title"></h3>
+            <p class="card-subtitle"></p>
+            <p class="card-description"></p>
+            <div class="card-stats"></div>
+            </div>
+    </div>
 
     <header id="main-header">
         <div class="logo">UAO Stress App</div>
@@ -165,56 +382,388 @@
 
         <section class="section-padding">
             
-            <div class="todo-app-container anim-fade-grow delay-2">
-                <h2 class="section-title" style="margin-bottom: 20px;">Mi Progreso</h2>
+            <div class="gestion-layout anim-fade-grow delay-2">
 
-                <div class="progress-bar-container">
-                    <div class="progress-bar-label">
-                        <span>Tareas Completadas</span>
-                        <span>2 / 5</span>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="calendar-prev">&larr;</button>
+                        <h3 id="current-month-year">Cargando...</h3>
+                        <button id="calendar-next">&rarr;</button>
                     </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill"></div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
                     </div>
+                    <div class="calendar-grid" id="calendar-grid-body"></div>
                 </div>
 
-                <form class="add-task-form">
-                    <input type="text" placeholder="Ej: Entregar proyecto de ASM...">
-                    <button type="submit" class="cta-btn"><span>Añadir Tarea</span></button>
-                </form>
-
-                <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;">Tareas Pendientes</h2>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <input type="checkbox" id="task1">
-                        <label for="task1">Entregar proyecto de ASM</label>
-                    </li>
-                    <li class="task-item">
-                        <input type="checkbox" id="task2">
-                        <label for="task2">Estudiar para parcial de Cálculo</label>
-                    </li>
-                    <li class="task-item">
-                        <input type="checkbox" id="task3">
-                        <label for="task3">Hacer taller de física</label>
-                    </li>
-                </ul>
-
-                <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;">Tareas Completadas</h2>
-                <ul class="task-list">
-                    <li class="task-item completed">
-                        <input type="checkbox" id="task4" checked>
-                        <label for="task4">Ver primer módulo de inglés</label>
-                    </li>
-                    <li class="task-item completed">
-                        <input type="checkbox" id="task5" checked>
-                        <label for="task5">Responder correo a profesor</label>
-                    </li>
-                </ul>
-
+                <div class="task-list-container">
+                    <h2 class="section-title" style="margin-bottom: 25px;">Tareas Pendientes</h2>
+                    
+                    <div class="add-task-button-container">
+                        <button class="cta-btn" id="open-task-modal-btn">+ Añadir Tarea Nueva</button>
+                    </div>
+                    
+                    <div class="task-card-grid" id="task-grid">
+                        <div class="task-card example-task" data-id="task-example-1">
+                            </div>
+                        <div class="task-card completed example-task" data-id="task-example-2">
+                            </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
+
+    <div class="modal-overlay" id="add-task-modal">
+        <div class="modal-content">
+            <div class="modal-form-col">
+                <h2>Añadir Nueva Tarea</h2>
+                <form id="modal-task-form">
+                    <label for="modal-task-title">Título de la Tarea</label>
+                    <input type="text" id="modal-task-title" placeholder="Ej: Entregar Proyecto 3" required>
+                    <label for="modal-task-desc">Descripción</label>
+                    <textarea id="modal-task-desc" placeholder="Ej: Subir propuesta y prototipo..."></textarea>
+                    <label for="modal-task-time">Hora</label>
+                    <input type="text" id="modal-task-time" placeholder="Ej: 2:30 PM">
+                    <button type="submit" class="cta-btn"><span>Guardar Tarea</span></button>
+                </form>
+            </div>
+            <div class="modal-calendar-col">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="modal-calendar-prev">&larr;</button>
+                        <h3 id="modal-month-year">Cargando...</h3>
+                        <button id="modal-calendar-next">&rarr;</button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
+                    </div>
+                    <div class="calendar-grid" id="modal-calendar-grid-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            const today = new Date();
+            const taskGrid = document.getElementById('task-grid');
+
+            // --- 1. LÓGICA DE DATOS (localStorage) ---
+            const STORAGE_KEY = 'uaoTasks';
+            function getTasks() {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            }
+            function saveTasks(tasks) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+                // *** NUEVO ***: Refresca el calendario principal después de guardar
+                renderMainCalendar(mainCalYear, mainCalMonth);
+            }
+
+            // --- 2. LÓGICA DE RENDERIZADO DE TAREAS ---
+            function createTaskCardElement(task) {
+                const card = document.createElement('div');
+                card.classList.add('task-card');
+                if (task.completed) card.classList.add('completed');
+                card.dataset.id = task.id; 
+
+                const formattedDate = task.date ? new Date(task.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '(Sin fecha)';
+                const time = task.time || '(Sin hora)';
+
+                card.innerHTML = `
+                    <div class="task-card-content">
+                        <h3>${task.title}</h3>
+                        <p><strong>Descripción:</strong> ${task.desc || '(Sin descripción)'}</p>
+                    </div>
+                    <div class="task-card-details">
+                        <div><span>📅</span>${formattedDate}</div>
+                        <div><span>🕒</span>${time}</div>
+                        <button class="task-card-attachment">Adjuntar Prueba</button>
+                    </div>
+                    <div class="task-card-footer">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="${task.id}" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                            <label for="${task.id}">Completada</label>
+                        </div>
+                        <button class="delete-btn">Eliminar</button>
+                    </div>
+                `;
+                return card;
+            }
+
+            function loadTasks() {
+                taskGrid.innerHTML = ''; 
+                const tasks = getTasks();
+                
+                if (tasks.length === 0) {
+                    document.querySelectorAll('.example-task').forEach(taskEl => {
+                        taskEl.style.display = 'flex'; 
+                        taskGrid.appendChild(taskEl); 
+                    });
+                } else {
+                    tasks.forEach(task => {
+                        taskGrid.appendChild(createTaskCardElement(task));
+                    });
+                }
+            }
+
+            // --- 3. LÓGICA DEL MODAL ---
+            const modal = document.getElementById('add-task-modal');
+            const openModalBtn = document.getElementById('open-task-modal-btn');
+            const taskForm = document.getElementById('modal-task-form');
+            let selectedDate = new Date(); 
+            
+            openModalBtn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                selectedDate = new Date(); 
+                renderModalCalendar(selectedDate.getFullYear(), selectedDate.getMonth());
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+            });
+
+            taskForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const tasks = getTasks();
+                const newTask = {
+                    id: `task-${Date.now()}`,
+                    title: document.getElementById('modal-task-title').value,
+                    desc: document.getElementById('modal-task-desc').value,
+                    time: document.getElementById('modal-task-time').value,
+                    date: selectedDate.toISOString(), 
+                    completed: false
+                };
+
+                tasks.push(newTask);
+                saveTasks(tasks); // Esto también refrescará el calendario (ver Lógica 1)
+                loadTasks(); 
+                
+                modal.style.display = 'none';
+                taskForm.reset();
+            });
+
+            // --- 4. LÓGICA DE CALENDARIO (REUTILIZABLE) ---
+            
+            // *** NUEVO ***: Referencias a la tarjeta flotante
+            const dataCardContainer = document.getElementById('data-card-container');
+            const cardTitle = dataCardContainer.querySelector('.card-title');
+            const cardSubtitle = dataCardContainer.querySelector('.card-subtitle');
+            const cardDescription = dataCardContainer.querySelector('.card-description');
+            const cardStats = dataCardContainer.querySelector('.card-stats');
+
+            /**
+             * Renderiza un calendario en un contenedor específico.
+             * @param {number} year - El año a renderizar.
+             * @param {number} month - El mes a renderizar (0-indexado).
+             * @param {string} monthYearElId - ID del elemento <h3> para el título.
+             * @param {string} gridBodyId - ID del <div> para los días.
+             * @param {boolean} isModalCalendar - True si es el calendario del modal.
+             */
+            function renderCalendar(year, month, monthYearElId, gridBodyId, isModalCalendar = false) {
+                const monthYearEl = document.getElementById(monthYearElId);
+                const gridBody = document.getElementById(gridBodyId);
+
+                gridBody.innerHTML = '';
+                monthYearEl.textContent = `${monthNames[month]} ${year}`;
+
+                // *** NUEVO ***: Carga las tareas *antes* del bucle
+                const allTasks = getTasks();
+
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    gridBody.appendChild(document.createElement('div')).classList.add('calendar-day', 'other-month');
+                }
+
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayEl = document.createElement('div');
+                    dayEl.classList.add('calendar-day');
+                    dayEl.textContent = i;
+                    
+                    const dayDate = new Date(year, month, i);
+
+                    if (!isModalCalendar && i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                        dayEl.classList.add('today');
+                    }
+                    
+                    if (isModalCalendar && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
+                        dayEl.classList.add('selected');
+                    }
+
+                    // *** NUEVO: LÓGICA DE PUNTO DE TAREA Y HOVER ***
+                    if (!isModalCalendar) {
+                        // Compara la fecha ignorando la hora
+                        const tasksForDay = allTasks.filter(task => {
+                            const taskDate = new Date(task.date);
+                            return taskDate.getDate() === i &&
+                                   taskDate.getMonth() === month &&
+                                   taskDate.getFullYear() === year;
+                        });
+
+                        if (tasksForDay.length > 0) {
+                            // 1. Añade el punto
+                            const dot = document.createElement('div');
+                            dot.classList.add('task-dot');
+                            dayEl.appendChild(dot);
+
+                            // 2. Añade los listeners de hover
+                            const hoverTask = tasksForDay[0]; // Muestra la primera tarea
+                            
+                            dayEl.addEventListener('mouseover', (e) => {
+                                showTaskHoverCard(e, hoverTask);
+                            });
+                            dayEl.addEventListener('mouseleave', () => {
+                                hideTaskHoverCard();
+                            });
+                            dayEl.addEventListener('mousemove', (e) => {
+                                if (dataCardContainer.classList.contains('visible')) {
+                                    updateCardPosition(e.clientX, e.clientY);
+                                }
+                            });
+                        }
+                    }
+                    
+                    if (isModalCalendar) {
+                        dayEl.addEventListener('click', () => {
+                            selectedDate = dayDate;
+                            renderModalCalendar(year, month);
+                        });
+                    }
+                    gridBody.appendChild(dayEl);
+                }
+            }
+
+            // Calendario Principal
+            let mainCalYear = today.getFullYear();
+            let mainCalMonth = today.getMonth();
+            document.getElementById('calendar-prev').addEventListener('click', () => {
+                mainCalMonth--;
+                if (mainCalMonth < 0) { mainCalMonth = 11; mainCalYear--; }
+                renderMainCalendar(mainCalYear, mainCalMonth);
+            });
+            document.getElementById('calendar-next').addEventListener('click', () => {
+                mainCalMonth++;
+                if (mainCalMonth > 11) { mainCalMonth = 0; mainCalYear++; }
+                renderMainCalendar(mainCalYear, mainCalMonth);
+            });
+            function renderMainCalendar(y, m) {
+                renderCalendar(y, m, 'current-month-year', 'calendar-grid-body', false);
+            }
+            
+            // Calendario del Modal
+            let modalCalYear = selectedDate.getFullYear();
+            let modalCalMonth = selectedDate.getMonth();
+            document.getElementById('modal-calendar-prev').addEventListener('click', () => {
+                modalCalMonth--;
+                if (modalCalMonth < 0) { modalCalMonth = 11; modalCalYear--; }
+                renderModalCalendar(modalCalYear, modalCalMonth);
+            });
+            document.getElementById('modal-calendar-next').addEventListener('click', () => {
+                modalCalMonth++;
+                if (modalCalMonth > 11) { modalCalMonth = 0; modalCalYear++; }
+                renderModalCalendar(modalCalYear, modalCalMonth);
+            });
+            function renderModalCalendar(y, m) {
+                modalCalYear = y;
+                modalCalMonth = m;
+                renderCalendar(y, m, 'modal-month-year', 'modal-calendar-grid-body', true);
+            }
+            
+            // --- 5. EVENT DELEGATION (Completar y Eliminar) ---
+            taskGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const card = e.target.closest('.task-card');
+                    const taskId = card.dataset.id;
+                    let tasks = getTasks();
+                    tasks = tasks.filter(task => task.id !== taskId);
+                    saveTasks(tasks); // Esto también refrescará el calendario
+                    
+                    card.style.transform = 'scale(0.8)';
+                    card.style.opacity = '0';
+                    setTimeout(() => card.remove(), 300);
+                }
+            });
+            taskGrid.addEventListener('change', (e) => {
+                if (e.target.classList.contains('task-checkbox')) {
+                    const card = e.target.closest('.task-card');
+                    const taskId = card.dataset.id;
+                    const isCompleted = e.target.checked;
+                    let tasks = getTasks();
+                    const taskIndex = tasks.findIndex(task => task.id === taskId);
+                    if (taskIndex > -1) {
+                        tasks[taskIndex].completed = isCompleted;
+                        saveTasks(tasks); // No refresca el calendario, solo guarda
+                    }
+                    card.classList.toggle('completed', isCompleted);
+                }
+            });
+            
+            // --- 6. *** NUEVO *** FUNCIONES DE TARJETA FLOTANTE ---
+            
+            function updateCardPosition(mouseX, mouseY) {
+                if (!dataCardContainer) return;
+                const cardWidth = dataCardContainer.offsetWidth;
+                const cardHeight = dataCardContainer.offsetHeight;
+                
+                let newX = mouseX + 15; // Ligeramente a la derecha del cursor
+                let newY = mouseY - (cardHeight / 2); // Centrado verticalmente
+
+                // Evita que se salga por la derecha
+                if (newX + cardWidth > window.innerWidth) {
+                    newX = mouseX - cardWidth - 15; // Mueve a la izquierda
+                }
+                
+                // Evita que se salga por abajo
+                if (newY + cardHeight > window.innerHeight) {
+                    newY = window.innerHeight - cardHeight - 10;
+                }
+                // Evita que se salga por arriba
+                if (newY < 10) {
+                    newY = 10;
+                }
+
+                dataCardContainer.style.transform = `translate(${newX}px, ${newY}px)`;
+            }
+
+            function showTaskHoverCard(event, task) {
+                const formattedDate = new Date(task.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+                
+                cardTitle.textContent = task.title;
+                cardSubtitle.textContent = `📅 ${formattedDate} - 🕒 ${task.time || 'Todo el día'}`;
+                cardDescription.textContent = task.desc || '(Sin descripción)';
+                cardStats.innerHTML = ''; // Limpia los stats de "Impacto"
+                
+                dataCardContainer.classList.add('visible');
+                updateCardPosition(event.clientX, event.clientY);
+            }
+
+            function hideTaskHoverCard() {
+                dataCardContainer.classList.remove('visible');
+            }
+
+            // --- 7. INICIALIZACIÓN ---
+            renderMainCalendar(mainCalYear, mainCalMonth);
+            loadTasks(); 
+
+        });
+    </script>
 </body>
 </html>
