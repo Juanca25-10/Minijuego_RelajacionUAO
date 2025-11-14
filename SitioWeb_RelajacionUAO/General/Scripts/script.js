@@ -284,8 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Inicia la carga de datos
-    loadDataAndRender();
+    // --- INICIA LA CARGA DE DATOS (SOLO SI ESTAMOS EN INDEX.HTML) ---
+    // Comprobamos si existe "hero-section", que solo está en index.html
+    if (document.getElementById('hero-section')) {
+        loadDataAndRender();
+    }
     
     // Llama a las funciones de animación una vez al inicio para establecer el estado
     handleScrollEffects();

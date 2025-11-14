@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título de Subpágina - UAO Stress App</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. NUEVA ANIMACIÓN (Fundido y Escalado) */
+        @keyframes fadeGrow {
+            from {
+                opacity: 0;
+                transform: scale(0.97); /* Comienza ligeramente más pequeño */
+            }
+            to {
+                opacity: 1;
+                transform: scale(1); /* Termina en su tamaño normal */
+            }
+        }
+
+        /* Clase de utilidad para aplicar la animación */
+        .anim-fade-grow {
+            opacity: 0; /* Inicia invisible */
+            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        /* Clases de retraso (stagger) */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+        .delay-4 { animation-delay: 0.7s; }
+
+
+        /* 2. NUEVO LAYOUT (Banner y Grid de Contenido) */
+        
+        /* Estilo para el banner de título */
+        .subpage-banner {
+            text-align: center;
+            /* Usamos tu color gris de fondo */
+            background-color: var(--color-dark-surface);
+            padding: 80px 5%; /* Más padding vertical */
+        }
+        
+        /* Estilo para el grid de 2 columnas */
+        .content-grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+            gap: 50px;
+            align-items: center;
+            max-width: 1200px; /* Ancho máximo del contenido */
+            margin: 0 auto;
+        }
+
+        .content-grid-2-col img {
+            width: 100%;
+            border-radius: 12px; /* Bordes redondeados */
+            object-fit: cover;
+            height: 400px; /* Altura fija para la imagen */
+            border: 1px solid #EAEAEA;
+        }
+
+        /* Media query para hacer el grid responsivo en móviles */
+        @media (max-width: 768px) {
+            .content-grid-2-col {
+                grid-template-columns: 1fr; /* Una sola columna en móvil */
+            }
+            .content-grid-2-col img {
+                height: auto; /* Altura automática en móvil */
+            }
+        }
+    </style>
+    </head>
+<body>
+    
+    <div id="data-card-container" class="hidden">
+        <div class="data-card">
+            </div>
+    </div>
+
+    <header id="main-header">
+        <div class="logo">UAO Stress App</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" style="font-weight: 600;"><span>&larr; Regresar</span></a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn"><span>Ingresar texto de boton</span></button>
+    </header>
+
+    <main>
+
+        <section class="subpage-banner">
+            <h1 class="title anim-fade-grow delay-1" style="font-size: 3.5rem; margin-bottom: 15px;">
+                Título Aquí
+            </h1>
+            <p class="tagline anim-fade-grow delay-2" style="max-width: 600px; margin: 0 auto;">
+                Ingresar texto aca: ejemplo ejemploteeee
+            </p>
+        </section>
+
+        <section id="mid-section" class="section-padding">
+            <div class="content-grid-2-col anim-fade-grow delay-3">
+                
+                <div>
+                    <img src="https://via.placeholder.com/600x400/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
+                </div>
+
+                <div>
+                    <h2 class="section-title">Subtítulo Aquí</h2>
+                    <p class="bio" style="font-size: 1.1rem; margin-bottom: 20px;">
+                        INFORMACION AQUI CIFUENTES PUENTES PUENTESOTES
+                    </p>
+                    <p class="bio" style="font-size: 1.1rem;">
+                        TEXTO ACA CAMILO MILON MILOS
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects-section" class="section-padding" style="background-color: var(--color-dark-surface);">
+            <div class="anim-fade-grow delay-4">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 50px;">
+                    Información en Tarjetas
+                </h2>
+                
+                <div class="project-grid">
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/400x200/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
+                        <div class="project-info">
+                            <h3>Título de Tarjeta 1</h3>
+                            <button class="cta-btn buy-btn" style="margin-top: 15px;"><span>Ver Más</span></button>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/400x200/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
+                        <div class="project-info">
+                            <h3>Título de Tarjeta 2</h3>
+                            <button class="cta-btn buy-btn" style="margin-top: 15px;"><span>Ver Más</span></button>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/400x200/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
+                        <div class="project-info">
+                            <h3>Título de Tarjeta 3</h3>
+                            <button class="cta-btn buy-btn" style="margin-top: 15px;"><span>Ver Más</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
