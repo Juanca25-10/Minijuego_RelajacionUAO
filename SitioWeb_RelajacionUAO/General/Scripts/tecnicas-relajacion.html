@@ -9,48 +9,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Animación suave (Se mantiene) */
-        @keyframes fadeGrow {
-            from { opacity: 0; transform: scale(0.97); }
-            to { opacity: 1; transform: scale(1); }
+        /* --- NUEVA ANIMACIÓN: Deslizamiento --- */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px); /* Empieza 30px abajo */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+        
+        /* Aplicamos la nueva animación a la clase que ya usábamos */
         .anim-fade-grow {
-            opacity: 0;
-            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            opacity: 0; /* Inicia invisible */
+            animation: slideInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
+
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.3s; }
         .delay-3 { animation-delay: 0.5s; }
+        .delay-4 { animation-delay: 0.7s; } /* Para la cuadrícula oculta */
 
-        /* Estilos del Banner (Se mantiene) */
+        /* --- ESTILOS DEL BANNER (Se mantiene) --- */
         .subpage-banner-v6 {
             background-color: var(--color-dark-surface);
             color: var(--color-secondary);
-            padding: 80px 5%;
+            padding: 100px 5%;
             text-align: center;
             border-radius: 12px;
             margin: 0 1%; 
         }
-        .subpage-banner-v6 .title { font-size: 3rem; }
-
-        /* --- NUEVO CSS PARA TÉCNICAS DE RELAJACIÓN --- */
-
-        /* Contenedor para el video principal */
-        .video-container {
-            max-width: 1100px;
+        .subpage-banner-v6 .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        .subpage-banner-v6 .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-secondary);
+            border-radius: 2px;
+        }
+        .subpage-banner-v6 .tagline {
+            font-size: 1.25rem;
+            color: #555;
+            max-width: 600px;
             margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- ESTILOS DE VIDEO (Se mantiene) --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .video-card {
             background-color: var(--color-background);
             border: 1px solid #EAEAEA; 
             border-radius: 12px; 
             box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
-            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(156, 31, 55, 0.15);
         }
         .video-player-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* Proporción 16:9 */
+            padding-bottom: 56.25%; /* 16:9 */
             height: 0;
             overflow: hidden;
-            border-radius: 8px;
             background-color: #000;
         }
         .video-player-wrapper iframe {
@@ -61,52 +106,59 @@
             height: 100%;
             border: 0;
         }
-        .video-container .section-title {
-            margin-bottom: 15px;
+        .video-card-title {
+            padding: 20px 25px;
         }
-        .video-container .bio { /* Usamos la clase .bio para párrafos */
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        /* Estilos de Tarjetas (Se mantienen de V6) */
-        .card-grid-v6 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; 
-        }
-        .soft-card {
-            background-color: var(--color-background);
-            border: 1px solid #EAEAEA; 
-            border-radius: 12px; 
-            padding: 25px;
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .soft-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(156, 31, 55, 0.15);
-        }
-        .soft-card h3 {
+        .video-card-title h3 {
             font-size: 1.5rem;
             font-weight: 800;
             color: var(--color-primary);
-            margin-bottom: 10px;
+            margin: 0;
         }
-        .soft-card p {
-            font-size: 1rem;
-            color: var(--color-secondary);
-            margin-bottom: 25px;
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        .soft-card .cta-btn {
-            width: 100%;
-            border-radius: 8px;
-            border: 2px solid var(--color-primary);
-            color: var(--color-primary);
-            font-weight: 800;
-            background-color: transparent;
+
+        /* --- ESTILO PARA EL VIDEO PRINCIPAL (Se mantiene) --- */
+        .main-video-container {
+            max-width: 1000px; /* Un poco más pequeño que la cuadrícula */
+            margin: 0 auto;
+        }
+
+        /* --- ESTILO PARA EL BOTÓN "VER MÁS" (Se mantiene) --- */
+        .load-more-container {
+            text-align: center;
+            margin-top: -40px; 
+            padding-bottom: 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .load-more-container .cta-btn {
+            font-size: 1.1rem;
+            padding: 12px 30px;
+        }
+
+        /* --- ESTILOS PARA LA SECCIÓN OCULTA (Se mantiene) --- */
+        .hidden-section {
+            background-color: var(--color-dark-surface); /* Fondo gris */
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            transition: max-height 0.8s ease-out, padding 0.8s ease-out, opacity 0.5s ease-out 0.3s;
+        }
+        .hidden-section.visible {
+            max-height: 2500px; /* Aumentado por si acaso (6 videos) */
+            padding-top: 100px;
+            padding-bottom: 100px;
+            opacity: 1;
+        }
+        .hidden-section h2 {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
     </style>
@@ -129,65 +181,110 @@
         <section class="subpage-banner-v6 anim-fade-grow delay-1">
             <h1 class="title">Técnicas de Relajación</h1>
             <p class="tagline">
-                Encuentra un momento de calma. Reproduce el video o explora otras técnicas.
+                Encuentra un momento de calma. Explora estos videos y ejercicios guiados.
             </p>
         </section>
 
         <section class="section-padding">
-            <div class="video-container anim-fade-grow delay-2">
-                <h2 class="section-title">Respiración Guiada (5 Minutos)</h2>
-                <p class="bio">
-                    Sigue esta animación y ejercicio de respiración para reducir rápidamente 
-                    los niveles de estrés y encontrar tu centro.
-                </p>
-                <div class="video-player-wrapper">
-                    <iframe src="https://www.youtube.com/embed/s-jS2FNG4-w" 
-                            title="YouTube video player" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
+            <div class="main-video-container anim-fade-grow delay-2">
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/3opO2_k2uhI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Ejercicio para relajar la mente en 5 minutos</h3>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-padding" style="background-color: var(--color-dark-surface);">
+        <div class="load-more-container anim-fade-grow delay-3">
+            <button class="cta-btn" id="load-more-btn">
+                <span>Ver más Videos</span>
+            </button>
+        </div>
+
+        <section id="hidden-video-section" class="section-padding hidden-section">
             
-            <h2 class="section-title anim-fade-grow delay-3" style="text-align: center; margin-bottom: 50px;">
-                Explora Otros Recursos
-            </h2>
-            
-            <div class="card-grid-v6 anim-fade-grow delay-3">
-                <div class="soft-card">
-                    <h3>Meditación Mindfulness</h3>
-                    <p>
-                        Aprende a enfocar tu atención en el presente y aceptar tus 
-                        pensamientos sin juzgarlos.
-                    </p>
-                    <button class="cta-btn"><span>Leer Artículo</span></button>
+            <h2 class="section-title">Más Recursos de Relajación</h2>
+
+            <div class="video-grid anim-fade-grow delay-4">
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Ejercicio de relajación para ansiedad y nerviosismo</h3>
+                    </div>
                 </div>
 
-                <div class="soft-card">
-                    <h3>Mini Juego Anti-Estrés</h3>
-                    <p>
-                        A veces, solo necesitas una distracción rápida. 
-                        Prueba nuestro juego interactivo.
-                    </p>
-                    <button class="cta-btn"><span>Jugar Ahora</span></button>
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/lyjWOZ5EbXM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Técnicas de relajación</h3>
+                    </div>
                 </div>
 
-                <div class="soft-card">
-                    <h3>Estiramiento Muscular</h3>
-                    <p>
-                        Libera la tensión acumulada en tu cuello, hombros y espalda 
-                        con esta guía rápida de 3 minutos.
-                    </p>
-                    <button class="cta-btn"><span>Ver Guía</span></button>
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/EGO5m_DBzF8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Respiración para reducir la ansiedad</h3>
+                    </div>
                 </div>
+
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/v97VU8yHf6U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Técnica Relajación Progresiva de Jacobson</h3>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/IShkpOm63gg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Meditación para Principiantes *6 Minutos*</h3>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-player-wrapper">
+                        <iframe src="https://www.youtube.com/embed/cooHA9cXbeg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-card-title">
+                        <h3>Rutina de RELAJACIÓN + MOVILIDAD</h3>
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
     
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const hiddenSection = document.getElementById('hidden-video-section');
+
+            loadMoreBtn.addEventListener('click', () => {
+                hiddenSection.classList.toggle('visible');
+
+                const btnText = loadMoreBtn.querySelector('span');
+                if (hiddenSection.classList.contains('visible')) {
+                    btnText.textContent = 'Ocultar Videos';
+                } else {
+                    btnText.textContent = 'Ver más Videos';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
