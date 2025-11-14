@@ -2,7 +2,7 @@
 /* CANVAS DEL JUEGO */
 /* ------------------------------------------------------------------ */
 #firefly-game-canvas {
-    position: fixed; /* CAMBIO CLAVE: Volver a 'fixed' */
+    position: fixed; /* Correcto: se fija a la ventana */
     top: 0;
     left: 0;
     width: 100vw;
@@ -25,15 +25,17 @@
 #firefly-toggle-btn {
     position: fixed; /* Mantiene la posición fija en la pantalla */
     
-    /* --- CAMBIOS PARA CENTRAR EN LA PARTE INFERIOR --- */
-    bottom: 20px;
-    left: 50%; /* Lo muevo al 50% del ancho de la pantalla */
-    transform: translateX(-50%); /* Lo desplazo hacia la izquierda la mitad de su propio ancho para centrarlo */
-    /* El "right: 20px" original se elimina para que no interfiera */
+    /* --- ESTRATEGIA REFORZADA PARA CENTRADO INFERIOR --- */
+    /* 1. Usamos 'left: 0', 'right: 0' para que el botón abarque todo el ancho horizontal */
+    left: 0;
+    right: 0; 
+    /* 2. 'margin: auto' fuerza el centrado horizontal del botón entre left y right */
+    margin: auto; 
+    bottom: 20px; /* 20px desde la parte inferior de la VENTANA */
     
     width: 60px; 
     height: 60px;
-    z-index: 1000; 
+    z-index: 1000; /* Aseguramos que esté por encima de todo */
     border: none;
     padding: 0;
     background: transparent; 
@@ -44,6 +46,11 @@
     align-items: center;
     justify-content: center;
     overflow: hidden; 
+    
+    /* Eliminamos el transform en el estado normal, ya que margin:auto lo centra */
+    transform: none; 
+    /* Eliminamos la sombra que habías quitado */
+    box-shadow: none; 
 }
 
 @media (min-width: 768px) {
@@ -54,13 +61,14 @@
 }
 
 #firefly-toggle-btn:hover {
-    transform: scale(1.1) translateX(-50%); /* Mantiene el centrado mientras escala */
-    /* Se mantiene la eliminación del box-shadow */
+    transform: scale(1.1); /* Solo escalamos */
+    box-shadow: none;
 }
 
 #firefly-toggle-btn.active {
     background-color: transparent;
-    transform: scale(1.05) translateX(-50%); /* Mantiene el centrado mientras escala */
+    transform: scale(1.05); /* Solo escalamos */
+    box-shadow: none; 
 }
 
 /* Estilos de las imágenes dentro del botón */
@@ -77,7 +85,7 @@
 
 /* Tooltip (Texto flotante al hacer hover) */
 #firefly-toggle-btn {
-    position: relative; /* Sigue siendo relativo para el tooltip */
+    position: relative; /* Lo mantenemos, ya que el position:fixed está arriba */
 }
 
 .tooltip-text {
