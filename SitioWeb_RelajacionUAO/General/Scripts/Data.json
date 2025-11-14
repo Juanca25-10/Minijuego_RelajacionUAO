@@ -2,10 +2,10 @@
     "header": {
         "logo": "UAO Stress App",
         "nav_links": [
-            {"text": "Inicio", "url": "#hero-section"},
-            {"text": "El Problema", "url": "#mid-section"},
-            {"text": "Funcionalidades", "url": "#projects-section"}
-        ],
+        {"text": "Inicio", "url": "index.html"}, 
+        {"text": "El Problema", "url": "#mid-section"},
+        {"text": "Funcionalidades", "url": "#projects-section"}
+    ],
         "cta_button": "¡Comienza Ahora!"
     },
     "hero_section": {

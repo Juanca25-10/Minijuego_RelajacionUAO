@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardSubtitle = document.querySelector('.data-card .card-subtitle');
     const cardDescription = document.querySelector('.data-card .card-description');
     const cardStats = document.querySelector('.data-card .card-stats');
-    const cardCta = document.querySelector('.data-card .card-cta'); // Referencia al botón a ocultar
+    const cardCta = document.querySelector('.data-card .card-cta');
     
     // Referencias para la animación de scroll
     const midGrid = document.querySelector('#mid-section .mid-grid');
@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const midSection = document.getElementById('mid-section'); 
 
     // --- 1. DATOS SIMULADOS PARA LA TARJETA FLOTANTE (mockCardData) ---
-    // Incluye las 4 funcionalidades clave del proyecto.
     const mockCardData = {
     'Gestión de Actividades': {
         title: 'Gestor de Tareas',
@@ -52,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             renderHeader(data.header);
-            // Ahora renderHeroSection devuelve todos los activadores
             const activators = renderHeroSection(data.hero_section); 
             renderMidSection(data.mid_section);
             renderProjectsSection(data.projects_section);
@@ -79,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctaBtn.innerHTML = `<span>${headerData.cta_button}</span>`;
     };
 
-    // --- MODIFICADA: Aplica hover a TODOS los elementos ---
+    // --- MODIFICADA: Aplica hover y ¡CLIC! ---
     const renderHeroSection = (heroData) => {
         document.querySelector('.greeting').textContent = heroData.greeting;
         document.querySelector('.title').textContent = heroData.title;
@@ -94,11 +92,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.classList.add('stat-item');
             item.setAttribute('data-info', stat.description);
-            
-            // SE APLICA LA CLASE HOVER A TODOS LOS ELEMENTOS
             item.classList.add('hover-activator');
             activators.push(item);
-            // ------------------------------------------------
+            
+            // --- ¡NUEVO CÓDIGO DE CLICK! ---
+            let url = '#'; // URL por defecto
+            
+            if (stat.description === 'Gestión de Actividades') {
+                url = 'gestion-actividades.html';
+            } else if (stat.description === 'Técnicas de Relajación') {
+                url = 'tecnicas-relajacion.html';
+            }
+            // (Puedes añadir 'else if' para el Mini Juego aquí)
+            
+            if(url !== '#') {
+                item.style.cursor = 'pointer'; // Muestra que es clickeable
+                item.onclick = () => {
+                    window.location.href = url;
+                };
+            }
+            // --- FIN DE CÓDIGO NUEVO ---
 
             item.innerHTML = `
                 <p class="stat-id">${stat.id}</p>
@@ -140,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // --- 4. FUNCIONES DE INTERACCIÓN (Hover y Card Position) ---
-    // --- MODIFICADA: Oculta el botón 'Ver Más' ---
     const connectHoverFunctionality = (activators) => {
         activators.forEach(activator => {
             const infoKey = activator.getAttribute('data-info');
@@ -153,10 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 cardSubtitle.textContent = data.subtitle;
                 cardDescription.textContent = data.description;
                 
-                // OCULTAMOS EL BOTÓN 'VER MÁS'
                 cardCta.textContent = ''; 
                 cardCta.style.display = 'none'; 
-                // ---------------------------------
                 
                 cardStats.innerHTML = `
                     <p>${Object.keys(data.stats)[0]}: <strong>${data.stats[Object.keys(data.stats)[0]]}</strong></p>
@@ -169,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             activator.addEventListener('mouseleave', () => {
                 dataCardContainer.classList.remove('visible');
-                //cardCta.style.display = 'block'; // Aseguramos que se muestre si es usado en otro lado
             });
 
             activator.addEventListener('mousemove', (e) => {
@@ -204,24 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 5. FUNCIÓN GENÉRICA DE ANIMACIÓN BASADA EN SCROLL (PARALLAX) ---
-
     const animateSectionOnScroll = (element, startY) => {
         if (!element) return;
-
         const elementTop = element.getBoundingClientRect().top;
         const viewportHeight = window.innerHeight;
-
         const triggerPoint = viewportHeight * 0.8; 
-
         if (elementTop < triggerPoint) {
             const scrollDistance = triggerPoint - elementTop;
-            
             let translateY = Math.min(startY, scrollDistance * 1.2); 
             let opacity = Math.min(1, scrollDistance / 80); 
-
             element.style.transform = `translateY(${startY - translateY}px)`;
             element.style.opacity = opacity;
-
         } else {
             element.style.transform = `translateY(${startY}px)`;
             element.style.opacity = '0';
@@ -229,26 +231,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // --- 6. FUNCIÓN DE DEGRADADO DINÁMICO (SUTIL Y FLUIDO) ---
-
     const animateBackgroundGradient = () => {
         if (!midSection) return;
-        
         const scrollPos = window.scrollY;
         const startPosition = midSection.offsetTop - (window.innerHeight / 2); 
-        
         let progress = 0;
         if (scrollPos > startPosition) {
-            // Rango de scroll sobre el cual ocurre el cambio (ajustable)
             const scrollRange = 1000; 
             progress = Math.min(1, (scrollPos - startPosition) / scrollRange);
         }
-
-        // El alfa (transparencia) del color Rojo/Maroon (156, 31, 55).
-        // Modifica maxAlpha para cambiar la intensidad (ej: 0.15 - muy sutil, 0.50 - notable).
         const maxAlpha = 0.30; 
         const currentAlpha = progress * maxAlpha;
-
-        // Combina el degradado dinámico (superior) con el degradado radial base (inferior)
         document.body.style.backgroundImage = `
             linear-gradient(to bottom, rgba(156, 31, 55, ${currentAlpha}) 0%, rgba(156, 31, 55, 0) 100%),
             radial-gradient(circle at center, var(--color-background) 0%, var(--color-subtle-background) 100%)
@@ -257,25 +250,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 7. FUNCIÓN ENVOLTORIO PARA LLAMAR TODAS LAS ANIMACIONES ---
     const handleScrollEffects = () => {
-        // Animación de Parallax
         animateSectionOnScroll(midGrid, 50);
         animateSectionOnScroll(projectsSectionTitle, 40);
         animateSectionOnScroll(projectGrid, 20);
-
-        // Animación de Fondo Sutil
         animateBackgroundGradient();
     };
 
-
     // --- 8. INICIALIZACIÓN Y EVENT LISTENERS ---
-
-    // Inicialización del estado CSS para todos los elementos animados
     const elementsToAnimate = [
         { element: midGrid, startY: 50, duration: 0.5 },
         { element: projectsSectionTitle, startY: 40, duration: 0.5 },
         { element: projectGrid, startY: 50, duration: 0.6 } 
     ];
-
     elementsToAnimate.forEach(({ element, startY, duration }) => {
         if (element) {
             element.style.transition = `opacity ${duration}s ease-out, transform ${duration}s ease-out`;
@@ -284,12 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Inicia la carga de datos
-    loadDataAndRender();
+    // Comprobamos si existe "hero-section", que solo está en index.html
+    if (document.getElementById('hero-section')) {
+        loadDataAndRender();
+    }
     
-    // Llama a las funciones de animación una vez al inicio para establecer el estado
     handleScrollEffects();
-
-    // Escuchar el evento de scroll en la ventana para actualizar la animación
     window.addEventListener('scroll', handleScrollEffects);
 });
