@@ -9,22 +9,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* 1. NUEVA ANIMACIÓN (Fundido y Escalado) */
-        @keyframes fadeGrow {
+        /* 1. NUEVA ANIMACIÓN (Wipe-In / Barrido) */
+        @keyframes wipeIn {
             from {
-                opacity: 0;
-                transform: scale(0.97); /* Comienza ligeramente más pequeño */
+                /* Se revela de izquierda a derecha */
+                clip-path: inset(0 100% 0 0);
             }
             to {
-                opacity: 1;
-                transform: scale(1); /* Termina en su tamaño normal */
+                clip-path: inset(0 0 0 0);
             }
         }
 
-        /* Clase de utilidad para aplicar la animación */
-        .anim-fade-grow {
-            opacity: 0; /* Inicia invisible */
-            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        .anim-wipe-in {
+            /* clip-path necesita que sea visible */
+            opacity: 1; 
+            /* Inicia oculto (100% desde la derecha) */
+            clip-path: inset(0 100% 0 0);
+            /* Aplica la animación */
+            animation: wipeIn 0.8s cubic-bezier(0.61, 1, 0.88, 1) forwards;
         }
 
         /* Clases de retraso (stagger) */
@@ -33,52 +35,119 @@
         .delay-3 { animation-delay: 0.5s; }
         .delay-4 { animation-delay: 0.7s; }
 
-
-        /* 2. NUEVO LAYOUT (Banner y Grid de Contenido) */
+        /* 2. NUEVO LAYOUT (Banner Rojo y Bordes Duros) */
         
-        /* Estilo para el banner de título */
-        .subpage-banner {
+        /* Estilo para el banner de título (Fondo Rojo) */
+        .subpage-banner-v4 {
+            /* Usa tu color primario como fondo */
+            background-color: var(--color-primary); 
+            color: var(--color-light-text); /* Texto blanco */
+            padding: 70px 5%;
             text-align: center;
-            /* Usamos tu color gris de fondo */
-            background-color: var(--color-dark-surface);
-            padding: 80px 5%; /* Más padding vertical */
+            /* Borde inferior bien marcado */
+            border-bottom: 3px solid var(--color-secondary); 
+        }
+        /* Sobreescribir color de texto para el banner */
+        .subpage-banner-v4 .title,
+        .subpage-banner-v4 .tagline {
+            color: var(--color-light-text);
+        }
+        .subpage-banner-v4 .title {
+            font-size: 3rem;
+        }
+
+        /* Estilo para el grid de 2 columnas (Con borde marcado) */
+        .content-grid-v4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* El borde marcado que pediste */
+            border: 3px solid var(--color-secondary);
+            padding: 40px;
+            /* Fondo blanco para contrastar con el fondo general */
+            background-color: var(--color-background); 
+        }
+        .content-grid-v4 img {
+            width: 100%;
+            display: block;
+            border: 2px solid var(--color-secondary); /* Borde en la imagen */
+            object-fit: cover;
+            height: 400px;
+        }
+        .content-grid-v4 p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* 3. NUEVAS TARJETAS (SHARP CARDS) */
+        /* Un contenedor para las nuevas tarjetas */
+        .card-grid-v4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px; /* Más espacio */
         }
         
-        /* Estilo para el grid de 2 columnas */
-        .content-grid-2-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-            gap: 50px;
-            align-items: center;
-            max-width: 1200px; /* Ancho máximo del contenido */
-            margin: 0 auto;
+        /* Esta es la nueva tarjeta. Anula .project-item */
+        .sharp-card {
+            background-color: var(--color-background);
+            /* Borde negro marcado */
+            border: 3px solid var(--color-secondary); 
+            border-radius: 0; /* Sin bordes redondeados */
+            padding: 25px;
+            text-align: left;
+            /* SOMBRA DURA: Este es el efecto clave */
+            box-shadow: 8px 8px 0 var(--color-primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .content-grid-2-col img {
+        /* Animación de hover para la sombra dura */
+        .sharp-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 var(--color-primary);
+        }
+        
+        .sharp-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-primary); /* Título rojo */
+            margin-bottom: 10px;
+        }
+        .sharp-card p {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            margin-bottom: 25px;
+        }
+        
+        /* Botón que coincide con la estética 'sharp' */
+        .sharp-card .cta-btn {
             width: 100%;
-            border-radius: 12px; /* Bordes redondeados */
-            object-fit: cover;
-            height: 400px; /* Altura fija para la imagen */
-            border: 1px solid #EAEAEA;
+            border-radius: 0; /* Botón cuadrado */
+            border: 2px solid var(--color-secondary);
+            color: var(--color-secondary);
+            font-weight: 800;
+            background-color: transparent;
+        }
+        .sharp-card .cta-btn:hover {
+            background-color: var(--color-secondary);
+            color: var(--color-light-text);
+            border-color: var(--color-secondary);
         }
 
-        /* Media query para hacer el grid responsivo en móviles */
+        /* Media query para los grids */
         @media (max-width: 768px) {
-            .content-grid-2-col {
-                grid-template-columns: 1fr; /* Una sola columna en móvil */
-            }
-            .content-grid-2-col img {
-                height: auto; /* Altura automática en móvil */
+            .content-grid-v4 {
+                grid-template-columns: 1fr;
             }
         }
     </style>
     </head>
 <body>
     
-    <div id="data-card-container" class="hidden">
-        <div class="data-card">
-            </div>
-    </div>
+    <div id="data-card-container" class="hidden"> </div>
 
     <header id="main-header">
         <div class="logo">UAO Stress App</div>
@@ -92,66 +161,71 @@
 
     <main>
 
-        <section class="subpage-banner">
-            <h1 class="title anim-fade-grow delay-1" style="font-size: 3.5rem; margin-bottom: 15px;">
-                Título Aquí
-            </h1>
-            <p class="tagline anim-fade-grow delay-2" style="max-width: 600px; margin: 0 auto;">
-                Ingresar texto aca: ejemplo ejemploteeee
+        <section class="subpage-banner-v4 anim-wipe-in delay-1">
+            <h1 class="title">Título Aquí</h1>
+            <p class="tagline">
+                TEXTO AQUI CIFUENTES PUENTES PUENTOTES
             </p>
         </section>
 
         <section id="mid-section" class="section-padding">
-            <div class="content-grid-2-col anim-fade-grow delay-3">
+            <div class="content-grid-v4 anim-wipe-in delay-2">
                 
                 <div>
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
-                </div>
-
-                <div>
                     <h2 class="section-title">Subtítulo Aquí</h2>
-                    <p class="bio" style="font-size: 1.1rem; margin-bottom: 20px;">
-                        INFORMACION AQUI CIFUENTES PUENTES PUENTESOTES
+                    <p>
+                        Información aquí camilo milo milon
                     </p>
-                    <p class="bio" style="font-size: 1.1rem;">
-                        TEXTO ACA CAMILO MILON MILOS
+                    <p>
+                        Ingresar texto acá Garzon garzoniano Y obicitooo
                     </p>
+                </div>
+                
+                <div>
+                    <img src="https://via.placeholder.com/600x400/FFFFFF/1E1E1E?text=Imagen+Aquí" alt="Placeholder">
                 </div>
 
             </div>
         </section>
 
-        <section id="projects-section" class="section-padding" style="background-color: var(--color-dark-surface);">
-            <div class="anim-fade-grow delay-4">
-                <h2 class="section-title" style="text-align: center; margin-bottom: 50px;">
-                    Información en Tarjetas
-                </h2>
-                
-                <div class="project-grid">
-                    <div class="project-item">
-                        <img src="https://via.placeholder.com/400x200/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
-                        <div class="project-info">
-                            <h3>Título de Tarjeta 1</h3>
-                            <button class="cta-btn buy-btn" style="margin-top: 15px;"><span>Ver Más</span></button>
-                        </div>
-                    </div>
+        <section id="projects-section" class="section-padding" style="background-color: var(--color-subtle-background);">
+            
+            <h2 class="section-title anim-wipe-in delay-3" style="text-align: center; margin-bottom: 50px;">
+                Información en Tarjetas
+            </h2>
+            
+            <div class="card-grid-v4 anim-wipe-in delay-4">
 
-                    <div class="project-item">
-                        <img src="https://via.placeholder.com/400x200/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
-                        <div class="project-info">
-                            <h3>Título de Tarjeta 2</h3>
-                            <button class="cta-btn buy-btn" style="margin-top: 15px;"><span>Ver Más</span></button>
-                        </div>
-                    </div>
-
-                    <div class="project-item">
-                        <img src="https://via.placeholder.com/400x200/F5F5F5/9C1F37?text=Imagen+Aquí" alt="Placeholder">
-                        <div class="project-info">
-                            <h3>Título de Tarjeta 3</h3>
-                            <button class="cta-btn buy-btn" style="margin-top: 15px;"><span>Ver Más</span></button>
-                        </div>
-                    </div>
+                <div class="sharp-card">
+                    <h3>Título de Tarjeta 1</h3>
+                    <p>
+                        Ingresar texto acá para la descripción de esta tarjeta.
+                    </p>
+                    <button class="cta-btn">
+                        <span>Ver Más</span>
+                    </button>
                 </div>
+
+                <div class="sharp-card">
+                    <h3>Título de Tarjeta 2</h3>
+                    <p>
+                        Ingresar texto acá para la descripción de esta tarjeta.
+                    </p>
+                    <button class="cta-btn">
+                        <span>Ver Más</span>
+                    </button>
+                </div>
+
+                <div class="sharp-card">
+                    <h3>Título de Tarjeta 3</h3>
+                    <p>
+                        Ingresar texto acá para la descripción de esta tarjeta.
+                    </p>
+                    <button class="cta-btn">
+                        <span>Ver Más</span>
+                    </button>
+                </div>
+
             </div>
         </section>
 
