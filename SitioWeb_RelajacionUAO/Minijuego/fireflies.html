@@ -4,21 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma de Gestión Académica</title>
-    <!-- Carga de Tailwind CSS (para el diseño de la página) -->
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Estilos del minijuego -->
     <link rel="stylesheet" href="./fireflies.css">
+
     <style>
-        /* Estilos generales para que la página sea larga y se pueda hacer scroll */
-        body { font-family: 'Inter', sans-serif; min-height: 200vh; background-color: #f7f7f7; }
-        .crosshair-cursor * { cursor: crosshair !important; }
+        /* Página larga para probar scroll */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            min-height: 200vh; 
+            background-color: #f7f7f7; 
+        }
     </style>
 </head>
 <body class="p-8">
 
-    <!-- CANVAS DEL JUEGO (Se superpone a todo) -->
-    <canvas id="firefly-game-canvas"></canvas>
+    <!-- ======================
+         CONTADOR DEL JUEGO
+    ======================= -->
+    <div id="scoreDisplay">0</div>
 
-    <!-- CONTENIDO PRINCIPAL DE LA PÁGINA -->
+    <!-- ======================
+         CANVAS DEL JUEGO
+    ======================= -->
+    <canvas id="firefly-game-canvas"></canvas>
+    <canvas id="net3d-canvas"></canvas>
+
+
+    <!-- ======================
+         CONTENIDO PRINCIPAL
+    ======================= -->
     <header class="text-center mb-10 bg-indigo-600 p-6 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold text-white">Plataforma de Gestión Académica</h1>
         <p class="text-white/80">Simulando el contenido principal de la web</p>
@@ -26,11 +44,11 @@
 
     <main class="max-w-4xl mx-auto space-y-12">
         
-        <!-- Tarjeta de Tareas Pendientes -->
+        <!-- Tarjeta de tareas -->
         <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-red-500">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Tareas Pendientes (Ejemplo)</h2>
             <p class="mb-4 text-gray-600">
-                El minijuego de luciérnagas se encuentra disponible en el botón flotante inferior. Los elementos del juego (luciérnagas y red) están representados por figuras básicas (círculos) por ahora.
+                El minijuego de luciérnagas se encuentra disponible en el botón flotante inferior.
             </p>
             <div class="space-y-3">
                 <div class="bg-red-100 p-3 rounded-lg border-l-4 border-red-400">Estudiar cálculo (Prioridad Alta)</div>
@@ -39,42 +57,95 @@
             </div>
         </div>
 
-        <!-- Sección Adicional 1: Avance del Proyecto -->
+        <!-- Sección 1 -->
         <div class="bg-white p-6 rounded-xl shadow-lg">
             <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Sección Adicional 1: Avance del Proyecto</h2>
-            <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p class="text-gray-600">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+            </p>
         </div>
-        
-        <!-- Sección Adicional 2: Detalles y Documentación -->
+
+        <!-- Sección 2 -->
         <div class="bg-white p-6 rounded-xl shadow-lg">
             <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Sección Adicional 2: Detalles y Documentación</h2>
-            <p class="text-gray-600">Proin in ligula nec felis egestas tempor. Nulla facilisi. Sed malesuada leo id arcu euismod, non facilisis quam scelerisque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam erat volutpat. Nam euismod libero id libero luctus, ac iaculis sapien commodo. Fusce non erat id mauris malesuada bibendum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            <p class="text-gray-600">
+                Proin in ligula nec felis egestas tempor...
+            </p>
             <ul class="list-disc list-inside mt-4 text-gray-600 space-y-1">
                 <li>Revisión de la documentación (30/06)</li>
                 <li>Pruebas de integración (05/07)</li>
                 <li>Despliegue inicial (10/07)</li>
             </ul>
         </div>
-        
-        <!-- Sección Adicional 3: Contacto -->
+
+        <!-- Sección 3 -->
         <div class="bg-white p-6 rounded-xl shadow-lg">
             <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Sección Adicional 3: Contacto</h2>
-            <p class="text-gray-600">Asegúrate de que el minijuego de luciérnagas siga funcionando correctamente cuando navegues hasta esta parte inferior de la página. La propiedad `position: fixed` tanto en el canvas como en el botón asegura que permanezcan en su lugar en la ventana del navegador.</p>
+            <p class="text-gray-600">Asegúrate de que el minijuego siga funcionando al bajar.</p>
             <div class="mt-8 h-[50vh] flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg">
-                <p class="text-gray-500">Pie de página / Área de gran altura para garantizar scroll.</p>
+                <p class="text-gray-500">Pie de página / Área de altura grande.</p>
             </div>
         </div>
-        
+
     </main>
 
-    <!-- BOTÓN FLOTANTE (Fixed) -->
+
+    <!-- ======================
+         BOTÓN DEL MINIJUEGO
+    ======================= -->
     <button id="firefly-toggle-btn" title="Iniciar/Detener el Minijuego">
-        <img id="btn-icon-start" src="./Assets/Imagenes/Button_NoInteractua.png" alt="Icono de Inicio" class="w-full h-full object-contain">
-        <img id="btn-icon-close" src="./Assets/Imagenes/X_Salir.png" alt="Icono de Cierre" class="w-full h-full object-contain hidden">
+        <img id="btn-icon-start" src="./Assets/Imagenes/Button_NoInteractua.png" class="w-full h-full object-contain">
+        <img id="btn-icon-hover" src="./Assets/Imagenes/Button_SiInteractua.png" class="w-full h-full object-contain hidden">
+        <img id="btn-icon-close" src="./Assets/Imagenes/X_Salir.png" class="w-full h-full object-contain hidden">
         <span class="tooltip-text" id="tooltip-text">Iniciar Descanso Activo</span>
     </button>
+
+
+    <!-- ======================
+         BARRA CTA
+    ======================= -->
+    <div id="cta-bar" class="fixed bottom-0 left-0 w-full z-[1001] cursor-pointer shadow-xl transition-transform duration-500 transform translate-y-full">
+        <div class="flex items-center justify-center py-3 px-4 text-white text-lg font-semibold" 
+             style="background: linear-gradient(90deg, #ff9900, #ffcc33);">
+            Tomate un tiempo y deja la noche caer
+        </div>
+    </div>
+
+
+
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+  import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js";
+  import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js";
+
+  // Example usage
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+  camera.position.z = 5;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Animate cube with GSAP
+  gsap.to(cube.rotation, { x: Math.PI * 2, duration: 5, repeat: -1, ease: "linear" });
+</script>
+
+<script type="module" src="./net3D.js"></script>
+<script type="module" src="./fireflies.js"></script>
     
-    <!-- Carga del script del juego -->
-    <script type="module" src="./fireflies.js"></script>
+
 </body>
 </html>
