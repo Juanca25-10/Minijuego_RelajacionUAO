@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="./fireflies.css">
 
     <style>
-        /* Página larga para probar scroll */
         body { 
             font-family: 'Inter', sans-serif; 
             min-height: 200vh; 
@@ -28,11 +27,9 @@
     <div id="scoreDisplay">0</div>
 
     <!-- ======================
-         CANVAS DEL JUEGO
+         CANVAS DEL MINIJUEGO
     ======================= -->
     <canvas id="firefly-game-canvas"></canvas>
-    <canvas id="net3d-canvas"></canvas>
-
 
     <!-- ======================
          CONTENIDO PRINCIPAL
@@ -89,9 +86,8 @@
 
     </main>
 
-
     <!-- ======================
-         BOTÓN DEL MINIJUEGO
+         BOTÓN FLOTANTE DEL MINIJUEGO
     ======================= -->
     <button id="firefly-toggle-btn" title="Iniciar/Detener el Minijuego">
         <img id="btn-icon-start" src="./Assets/Imagenes/Button_NoInteractua.png" class="w-full h-full object-contain">
@@ -99,7 +95,6 @@
         <img id="btn-icon-close" src="./Assets/Imagenes/X_Salir.png" class="w-full h-full object-contain hidden">
         <span class="tooltip-text" id="tooltip-text">Iniciar Descanso Activo</span>
     </button>
-
 
     <!-- ======================
          BARRA CTA
@@ -111,41 +106,10 @@
         </div>
     </div>
 
-
-
-<script type="module">
-  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
-  import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js";
-  import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js";
-
-  // Example usage
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-
-  camera.position.z = 5;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Animate cube with GSAP
-  gsap.to(cube.rotation, { x: Math.PI * 2, duration: 5, repeat: -1, ease: "linear" });
-</script>
-
-<script type="module" src="./net3D.js"></script>
-<script type="module" src="./fireflies.js"></script>
-    
+    <!-- ======================
+         SCRIPTS DEL MINIJUEGO
+    ======================= -->
+    <script type="module" src="./fireflies.js"></script>
 
 </body>
 </html>
