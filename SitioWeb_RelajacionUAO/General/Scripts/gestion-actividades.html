@@ -11,12 +11,19 @@
     <style>
 
         /* --- ESTILOS PARA LA NUEVA SECCIÓN DE ACTIVIDADES UAO --- */
-        .uni-activities-grid-v6 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+       .uni-activities-grid-v6 {
+            display: flex; /* CAMBIO CLAVE: Usa flexbox para flujo horizontal */
+            flex-wrap: nowrap; /* FUERZA A NO ROMPER LA LÍNEA */
+            gap: 30px; 
+            
+            /* Eliminamos límites para que crezca horizontalmente */
+            max-width: none; 
+            margin: 0;
+            padding: 0;
+            
+            /* Asegura que las tarjetas estén alineadas en el centro verticalmente (opcional) */
+            align-items: stretch;
+            height: 100%;
         }
 
         .uni-activity-card {
@@ -462,51 +469,36 @@
         }
 
         /* --- ESTILOS PARA SCROLL HORIZONTAL DE ACTIVIDADES UAO --- */
+        /* --- ESTILOS PARA SCROLL HORIZONTAL DE ACTIVIDADES UAO --- */
         .horizontal-scroll-wrapper {
-            /* Oculta lo que se desborda y permite el scroll horizontal */
-            overflow-x: auto; 
-            overflow-y: hidden;
-            
-            /* Asegura que el contenedor de las tarjetas no se rompa */
-            white-space: nowrap; 
-            padding-bottom: 20px; /* Espacio para que la barra de scroll no toque las tarjetas */
+    overflow-x: auto; /* ¡CLAVE! Habilita el scroll horizontal */
+    overflow-y: hidden; 
+    scroll-snap-type: x mandatory; /* Hace que el scroll se "ancle" en las tarjetas */
+    padding-bottom: 20px; /* Para que la barra de scroll no se pegue al borde */
+}
+        .horizontal-scroll-wrapper::-webkit-scrollbar {
+            display: none;
         }
         
         /* Modificamos el contenedor interno para que sus hijos estén en línea */
         .uni-activities-grid-v6 {
-            /* Desactiva el Grid Layout normal para forzar el flujo horizontal */
-            display: flex; 
-            
-            /* Permite que el contenido siga en una sola línea */
-            flex-wrap: nowrap; 
-            
-            /* Mantiene la separación entre las tarjetas */
-            gap: 30px; 
-            
-            /* Elimina el límite de ancho para que crezca horizontalmente */
-            max-width: none; 
-            margin: 0;
-            padding: 0;
-        }
+    display: flex; /* ¡CLAVE! Cambia de Grid a Flexbox */
+    gap: 30px;
+    width: max-content; /* Asegura que el contenedor sea tan ancho como el total de las tarjetas */
+    padding: 0 50px; /* Espacio en los costados */
+}
 
         /* Ajustamos el tamaño de la tarjeta para que tenga un ancho fijo y se deslice */
-        .uni-activity-card {
-            /* Anchura fija para que la tarjeta no se comprima */
-            flex: 0 0 320px; 
-            width: 320px;
-        }
+       /* Ajustamos el tamaño de la tarjeta para que tenga un ancho fijo y se deslice */
+       .uni-activity-card {
+    flex: 0 0 320px; /* Fija el ancho de cada tarjeta (ejemplo: 320px) */
+    scroll-snap-align: center; /* Centra la tarjeta al detener el scroll */
+    /* ... otros estilos de la tarjeta (box-shadow, border-radius, etc.) */
+}
 
         /* Opcional: Estilo de la barra de scroll (solo para navegadores WebKit como Chrome/Safari) */
-        .horizontal-scroll-wrapper::-webkit-scrollbar {
-            height: 8px;
-        }
-        .horizontal-scroll-wrapper::-webkit-scrollbar-thumb {
-            background-color: var(--color-primary); /* Rojo UAO */
-            border-radius: 10px;
-        }
-        .horizontal-scroll-wrapper::-webkit-scrollbar-track {
-            background-color: var(--color-dark-surface);
-        }
+        
+       
 
         /* CSS para Tareas de Ejemplo (Ocultar) */
         .example-task { display: none; }
