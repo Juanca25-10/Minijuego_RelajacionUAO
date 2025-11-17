@@ -1,94 +1,31 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Gestión Académica</title>
+    <title>UAO Stress App - Minijuego Integrado</title> 
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Estilos del minijuego -->
     <link rel="stylesheet" href="./fireflies.css">
-
+    
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
             min-height: 200vh; 
             background-color: #f7f7f7; 
+            padding: 0 !important; /* Eliminamos el padding 'p-8' del body si es un sitio web completo */
         }
     </style>
 </head>
-<body class="p-8">
+<body class=""> 
 
-    <!-- ======================
-         CONTADOR DEL JUEGO
-    ======================= -->
     <div id="scoreDisplay">0</div>
-
-    <!-- ======================
-         CANVAS DEL MINIJUEGO
-    ======================= -->
     <canvas id="firefly-game-canvas"></canvas>
 
-    <!-- ======================
-         CONTENIDO PRINCIPAL
-    ======================= -->
-    <header class="text-center mb-10 bg-indigo-600 p-6 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-white">Plataforma de Gestión Académica</h1>
-        <p class="text-white/80">Simulando el contenido principal de la web</p>
-    </header>
-
-    <main class="max-w-4xl mx-auto space-y-12">
+    <main class="max-w-4xl mx-auto space-y-12 p-8">
         
-        <!-- Tarjeta de tareas -->
-        <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-red-500">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Tareas Pendientes (Ejemplo)</h2>
-            <p class="mb-4 text-gray-600">
-                El minijuego de luciérnagas se encuentra disponible en el botón flotante inferior.
-            </p>
-            <div class="space-y-3">
-                <div class="bg-red-100 p-3 rounded-lg border-l-4 border-red-400">Estudiar cálculo (Prioridad Alta)</div>
-                <div class="bg-yellow-100 p-3 rounded-lg border-l-4 border-yellow-400">Investigar tema de tesis (Prioridad Media)</div>
-                <div class="bg-green-100 p-3 rounded-lg border-l-4 border-green-400">Revisar horario semanal (Prioridad Baja)</div>
-            </div>
-        </div>
+        </main>
 
-        <!-- Sección 1 -->
-        <div class="bg-white p-6 rounded-xl shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Sección Adicional 1: Avance del Proyecto</h2>
-            <p class="text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-        </div>
-
-        <!-- Sección 2 -->
-        <div class="bg-white p-6 rounded-xl shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Sección Adicional 2: Detalles y Documentación</h2>
-            <p class="text-gray-600">
-                Proin in ligula nec felis egestas tempor...
-            </p>
-            <ul class="list-disc list-inside mt-4 text-gray-600 space-y-1">
-                <li>Revisión de la documentación (30/06)</li>
-                <li>Pruebas de integración (05/07)</li>
-                <li>Despliegue inicial (10/07)</li>
-            </ul>
-        </div>
-
-        <!-- Sección 3 -->
-        <div class="bg-white p-6 rounded-xl shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Sección Adicional 3: Contacto</h2>
-            <p class="text-gray-600">Asegúrate de que el minijuego siga funcionando al bajar.</p>
-            <div class="mt-8 h-[50vh] flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg">
-                <p class="text-gray-500">Pie de página / Área de altura grande.</p>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- ======================
-         BOTÓN FLOTANTE DEL MINIJUEGO
-    ======================= -->
     <button id="firefly-toggle-btn" title="Iniciar/Detener el Minijuego">
         <img id="btn-icon-start" src="./Assets/Imagenes/Button_NoInteractua.png" class="w-full h-full object-contain">
         <img id="btn-icon-hover" src="./Assets/Imagenes/Button_SiInteractua.png" class="w-full h-full object-contain hidden">
@@ -96,9 +33,6 @@
         <span class="tooltip-text" id="tooltip-text">Iniciar Descanso Activo</span>
     </button>
 
-    <!-- ======================
-         BARRA CTA
-    ======================= -->
     <div id="cta-bar" class="fixed bottom-0 left-0 w-full z-[1001] cursor-pointer shadow-xl transition-transform duration-500 transform translate-y-full">
         <div class="flex items-center justify-center py-3 px-4 text-white text-lg font-semibold" 
              style="background: linear-gradient(90deg, #ff9900, #ffcc33);">
@@ -106,15 +40,11 @@
         </div>
     </div>
 
-    <!-- ======================
-         SCRIPTS DEL MINIJUEGO
-    ======================= -->
     <script type="module" src="./fireflies.js"></script>
 
-    <!-- ===== AUDIO PRE-CARGADO ===== -->
     <audio id="bg-music" src="./Assets/Audios/AudioFondoJuego.mp3" preload="auto" loop></audio>
     <audio id="net-sound" src="./Assets/Audios/old-men-arm-move-97741.mp3" preload="auto"></audio>
-<audio id="capture-sound" src="./Assets/Audios/notification-bell-sound-376888.mp3" preload="auto"></audio>
+    <audio id="capture-sound" src="./Assets/Audios/notification-bell-sound-376888.mp3" preload="auto"></audio>
 
 </body>
 <div id="forest-dark-mode"></div>
