@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Actividades - UAO Stress App</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Animación suave (Se mantiene) */
+        @keyframes fadeGrow {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .anim-fade-grow {
+            opacity: 0;
+            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+
+        /* Estilos del Banner (Se mantiene) */
+        .subpage-banner-v6 {
+            background-color: var(--color-dark-surface);
+            color: var(--color-secondary);
+            padding: 80px 5%;
+            text-align: center;
+            border-radius: 12px;
+            margin: 0 1%; 
+        }
+        .subpage-banner-v6 .title { font-size: 3rem; }
+
+        /* --- NUEVO CSS PARA GESTOR DE TAREAS --- */
+        /* Contenedor principal de la app de tareas */
+        .todo-app-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--color-background);
+            border: 1px solid #EAEAEA; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
+            padding: 30px;
+        }
+        
+        /* Barra de progreso */
+        .progress-bar-container {
+            margin-bottom: 25px;
+        }
+        .progress-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: var(--color-dark-surface);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            width: 40%; /* Ejemplo de progreso */
+            height: 100%;
+            background-color: var(--color-primary);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Formulario para añadir tareas */
+        .add-task-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .add-task-form input[type="text"] {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #EAEAEA;
+            border-radius: 8px;
+            font-family: var(--font-family-main);
+            font-size: 1rem;
+        }
+        .add-task-form .cta-btn {
+            white-space: nowrap; /* Evita que el texto del botón se rompa */
+        }
+        
+        /* Lista de Tareas */
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px solid #EAEAEA;
+            transition: background-color 0.3s ease;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .task-item:hover {
+            background-color: var(--color-subtle-background);
+        }
+        .task-item label {
+            flex-grow: 1;
+            margin-left: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        /* Checkbox personalizado */
+        .task-item input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-primary);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+        .task-item input[type="checkbox"]:checked {
+            background-color: var(--color-primary);
+        }
+        .task-item input[type="checkbox"]:checked::before {
+            content: '✔';
+            color: white;
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            font-size: 14px;
+        }
+        .task-item.completed label {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="data-card-container" class="hidden"></div>
+
+    <header id="main-header">
+        <div class="logo">UAO Stress App</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" style="font-weight: 600;"><span>&larr; Regresar</span></a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn"><span>Ingresar texto de boton</span></button>
+    </header>
+
+    <main>
+        <section class="subpage-banner-v6 anim-fade-grow delay-1">
+            <h1 class="title">Gestión de Actividades</h1>
+            <p class="tagline">
+                Organiza tus tareas, gestiona tu tiempo y reduce el estrés académico.
+            </p>
+        </section>
+
+        <section class="section-padding">
+            
+            <div class="todo-app-container anim-fade-grow delay-2">
+                <h2 class="section-title" style="margin-bottom: 20px;">Mi Progreso</h2>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar-label">
+                        <span>Tareas Completadas</span>
+                        <span>2 / 5</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                </div>
+
+                <form class="add-task-form">
+                    <input type="text" placeholder="Ej: Entregar proyecto de ASM...">
+                    <button type="submit" class="cta-btn"><span>Añadir Tarea</span></button>
+                </form>
+
+                <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;">Tareas Pendientes</h2>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <input type="checkbox" id="task1">
+                        <label for="task1">Entregar proyecto de ASM</label>
+                    </li>
+                    <li class="task-item">
+                        <input type="checkbox" id="task2">
+                        <label for="task2">Estudiar para parcial de Cálculo</label>
+                    </li>
+                    <li class="task-item">
+                        <input type="checkbox" id="task3">
+                        <label for="task3">Hacer taller de física</label>
+                    </li>
+                </ul>
+
+                <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;">Tareas Completadas</h2>
+                <ul class="task-list">
+                    <li class="task-item completed">
+                        <input type="checkbox" id="task4" checked>
+                        <label for="task4">Ver primer módulo de inglés</label>
+                    </li>
+                    <li class="task-item completed">
+                        <input type="checkbox" id="task5" checked>
+                        <label for="task5">Responder correo a profesor</label>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>

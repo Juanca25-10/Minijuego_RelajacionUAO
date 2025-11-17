@@ -1,0 +1,151 @@
+/* ============================================================
+   CANVAS DEL MINIJUEGO
+   ============================================================*/
+
+#firefly-game-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    pointer-events: none;
+    background: transparent;
+}
+
+#firefly-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 998;
+    background: transparent; /* sin negro de fondo */
+    display: none;           /* oculto por defecto */
+    object-fit: contain;     /* mantiene proporción */
+}
+
+/* Cuando el juego está activo el canvas sí recibe eventos */
+.crosshair-cursor #firefly-game-canvas {
+    pointer-events: auto;
+}
+
+/* ============================================================
+   CONTADOR (solo número grande blanco con sombra)
+   ============================================================*/
+
+#scoreDisplay {
+    position: fixed;
+    top: 20px;    /* separación del borde superior */
+    right: 25px;  /* separación del borde derecho */
+    font-size: 52px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 10px black;
+    z-index: 2000;
+    display: none; /* Se muestra solo durante el juego */
+    background: none !important; /* Sin fondo */
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* ============================================================
+   BOTÓN FLOTANTE DEL MINIJUEGO
+   ============================================================*/
+
+#firefly-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85px;
+    height: 85px;
+    z-index: 1000;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#firefly-toggle-btn:hover {
+    transform: translateX(-50%) scale(1.15);
+}
+
+/* Íconos del botón */
+#firefly-toggle-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Ocultar elementos */
+.hidden {
+    display: none !important;
+}
+
+/* ============================================================
+   TOOLTIP DEL BOTÓN
+   ============================================================*/
+
+.tooltip-text {
+    position: absolute;
+    bottom: 110%;
+    right: 50%;
+    transform: translateX(50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-size: 14px;
+    z-index: 2000;
+}
+
+#firefly-toggle-btn:hover .tooltip-text {
+    opacity: 1;
+}
+
+/* ============================================================
+   CTA BAR (animación de ocultar/mostrar)
+   ============================================================*/
+
+.cta-hidden {
+    transform: translateY(100%) !important;
+}
+
+/* ============================================================
+   CURSOR EN MODO MINIJUEGO
+   ============================================================*/
+
+.crosshair-cursor * {
+    cursor: crosshair !important;
+}
+
+/* ============================================================
+   FONDO OSCURO AL CAMBIAR AL MINIJUEGO
+   ============================================================*/
+#forest-dark-mode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 30%, rgba(20, 20, 40, 0.4), rgba(0, 0, 0, 0.95));
+    backdrop-filter: blur(2px);
+    z-index: 900; /* debajo del canvas pero encima del sitio */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+#forest-dark-mode.active {
+    opacity: 1;
+}

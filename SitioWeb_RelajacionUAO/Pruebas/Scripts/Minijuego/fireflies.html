@@ -1,0 +1,51 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAO Stress App - Minijuego Integrado</title> 
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="./fireflies.css">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            min-height: 200vh; 
+            background-color: #f7f7f7; 
+            padding: 0 !important; /* Eliminamos el padding 'p-8' del body si es un sitio web completo */
+        }
+    </style>
+</head>
+<body class=""> 
+
+    <div id="scoreDisplay">0</div>
+    <canvas id="firefly-game-canvas"></canvas>
+
+    <main class="max-w-4xl mx-auto space-y-12 p-8">
+        
+        </main>
+
+    <button id="firefly-toggle-btn" title="Iniciar/Detener el Minijuego">
+        <img id="btn-icon-start" src="./Assets/Imagenes/Button_NoInteractua.png" class="w-full h-full object-contain">
+        <img id="btn-icon-hover" src="./Assets/Imagenes/Button_SiInteractua.png" class="w-full h-full object-contain hidden">
+        <img id="btn-icon-close" src="./Assets/Imagenes/X_Salir.png" class="w-full h-full object-contain hidden">
+        <span class="tooltip-text" id="tooltip-text">Iniciar Descanso Activo</span>
+    </button>
+
+    <div id="cta-bar" class="fixed bottom-0 left-0 w-full z-[1001] cursor-pointer shadow-xl transition-transform duration-500 transform translate-y-full">
+        <div class="flex items-center justify-center py-3 px-4 text-white text-lg font-semibold" 
+             style="background: linear-gradient(90deg, #ff9900, #ffcc33);">
+            Tomate un tiempo y deja la noche caer
+        </div>
+    </div>
+
+    <script type="module" src="./fireflies.js"></script>
+
+    <audio id="bg-music" src="./Assets/Audios/AudioFondoJuego.mp3" preload="auto" loop></audio>
+    <audio id="net-sound" src="./Assets/Audios/old-men-arm-move-97741.mp3" preload="auto"></audio>
+    <audio id="capture-sound" src="./Assets/Audios/notification-bell-sound-376888.mp3" preload="auto"></audio>
+
+</body>
+<div id="forest-dark-mode"></div>
+</html>

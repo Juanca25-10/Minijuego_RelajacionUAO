@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título de Subpágina - UAO Stress App</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. ANIMACIÓN (Fundido y Escalado Suave) */
+        @keyframes fadeGrow {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .anim-fade-grow {
+            opacity: 0;
+            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+        .delay-4 { animation-delay: 0.7s; }
+
+        /* 2. LAYOUT (Banner Suave y Bordes Suaves) */
+        
+        /* Banner de título (Gris Claro) */
+        .subpage-banner-v6 {
+            background-color: var(--color-dark-surface); /* Fondo gris suave */
+            color: var(--color-secondary);
+            padding: 80px 5%;
+            text-align: center;
+            /* *** CAMBIO ***: Más redondeado */
+            border-radius: 12px;
+            margin: 0 1%; 
+        }
+        .subpage-banner-v6 .title { font-size: 3rem; }
+
+        /* Grid de contenido (Borde y Sombra Suaves) */
+        .content-grid-v6 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* *** CAMBIO ***: Borde suave (no negro) */
+            border: 1px solid #EAEAEA; 
+            padding: 40px;
+            background-color: var(--color-background); 
+            /* *** CAMBIO ***: Más redondeado */
+            border-radius: 12px;
+            /* *** CAMBIO ***: Sombra suave (no dura) */
+            box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); /* Sombra roja suave */
+        }
+        .content-grid-v6 img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            height: 400px;
+            /* *** CAMBIO ***: Más redondeado */
+            border-radius: 12px; 
+        }
+        .content-grid-v6 p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* 3. TARJETAS (Bordes y Sombras Suaves) */
+        .card-grid-v6 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; 
+        }
+        
+        .soft-card {
+            background-color: var(--color-background);
+            /* *** CAMBIO ***: Borde suave */
+            border: 1px solid #EAEAEA; 
+            /* *** CAMBIO ***: Más redondeado */
+            border-radius: 12px; 
+            padding: 25px;
+            text-align: left;
+            /* *** CAMBIO ***: Sombra suave */
+            box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .soft-card:hover {
+            transform: translateY(-5px); /* Sube al hacer hover */
+            box-shadow: 0 15px 35px rgba(156, 31, 55, 0.15);
+        }
+        
+        .soft-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+        .soft-card p {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            margin-bottom: 25px;
+        }
+        
+        /* Botón (coincide con el estilo de la tarjeta) */
+        .soft-card .cta-btn {
+            width: 100%;
+            border-radius: 8px; /* Redondeado */
+            border: 2px solid var(--color-primary); /* Borde rojo */
+            color: var(--color-primary);
+            font-weight: 800;
+            background-color: transparent;
+            /* Reutiliza la animación de hover de tu style.css */
+        }
+        /* (El hover de .cta-btn de tu style.css se aplica automáticamente) */
+        
+        /* Media query */
+        @media (max-width: 768px) {
+            .content-grid-v6 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    </head>
+<body>
+    
+    <div id="data-card-container" class="hidden"></div>
+
+    <header id="main-header">
+        <div class="logo">UAO Stress App</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" style="font-weight: 600;"><span>&larr; Regresar</span></a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn"><span>Ingresar texto de boton</span></button>
+    </header>
+
+    <main>
+
+        <section class="subpage-banner-v6 anim-fade-grow delay-1">
+            <h1 class="title">Título Aquí</h1>
+            <p class="tagline">
+                Ingresar texto acá: Este es un subtítulo o una descripción corta.
+            </p>
+        </section>
+
+        <section id="mid-section" class="section-padding">
+            <div class="content-grid-v6 anim-fade-grow delay-2">
+                
+                <div>
+                    <img src="https://via.placeholder.com/600x400/F5F5F5/1E1E1E?text=Imagen+Aquí" alt="Placeholder">
+                </div>
+
+                <div>
+                    <h2 class="section-title">Subtítulo Aquí</h2>
+                    <p>
+                        Información aquí... Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. 
+                    </p>
+                    <p>
+                        Ingresar texto acá... Duis aute irure dolor in reprehenderit in 
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects-section" class="section-padding" style="background-color: var(--color-dark-surface);">
+            
+            <h2 class="section-title anim-fade-grow delay-3" style="text-align: center; margin-bottom: 50px;">
+                Información en Tarjetas
+            </h2>
+            
+            <div class="card-grid-v6 anim-fade-grow delay-4">
+
+                <div class="soft-card">
+                    <h3>Título de Tarjeta 1</h3>
+                    <p>
+                        Ingresar texto acá para la descripción de esta tarjeta.
+                    </p>
+                    <button class="cta-btn">
+                        <span>Ver Más</span>
+                    </button>
+                </div>
+
+                <div class="soft-card">
+                    <h3>Título de Tarjeta 2</h3>
+                    <p>
+                        Ingresar texto acá para la descripción de esta tarjeta.
+                    </V>
+                    <button class="cta-btn">
+                        <span>Ver Más</span>
+                    </button>
+                </div>
+
+                <div class="soft-card">
+                    <h3>Título de Tarjeta 3</h3>
+                    <p>
+                        Ingresar texto acá para la descripción de esta tarjeta.
+                    </p>
+                    <button class="cta-btn">
+                        <span>Ver Más</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
