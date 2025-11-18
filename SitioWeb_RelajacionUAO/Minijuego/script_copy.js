@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. FUNCIÓN PRINCIPAL PARA CARGAR Y RENDERIZAR LOS DATOS ---
     const loadDataAndRender = async () => {
         try {
-            const response = await fetch('data.json');
+            const response = await fetch('./Data_copy.json')
             if (!response.ok) {
                 throw new Error(`Error al cargar data.json: ${response.statusText}`);
             }
