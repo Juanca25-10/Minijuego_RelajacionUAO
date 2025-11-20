@@ -956,27 +956,27 @@
             };
 
             /* =========================================
-               9. CARGA DE DATOS UAO (Data.json)
-               ========================================= */
-            fetch('Data.json').then(r => r.json()).then(d => {
-                if(d.university_activities) {
-                    const c = document.getElementById('uni-activities-grid');
-                    d.university_activities.forEach(a => {
-                        // Crear tarjeta del slider
-                        const cardDiv = document.createElement('div');
-                        cardDiv.className = 'uni-activity-card anim-fade-grow';
-                        cardDiv.innerHTML = `
-                        <div class="card-image-container"><img src="${a.image_url}" alt="${a.title}"></div>
-                        <div class="card-content">
-                            <h3>${a.title}</h3>
-                            <p class="card-date">📅 ${a.date}</p>
-                            <p>${a.description}</p>
-                            <a href="${a.url}" class="cta-btn buy-btn" style="text-align:center;display:block;margin-top:auto">Inscribirse</a>
-                        </div>`;
-                        c.appendChild(cardDiv);
-                    });
-                }
-            }).catch(e => console.error("Error cargando Data.json:", e));
+                9. CARGA DE DATOS UAO (Data.json)
+                ========================================= */
+            fetch('Data.json').then(r => r.json()).then(d => {
+                if(d.university_activities) {
+                    const c = document.getElementById('uni-activities-grid');
+                    d.university_activities.forEach(a => {
+                        // Crear tarjeta del slider
+                        const cardDiv = document.createElement('div');
+                        cardDiv.className = 'uni-activity-card anim-fade-grow';
+                        cardDiv.innerHTML = `
+                        <div class="card-image-container"><img src="${a.image_url}" alt="${a.title}"></div>
+                        <div class="card-content">
+                            <h3>${a.title}</h3>
+                            <p class="card-date">📅 ${a.date}</p>
+                            <p>${a.description}</p>
+                                                        <a href="inscripcion-detalle.html?id=${a.id}" class="cta-btn buy-btn" style="text-align:center;display:block;margin-top:auto">Inscribirse</a>
+                        </div>`;
+                        c.appendChild(cardDiv);
+                    });
+                }
+            }).catch(e => console.error("Error cargando Data.json:", e));
 
             // INICIALIZACIÓN FINAL
             renderMainCalendar(mainCalYear, mainCalMonth);

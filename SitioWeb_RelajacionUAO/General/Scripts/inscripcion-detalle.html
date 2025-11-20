@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Cargando Inscripción...</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    </head>
+<body>
+    
+    <header id="main-header">
+        </header>
+
+    <main>
+        <section id="detail-banner" class="dynamic-banner">
+            <div class="banner-overlay">
+                <h1 id="activity-title" class="anim-fade-grow delay-1"></h1>
+                <p id="activity-location" class="anim-fade-grow delay-2"></p>
+            </div>
+            </section>
+
+        <section id="inscription-content" class="section-padding">
+            <div class="content-wrapper">
+                
+                <div class="activity-info">
+                    <h2 class="section-subtitle">Detalles de la Actividad</h2>
+                    <p id="activity-description" class="info-description"></p>
+                    
+                    <div class="schedule-box anim-fade-grow delay-3">
+                        <h3>Horario Confirmado</h3>
+                        <p id="activity-schedule" class="schedule-time"></p>
+                    </div>
+                </div>
+
+                <div class="inscription-form-container anim-fade-grow delay-4">
+                    <h2 class="section-subtitle form-title">Formulario de Registro</h2>
+                    
+                    <form id="inscription-form" class="inscription-form">
+                        
+                        <div class="form-group">
+                            <label for="student-name">Nombre Completo</label>
+                            <input type="text" id="student-name" required placeholder="Ej. Juan Pérez">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="student-code">Código Estudiantil</label>
+                            <input type="number" id="student-code" required placeholder="Ej. 2221234">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="student-email">Correo UAO</label>
+                            <input type="email" id="student-email" required placeholder="ejemplo@uao.edu.co">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Horario de la Sesión</label>
+                            <input type="text" id="form-schedule-display" readonly>
+                        </div>
+
+                        <button type="submit" class="cta-btn submit-btn">
+                            <span>Inscribirme Ahora</span>
+                        </button>
+                    </form>
+                    
+                    <div id="success-message" class="success-box hidden">
+                        <p class="success-text">✅ ¡Inscripción Exitosa!</p>
+                        <p id="confirmation-details"></p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script src="inscripcion-script.js"></script>
+    </body>
+</html>

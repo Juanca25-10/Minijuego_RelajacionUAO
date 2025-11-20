@@ -1056,3 +1056,163 @@ a, button {
 #custom-color-picker:focus {
     box-shadow: 0 0 0 2px var(--color-dark-surface); /* Sombra sutil al enfocar */
 }
+
+/* =========================================
+   ESTILOS DE PÁGINA DE DETALLE E INSCRIPCIÓN
+   ========================================= */
+
+/* --- Banner de Detalle --- */
+.dynamic-banner {
+    position: relative;
+    height: 300px; /* Altura del banner */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-light-text);
+}
+
+.banner-overlay {
+    background-color: rgba(0, 0, 0, 0.45); /* Capa oscura sobre la imagen */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+#detail-banner h1 {
+    font-size: 3em;
+    margin-bottom: 5px;
+}
+
+#detail-banner p {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+/* --- Layout Contenido y Formulario --- */
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr; /* 2/3 para info, 1/3 para formulario */
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .content-wrapper {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+        gap: 30px;
+    }
+}
+
+.activity-info h2, .form-title {
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-dark-surface);
+}
+
+/* Caja de Horario Destacada */
+.schedule-box {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--color-dark-surface);
+    border-radius: 12px;
+    border-left: 5px solid var(--color-primary);
+}
+
+.schedule-box h3 {
+    margin-bottom: 8px;
+    color: var(--color-secondary);
+}
+
+.schedule-time {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* --- Estilos del Formulario --- */
+.inscription-form {
+    background-color: var(--color-subtle-background);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--color-secondary);
+}
+
+.inscription-form input[type="text"],
+.inscription-form input[type="number"],
+.inscription-form input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.inscription-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(156, 31, 55, 0.1);
+}
+
+.inscription-form input[readonly] {
+    background-color: var(--color-dark-surface);
+    color: var(--color-primary);
+    font-weight: bold;
+    cursor: default;
+}
+
+/* Estilos para el botón de envío */
+.submit-btn {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+/* Mensaje de Éxito */
+.success-box {
+    padding: 25px;
+    background-color: #e6ffed; /* Fondo verde claro */
+    border: 1px solid #c3e6cb;
+    color: #155724; /* Texto verde oscuro */
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.success-box .success-text {
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none !important; }
