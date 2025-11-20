@@ -54,5 +54,35 @@
                 "cta": "Ir a la Demo"
             }
         ]
-    }
+    },
+    "university_activities": [
+        {
+            "title": "Taller de Manejo del Tiempo",
+            "description": "Aprende técnicas efectivas para organizar tu semana y reducir la ansiedad por plazos de entrega.",
+            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Gestion+Tiempo",
+            "date": "Miércoles, 10:00 AM",
+            "url": "#inscripcion-tiempo"
+        },
+        {
+            "title": "Yoga y Estiramiento Express",
+            "description": "Sesión corta de yoga enfocada en liberar la tensión de cuello y espalda después de largas horas de estudio.",
+            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Yoga+Relajacion",
+            "date": "Martes y Jueves, 4:30 PM",
+            "url": "#inscripcion-yoga"
+        },
+        {
+            "title": "Club de Lectura Anti-Estrés",
+            "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias en un ambiente de apoyo.",
+            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Club+Lectura",
+            "date": "Viernes, 2:00 PM",
+            "url": "#inscripcion-lectura"
+        },
+        {
+            "title": "Club de Lectura Anti-Estrés",
+            "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias en un ambiente de apoyo.",
+            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Club+Lectura",
+            "date": "Viernes, 2:00 PM",
+            "url": "#inscripcion-lectura"
+        }
+    ]
 }

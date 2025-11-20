@@ -1,14 +1,18 @@
 /* style.css */
 
-/* RESET BÁSICO Y CONFIGURACIÓN GLOBAL */
+/* =========================================
+   1. CONFIGURACIÓN GLOBAL Y VARIABLES
+   ========================================= */
 :root {
-    /* --- COLORES BASADOS EN EL DISEÑO UAO --- */
-    --color-primary: #9C1F37; /* Rojo Institucional / Maroon */
-    --color-secondary: #1E1E1E; /* Negro casi puro para el texto */
-    --color-background: #FFFFFF; /* Blanco puro para elementos que flotan (card) */
-    --color-dark-surface: #F5F5F5; /* Superficie gris claro/blanco roto para contraste (mid-section) */
-    --color-subtle-background: #F9F9F9; /* Gris muy claro para el fondo principal */
+    /* Colores Institucionales y de Diseño */
+    --color-primary: #9C1F37; /* Rojo UAO */
+    --color-secondary: #1E1E1E; /* Negro Texto */
+    --color-background: #FFFFFF; /* Blanco Puro */
+    --color-dark-surface: #F5F5F5; /* Gris Claro (Secciones Alternas) */
+    --color-subtle-background: #F9F9F9; /* Gris Muy Claro (Fondo) */
     --color-light-text: #FFFFFF;
+    
+    /* Tipografía y Transiciones */
     --font-family-main: 'Inter', sans-serif;
     --transition-speed: 0.4s;
 }
@@ -24,17 +28,14 @@ body {
     color: var(--color-secondary);
     line-height: 1.6;
     scroll-behavior: smooth;
-    
-    /* === CAMBIO CLAVE: FONDO CON DEGRADADO RADIAL SUTIL === */
-    /* Crea un punto de luz sutil en el centro de la página, dándole profundidad */
+    /* Fondo con degradado sutil */
     background: radial-gradient(circle at center, var(--color-background) 0%, var(--color-subtle-background) 100%);
-    transition: background-image 0.5s ease;
-    /* Ajustamos el tamaño para que sea un efecto de fondo que se repite o cubre bien */
     min-height: 100vh;
-    /* =========================================== */
 }
 
-/* UTILIDADES Y TRANSICIONES SUAVES (SMOOTH) */
+/* =========================================
+   2. UTILIDADES Y ELEMENTOS COMUNES
+   ========================================= */
 a, button {
     text-decoration: none;
     color: inherit;
@@ -47,7 +48,13 @@ a, button {
     margin: 0 auto;
 }
 
-/* 1. HEADER */
+/* Ocultar cosas */
+.hidden { display: none !important; }
+
+
+/* =========================================
+   3. HEADER DE NAVEGACIÓN
+   ========================================= */
 #main-header {
     display: flex;
     justify-content: space-between;
@@ -81,34 +88,35 @@ a, button {
     color: var(--color-primary);
 }
 
+/* =========================================
+   4. ESTILOS DE BOTONES (CTA)
+   ========================================= */
 
-/* --- CÓDIGO DE BOTÓN MODIFICADO --- */
-
-/* Estilos generales para todos los botones CTA */
+/* Botón Estándar (Con animación de llenado) */
 .cta-btn {
-    display: inline-flex; /* Para centrar el texto verticalmente */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 10px 25px;
     border: 2px solid var(--color-primary);
-    background-color: transparent; /* Fondo transparente por defecto */
+    background-color: transparent;
     color: var(--color-primary);
     font-weight: 600;
     cursor: pointer;
     border-radius: 5px;
-    transition: all var(--transition-speed) ease-in-out; /* Transición para color de texto */
+    transition: all var(--transition-speed) ease-in-out;
     position: relative;
     overflow: hidden;
-    z-index: 1; /* Asegura que el botón esté sobre el pseudo-elemento */
+    z-index: 1;
 }
 
 .cta-btn span {
     position: relative;
-    z-index: 2; /* Asegura que el texto esté sobre el fondo animado */
-    transition: color var(--transition-speed) ease-in-out; /* Transición para el color del texto */
+    z-index: 2;
+    transition: color var(--transition-speed) ease-in-out;
 }
 
-/* Pseudo-elemento para el NUEVO efecto de "llenado" (en lugar de "slide") */
+/* Animación de fondo al hacer hover */
 .cta-btn::before {
     content: "";
     position: absolute;
@@ -116,29 +124,51 @@ a, button {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-primary); /* El color de llenado */
-    transition: transform var(--transition-speed) ease-out;
-    z-index: -1; /* Detrás del texto */
-    transform: scale(0); /* Inicia escalado a 0 */
+    background-color: var(--color-primary);
+    z-index: -1;
+    transform: scale(0);
+    transition: transform 0.4s ease-out;
     border-radius: 5px;
 }
 
-/* Al hacer hover, el pseudo-elemento se expande */
 .cta-btn:hover::before {
-    transform: scale(1); /* Crece a tamaño completo */
-}
-
-/* Al hacer hover, el texto cambia de color */
-.cta-btn:hover span {
-    color: var(--color-light-text); /* Texto blanco sobre el fondo rojo */
+    transform: scale(1);
 }
 
 .cta-btn:hover {
-    color: var(--color-light-text); /* Asegura que el color de texto cambie (para <a>) */
+    color: var(--color-light-text);
     border-color: var(--color-primary);
 }
 
-/* 2. HERO SECTION */
+.cta-btn:hover span {
+    color: var(--color-light-text);
+}
+
+/* Botón Específico "Ver Propuesta Teórica" (Sin animación de llenado) 
+   Este estilo evita el conflicto visual en la sección media */
+.mid-cta-btn {
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    transition: background-color var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
+}
+
+.mid-cta-btn::before {
+    display: none; /* Desactiva la animación compleja */
+}
+
+.mid-cta-btn:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.mid-cta-btn:hover span {
+    color: var(--color-light-text);
+}
+
+/* =========================================
+   5. SECCIÓN HERO (Inicio)
+   ========================================= */
 #hero-section {
     display: flex;
     flex-direction: column;
@@ -182,21 +212,17 @@ a, button {
     margin-bottom: 40px;
 }
 
-/* Imagen y Overlay (Líneas 100-110 aprox.) */
 .hero-image-overlay {
-    /* Gradiente suave para dar profundidad en la esquina, usando el NUEVO color de fondo */
     background: radial-gradient(circle at 70% 30%, rgba(156, 31, 55, 0.05) 0%, rgba(249, 249, 249, 0) 50%);
     position: absolute;
     top: 0;
     right: 0;
-    width: 60%; /* Ligeramente más grande */
+    width: 60%;
     height: 100%;
     z-index: 1;
-    /* QUITAMOS el clip-path para que el patrón de puntos del body sea visible detrás */
-    /* clip-path: polygon(100% 0, 100% 100%, 0% 100%, 20% 0); */ 
 }
 
-/* STATS GRID */
+/* Grid de Estadísticas / Botones Rápidos */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -208,6 +234,12 @@ a, button {
 .stat-item {
     border-left: 1px solid #CCC;
     padding-left: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.stat-item:hover {
+    background-color: #EEE;
 }
 
 .stat-id {
@@ -228,8 +260,9 @@ a, button {
     color: #666;
 }
 
-
-/* 3. MID SECTION */
+/* =========================================
+   6. SECCIÓN MID (El Problema)
+   ========================================= */
 #mid-section {
     background-color: var(--color-dark-surface);
 }
@@ -267,7 +300,6 @@ a, button {
 }
 
 .image-box img {
-    filter: none;
     width: 100%;
     height: auto;
     display: block;
@@ -277,32 +309,11 @@ a, button {
 
 .image-box img:hover {
     transform: scale(1.05);
-    filter: none;
 }
 
-/* RESPONSIVE BÁSICO */
-@media (max-width: 1024px) {
-    .hero-content {
-        grid-template-columns: 1fr;
-    }
-    .hero-image-overlay {
-        width: 100%;
-        height: 80%;
-        top: 20%;
-        left: 0;
-        clip-path: none;
-        opacity: 0.1;
-    }
-    .text-container {
-        padding-bottom: 200px;
-    }
-    .mid-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* 4. FUNCIONALIDAD DE DATA-CARD (Pop-up Dinámico) */
-
+/* =========================================
+   7. TARJETA FLOTANTE (Data Card)
+   ========================================= */
 #data-card-container {
     position: fixed;
     pointer-events: none;
@@ -324,10 +335,7 @@ a, button {
     padding: 20px;
     width: 280px;
     border-radius: 8px;
-    /* === NUEVA SOMBRA: SIMULACIÓN DE RELIEVE SUAVE === */
-    box-shadow: 
-        5px 5px 15px rgba(0, 0, 0, 0.05),  /* Sombra oscura y exterior */
-        -5px -5px 15px rgba(255, 255, 255, 0.8); /* Sombra clara/luz para el efecto 3D */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05), -5px -5px 15px rgba(255, 255, 255, 0.8);
 }
 
 .card-title {
@@ -374,107 +382,373 @@ a, button {
     transition: background-color 0.3s, opacity 0.3s;
 }
 
-.card-cta:hover {
-    opacity: 0.8;
+/* =========================================
+   8. SISTEMA DE RECOMPENSAS (Clash Royale Style)
+   ========================================= */
+.royal-pass-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 2px solid #EAEAEA;
 }
 
-.hover-activator {
-    cursor: pointer;
-    transition: background-color 0.3s;
+/* Cabecera Dorada */
+.pass-header {
+    background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%); /* Dorado */
+    padding: 30px;
+    text-align: center;
+    color: #5a3e00;
+    position: relative;
+    border-bottom: 4px solid #e6ac00;
 }
 
-.hover-activator:hover {
-    background-color: var(--color-dark-surface);
+.crown-counter {
+    font-size: 2.5rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 0 rgba(255,255,255,0.5);
 }
 
-/* 5. PROJECTS SECTION (Adaptada a las funcionalidades del proyecto) */
-#projects-section {
-    background-color: var(--color-background);
+.crown-icon { font-size: 3rem; }
+.crown-label { font-size: 1rem; font-weight: 600; opacity: 0.8; margin-left: 10px; }
+
+/* Barra de Progreso */
+.progress-bar-wrapper {
+    background: rgba(255,255,255,0.5);
+    height: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+.progress-bar-fill {
+    height: 100%;
+    background: var(--color-primary);
+    width: 0%;
+    transition: width 1s ease-out;
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.3);
 }
 
-.project-item {
-    background-color: var(--color-dark-surface);
+/* Lista de Recompensas */
+.rewards-track {
+    background-color: #f9f9f9;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Tarjeta de Nivel */
+.reward-tier {
+    display: flex;
+    background: white;
     border-radius: 12px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease-in-out;
-    border: 1px solid #EAEAEA;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border: 1px solid #eee;
+    opacity: 0.7;
+    filter: grayscale(1); /* Gris si está bloqueado */
+    position: relative;
+}
+
+/* Estado Desbloqueado */
+.reward-tier.unlocked {
+    opacity: 1;
+    filter: grayscale(0);
+    border: 2px solid #FFD700;
+    background: linear-gradient(to right, #fff, #fff9e6);
+}
+
+.reward-tier.unlocked:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Columnas de la tarjeta */
+.tier-goal {
+    background: #333;
+    color: white;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 10px;
     text-align: center;
 }
 
-.project-item:hover {
-    box-shadow: 0 10px 40px rgba(156, 31, 55, 0.15);
-}
+.tier-number { font-size: 1.5rem; color: #FFD700; }
+.tier-label { font-size: 0.7rem; text-transform: uppercase; }
 
-.project-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    padding: 10px;
-}
-
-.project-info {
+.tier-info {
     padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.project-info h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
+.reward-img-placeholder {
+    width: 60px;
+    height: 60px;
+    background: #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.reward-text h4 {
+    margin: 0;
+    font-size: 1.2rem;
     color: var(--color-secondary);
-    margin-bottom: 5px;
 }
 
-.project-info .price {
-    display: none;
+.reward-text p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #666;
 }
 
-.buy-btn {
-    width: auto;
-    margin: 10px auto 0;
-    padding: 8px 20px;
+.tier-action {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-left: 1px solid #eee;
+    background: #fafafa;
+    flex-direction: column;
+}
+
+.lock-icon { font-size: 1.5rem; color: #999; }
+
+/* Botón Reclamar */
+.claim-btn {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 0 #7a182b;
+    transition: transform 0.1s;
+}
+
+.claim-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #7a182b;
+}
+
+/* =========================================
+   9. ESTILOS DEL MODAL DE RECOMPENSA (CORREGIDO)
+   ========================================= */
+
+/* Fondo oscuro que cubre todo */
+.reward-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    /* Flexbox para centrar el cuadro blanco en la pantalla */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.reward-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* El contenedor del contenido (invisible o blanco según diseño) */
+.reward-modal-content {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    /* FORZAR CENTRADO DEL CONTENIDO INTERNO */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Esto centra los hijos (el botón) horizontalmente */
+    justify-content: center;
+    margin: 0 auto; /* Esto asegura que el div esté centrado */
+}
+
+.reward-step {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Asegura que todo dentro del paso esté centrado */
+}
+
+.reward-title {
+    color: #FFD700;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    animation: slideDown 0.5s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.reward-subtitle {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+/* EL BOTÓN MÁGICO (Centrado forzado) */
+.magic-chest-btn {
+    background: linear-gradient(45deg, #9C1F37, #ff4d6d);
+    border: 4px solid #FFD700;
+    color: white;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    /* Flex para centrar icono y texto dentro del botón */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 0 rgba(156, 31, 55, 0.7);
+    transition: all 0.3s ease;
+    animation: pulse-red 2s infinite;
+    /* MARGEN AUTOMÁTICO PARA CENTRAR EL BOTÓN EN EL CONTENEDOR */
+    margin: 0 auto; 
+}
+
+.chest-icon {
+    font-size: 5rem;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+}
+
+.magic-chest-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 50px #FFD700, 0 0 100px #9C1F37;
+    background: linear-gradient(45deg, #ff4d6d, #9C1F37);
+}
+
+.magic-chest-btn:hover .chest-icon {
+    transform: scale(1.2);
+}
+
+.magic-chest-btn:active {
+    transform: scale(0.9);
+}
+
+/* QR CON ZOOM */
+.qr-zoom-container {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    display: inline-block;
+    border: 5px solid #FFD700;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+    animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Margen auto para centrar */
+    margin: 0 auto;
+}
+
+.qr-zoom-container img {
+    width: 250px;
+    height: 250px;
+    display: block;
+}
+
+.reward-instruction {
+    color: #ccc;
+    margin-top: 20px;
     font-size: 1rem;
-    border: 1px solid var(--color-primary);
-    background-color: transparent;
-    color: var(--color-primary);
+    text-align: center;
+    width: 100%;
 }
 
-/* * El estilo de .buy-btn:hover se hereda de .cta-btn:hover 
- * ya que ambos tienen la clase .cta-btn
- */
-
-/*
---- CÓDIGO CORREGIDO Y MOVIDO ---
-Este es el bloque que estaba mal anidado.
-Ahora está fuera, en el nivel raíz, donde debe estar.
-*/
-
-/* Ajustes específicos para el botón "Ver Propuesta Teórica" en mid-section */
-.mid-cta-btn {
-    background-color: var(--color-background); /* Fondo blanco */
-    color: var(--color-primary); /* Texto rojo */
-    border: 2px solid var(--color-primary); /* Borde rojo */
-    /* Transición simple de "fade" para el hover */
-    transition: background-color var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out; 
+.close-modal-btn {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 30px;
+    margin-top: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    /* Margen auto para centrar */
+    margin-left: auto;
+    margin-right: auto;
+    display: block; 
 }
 
-/* Ocultamos explícitamente el pseudo-elemento para que no haga animación de llenado */
-.mid-cta-btn::before {
-    display: none; 
+.close-modal-btn:hover {
+    background: white;
+    color: black;
 }
 
-/* Efecto hover suave: invierte colores */
-.mid-cta-btn:hover {
-    background-color: var(--color-primary); /* Fondo rojo al hacer hover */
-    border-color: var(--color-primary); /* Borde rojo al hacer hover */
+/* Animaciones */
+@keyframes pulse-red {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
 }
 
-/* El texto se vuelve blanco al hacer hover en el botón */
-.mid-cta-btn:hover span {
-    color: var(--color-light-text);
+@keyframes zoomIn {
+    from { transform: scale(0) rotate(-180deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ... el resto del CSS (keyframes, etc.) permanece igual ... */
+/* =========================================
+   10. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+    }
+    .hero-image-overlay {
+        width: 100%;
+        height: 80%;
+        top: 20%;
+        left: 0;
+        clip-path: none;
+        opacity: 0.1;
+    }
+    .text-container {
+        padding-bottom: 200px;
+    }
+    .mid-grid {
+        grid-template-columns: 1fr;
+    }
 }

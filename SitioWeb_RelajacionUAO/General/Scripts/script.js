@@ -1,280 +1,183 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Referencias a elementos DOM
-    const dataCardContainer = document.getElementById('data-card-container');
-    const cardTitle = document.querySelector('.data-card .card-title');
-    const cardSubtitle = document.querySelector('.data-card .card-subtitle');
-    const cardDescription = document.querySelector('.data-card .card-description');
-    const cardStats = document.querySelector('.data-card .card-stats');
-    const cardCta = document.querySelector('.data-card .card-cta');
-    
-    // Referencias para la animación de scroll
+    // Referencias
+    const cardCont = document.getElementById('data-card-container');
     const midGrid = document.querySelector('#mid-section .mid-grid');
-    const projectsSectionTitle = document.querySelector('#projects-section .section-title');
-    const projectGrid = document.querySelector('#projects-section .project-grid');
-    const midSection = document.getElementById('mid-section'); 
+    
+    // Datos Mock para Hover
+    const cardData = {
+        'Gestión de Actividades': { title: 'Gestor de Tareas', subtitle: 'Funcionalidad Core', description: 'Organiza y completa tareas académicas.', stats: { Impacto: 'Alto', Complejidad: 'Media' } },
+        'Técnicas de Relajación': { title: 'Video y Animación', subtitle: 'Bienestar Mental', description: 'Recursos guiados para reducir estrés.', stats: { Impacto: 'Alto', Complejidad: 'Baja' } },
+        'Mini Juego Anti-estrés': { title: 'Herramienta Lúdica', subtitle: 'Pausa Activa', description: 'Juego interactivo para desconectar.', stats: { Impacto: 'Medio', Complejidad: 'Alta' } },
+        'Accesibilidad Web': { title: 'Para Todos', subtitle: 'Requisito No Funcional', description: 'Accesible en cualquier dispositivo.', stats: { Impacto: 'Alto', Complejidad: 'Media' } }
+    };
 
-    // --- 1. DATOS SIMULADOS PARA LA TARJETA FLOTANTE (mockCardData) ---
-    const mockCardData = {
-    'Gestión de Actividades': {
-        title: 'Gestor de Tareas',
-        subtitle: 'Funcionalidad Core',
-        description: 'Permite a los estudiantes agregar, eliminar y marcar como realizadas sus tareas académicas para reducir la sensación de abrumo.',
-        stats: { Impacto: 'Alto', Complejidad: 'Media' }
-    },
-    'Técnicas de Relajación': {
-        title: 'Video y Animación',
-        subtitle: 'Gestión Rápida de Estrés',
-        description: 'Proporciona un video o animación con técnicas rápidas para manejar situaciones estresantes.',
-        stats: { Impacto: 'Alto', Complejidad: 'Baja' }
-    },
-    'Mini Juego Anti-estrés': {
-        title: 'Herramienta Lúdica',
-        subtitle: 'Promoción del Bienestar',
-        description: 'Ofrece un mini juego que ayuda al estudiante a relajarse, promoviendo un ambiente de aprendizaje más saludable.',
-        stats: { Impacto: 'Medio', Complejidad: 'Alta' }
-    },
-    'Accesibilidad Web': {
-        title: 'Ubicación y Recursos',
-        subtitle: 'Requisito No Funcional',
-        description: 'Garantiza que la aplicación sea accesible con conexión a Internet y que use solo recursos y software gratuitos y libres.',
-        stats: { Impacto: 'Alto', Complejidad: 'Media' }
-    }
-};
-
-    // --- 2. FUNCIÓN PRINCIPAL PARA CARGAR Y RENDERIZAR LOS DATOS ---
-    const loadDataAndRender = async () => {
+    // Carga de JSON
+    const loadData = async () => {
         try {
-            const response = await fetch('data.json');
-            if (!response.ok) {
-                throw new Error(`Error al cargar data.json: ${response.statusText}`);
-            }
-            const data = await response.json();
+            const res = await fetch('Data.json'); // Asegúrate del nombre correcto
+            const d = await res.json();
             
-            renderHeader(data.header);
-            const activators = renderHeroSection(data.hero_section); 
-            renderMidSection(data.mid_section);
-            renderProjectsSection(data.projects_section);
+            // Header
+            document.querySelector('.logo').textContent = d.header.logo;
+            const nav = document.querySelector('.nav-links'); nav.innerHTML = '';
+            d.header.nav_links.forEach(l => nav.innerHTML += `<li><a href="${l.url}"><span>${l.text}</span></a></li>`);
+            document.querySelector('.cta-btn').innerHTML = `<span>${d.header.cta_button}</span>`;
 
-            connectHoverFunctionality(activators);
+            // Hero
+            const h = d.hero_section;
+            document.querySelector('.greeting').textContent = h.greeting;
+            document.querySelector('.title').textContent = h.title;
+            document.querySelector('.tagline').textContent = h.tagline;
+            document.querySelector('.trust-text').textContent = h.trust_text;
+            
+            const stats = document.querySelector('.stats-grid'); stats.innerHTML = '';
+            const activators = [];
+            h.stats.forEach(s => {
+                const div = document.createElement('div'); div.className = 'stat-item hover-activator';
+                div.setAttribute('data-info', s.description);
+                div.innerHTML = `<p class="stat-id">${s.id}</p><p class="stat-description">${s.description}</p>`;
+                div.style.cursor = 'pointer';
+                div.onclick = () => { 
+                    if(s.description.includes('Gestión')) window.location.href = 'gestion-actividades.html';
+                    if(s.description.includes('Relajación')) window.location.href = 'tecnicas-relajacion.html';
+                };
+                stats.appendChild(div); activators.push(div);
+            });
+            initHover(activators);
 
-        } catch (error) {
-            console.error('Fallo al inicializar la página:', error);
-            document.body.innerHTML = '<h1>Error al cargar el contenido de la página. Por favor, revisa la consola.</h1>';
+            // Mid Section
+            const m = d.mid_section;
+            document.querySelector('.mid-text .section-title').innerHTML = `${m.title_part1}<br><span>${m.title_part2}</span>`;
+            document.querySelector('.mid-text .bio').textContent = m.bio_text;
+            document.querySelector('.mid-cta-btn').innerHTML = `<span>${m.mid_cta}</span>`;
+        } catch (e) { console.log(e); }
+    };
+
+    // Hover Card Logic
+    const initHover = (els) => {
+        const move = (x, y) => {
+            let nx = x + 15, ny = y - (cardCont.offsetHeight/2);
+            if(nx + cardCont.offsetWidth > window.innerWidth) nx = x - cardCont.offsetWidth - 15;
+            cardCont.style.transform = `translate(${nx}px, ${ny}px)`;
+        };
+        els.forEach(el => {
+            el.addEventListener('mouseover', (e) => {
+                const d = cardData[el.getAttribute('data-info')]; if(!d) return;
+                cardCont.querySelector('.card-title').textContent = d.title;
+                cardCont.querySelector('.card-subtitle').textContent = d.subtitle;
+                cardCont.querySelector('.card-description').textContent = d.description;
+                cardCont.querySelector('.card-stats').innerHTML = `<p>Imp: <strong>${d.stats.Impacto}</strong></p>`;
+                cardCont.querySelector('.card-cta').style.display = 'none';
+                cardCont.classList.add('visible'); move(e.clientX, e.clientY);
+            });
+            el.addEventListener('mouseleave', () => cardCont.classList.remove('visible'));
+            el.addEventListener('mousemove', (e) => { if(cardCont.classList.contains('visible')) move(e.clientX, e.clientY); });
+        });
+    };
+
+    // Scroll Animations
+    const animateScroll = () => {
+        if(midGrid && midGrid.getBoundingClientRect().top < window.innerHeight * 0.8) {
+            midGrid.style.transform = 'translateY(0)'; midGrid.style.opacity = 1;
         }
     };
 
-    // --- 3. FUNCIONES DE RENDERIZADO ---
-    const renderHeader = (headerData) => {
-        document.querySelector('.logo').textContent = headerData.logo;
-        const navLinksContainer = document.querySelector('.nav-links');
-        navLinksContainer.innerHTML = '';
-        headerData.nav_links.forEach(link => {
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="${link.url}"><span>${link.text}</span></a>`;
-            navLinksContainer.appendChild(li);
-        });
-        const ctaBtn = document.querySelector('.cta-btn');
-        ctaBtn.innerHTML = `<span>${headerData.cta_button}</span>`;
-    };
+    // --- 5. SISTEMA DE RECOMPENSAS (ACTUALIZADO) ---
+    const renderRewards = () => {
+        const container = document.getElementById('rewards-track-list');
+        if (!container) return;
 
-    // --- MODIFICADA: Aplica hover y ¡CLIC! ---
-    const renderHeroSection = (heroData) => {
-        document.querySelector('.greeting').textContent = heroData.greeting;
-        document.querySelector('.title').textContent = heroData.title;
-        document.querySelector('.tagline').textContent = heroData.tagline;
-        document.querySelector('.trust-text').textContent = heroData.trust_text;
+        // Leer tareas
+        const tasks = JSON.parse(localStorage.getItem('uaoTasks') || '[]');
+        const completed = tasks.filter(t => t.completed).length;
+        
+        document.getElementById('total-completed-tasks').textContent = completed;
+        document.getElementById('global-progress-bar').style.width = `${Math.min(100, (completed/20)*100)}%`;
 
-        const statsContainer = document.querySelector('.stats-grid');
-        statsContainer.innerHTML = '';
-        const activators = [];
+        const rewards = [
+            { req: 3, item: "Botella de Agua", icon: "💧" },
+            { req: 6, item: "Manzana Roja", icon: "🍎" },
+            { req: 9, item: "Barra de Cereal", icon: "🍫" },
+            { req: 12, item: "Jugo de Naranja", icon: "🧃" },
+            { req: 15, item: "Café del Campus", icon: "☕" },
+            { req: 18, item: "Sandwich", icon: "🥪" },
+            { req: 20, item: "Kit Anti-Estrés", icon: "🎁" }
+        ];
 
-        heroData.stats.forEach((stat) => {
-            const item = document.createElement('div');
-            item.classList.add('stat-item');
-            item.setAttribute('data-info', stat.description);
-            item.classList.add('hover-activator');
-            activators.push(item);
+        container.innerHTML = '';
+        rewards.forEach((r, i) => {
+            const unlocked = completed >= r.req;
+            // Generamos el link del QR
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Premio-${r.item.replace(/ /g,'-')}`;
             
-            // --- ¡NUEVO CÓDIGO DE CLICK! ---
-            let url = '#'; // URL por defecto
-            
-            if (stat.description === 'Gestión de Actividades') {
-                url = 'gestion-actividades.html';
-            } else if (stat.description === 'Técnicas de Relajación') {
-                url = 'tecnicas-relajacion.html';
-            }
-            // (Puedes añadir 'else if' para el Mini Juego aquí)
-            
-            if(url !== '#') {
-                item.style.cursor = 'pointer'; // Muestra que es clickeable
-                item.onclick = () => {
-                    window.location.href = url;
-                };
-            }
-            // --- FIN DE CÓDIGO NUEVO ---
-
-            item.innerHTML = `
-                <p class="stat-id">${stat.id}</p>
-                <p class="stat-description">${stat.description}</p>
-            `;
-            statsContainer.appendChild(item);
-        });
-
-        return activators;
-    };
-
-    const renderMidSection = (midData) => {
-        const titleElement = document.querySelector('#mid-section .section-title');
-        titleElement.innerHTML = `${midData.title_part1}<br><span>${midData.title_part2}</span>`;
-        document.querySelector('.bio').textContent = midData.bio_text;
-        const midCtaBtn = document.querySelector('.mid-cta-btn');
-        midCtaBtn.innerHTML = `<span>${midData.mid_cta}</span>`;
-    };
-    
-    const renderProjectsSection = (projectsData) => {
-        document.querySelector('#projects-section .section-title').textContent = projectsData.title;
-
-        const projectGrid = document.querySelector('.project-grid');
-        projectGrid.innerHTML = '';
-
-        projectsData.projects.forEach(project => {
-            const item = document.createElement('div');
-            item.classList.add('project-item');
-            item.innerHTML = `
-                <img src="${project.image_url}" alt="${project.name}">
-                <div class="project-info">
-                    <h3>${project.name}</h3>
-                    <p class="price">${project.price}</p>
-                    <button class="cta-btn buy-btn"><span>${project.cta}</span></button>
+            const div = document.createElement('div');
+            div.className = `reward-tier ${unlocked ? 'unlocked' : ''}`;
+            div.innerHTML = `
+                <div class="tier-goal"><span class="tier-number">${r.req}</span><span>Tareas</span></div>
+                <div class="tier-info">
+                    <div class="reward-img-placeholder">${r.icon}</div>
+                    <div class="reward-text"><h4>Nivel ${i+1}</h4><p>${r.item}</p></div>
+                </div>
+                <div class="tier-action" id="act-${i}">
+                    ${unlocked 
+                        ? `<button class="claim-btn" onclick="openRewardModal('${r.item}', '${qrUrl}')">RECLAMAR</button>` 
+                        : `<div class="lock-icon">🔒</div>`}
                 </div>
             `;
-            projectGrid.appendChild(item);
+            container.appendChild(div);
         });
     };
-    
-    // --- 4. FUNCIONES DE INTERACCIÓN (Hover y Card Position) ---
-    const connectHoverFunctionality = (activators) => {
-        activators.forEach(activator => {
-            const infoKey = activator.getAttribute('data-info');
-            
-            activator.addEventListener('mouseover', (e) => {
-                const data = mockCardData[infoKey];
-                if (!data) return;
 
-                cardTitle.textContent = data.title;
-                cardSubtitle.textContent = data.subtitle;
-                cardDescription.textContent = data.description;
-                
-                cardCta.textContent = ''; 
-                cardCta.style.display = 'none'; 
-                
-                cardStats.innerHTML = `
-                    <p>${Object.keys(data.stats)[0]}: <strong>${data.stats[Object.keys(data.stats)[0]]}</strong></p>
-                    <p>${Object.keys(data.stats)[1]}: <strong>${data.stats[Object.keys(data.stats)[1]]}</strong></p>
-                `;
+    // --- NUEVAS FUNCIONES PARA EL MODAL ---
+    const modalOverlay = document.getElementById('reward-fullscreen-modal');
+    const step1 = document.getElementById('reward-step-1');
+    const step2 = document.getElementById('reward-step-2');
+    const rewardNameDisplay = document.getElementById('reward-name-display');
+    const zoomedQrImg = document.getElementById('zoomed-qr-image');
+    const magicBtn = document.getElementById('magic-claim-btn');
 
-                dataCardContainer.classList.add('visible');
-                updateCardPosition(e.clientX, e.clientY);
-            });
-
-            activator.addEventListener('mouseleave', () => {
-                dataCardContainer.classList.remove('visible');
-            });
-
-            activator.addEventListener('mousemove', (e) => {
-                if (dataCardContainer.classList.contains('visible')) {
-                    updateCardPosition(e.clientX, e.clientY);
-                }
-            });
-        });
-    };
-    
-    const updateCardPosition = (mouseX, mouseY) => {
-        const cardWidth = dataCardContainer.offsetWidth;
-        const cardHeight = dataCardContainer.offsetHeight;
+    // Función global para abrir el modal (se llama desde el HTML inyectado)
+    window.openRewardModal = (rewardName, qrUrl) => {
+        // 1. Resetear modal
+        step1.classList.remove('hidden');
+        step2.classList.add('hidden');
         
-        let newX = mouseX + 15;
-        let newY = mouseY - (cardHeight / 2);
+        // 2. Preparar datos
+        rewardNameDisplay.textContent = rewardName;
+        zoomedQrImg.src = qrUrl;
 
-        if (newX + cardWidth > window.innerWidth) {
-            newX = mouseX - cardWidth - 15;
-        }
-        
-        if (newY + cardHeight > window.innerHeight) {
-            newY = window.innerHeight - cardHeight - 10;
-        }
-
-        if (newY < 10) {
-            newY = 10;
-        }
-
-        dataCardContainer.style.transform = `translate(${newX}px, ${newY}px) scale(1)`;
+        // 3. Mostrar modal
+        modalOverlay.classList.remove('hidden');
+        // Pequeño delay para permitir transición CSS
+        setTimeout(() => {
+            modalOverlay.classList.add('active');
+        }, 10);
     };
 
-
-    // --- 5. FUNCIÓN GENÉRICA DE ANIMACIÓN BASADA EN SCROLL (PARALLAX) ---
-    const animateSectionOnScroll = (element, startY) => {
-        if (!element) return;
-        const elementTop = element.getBoundingClientRect().top;
-        const viewportHeight = window.innerHeight;
-        const triggerPoint = viewportHeight * 0.8; 
-        if (elementTop < triggerPoint) {
-            const scrollDistance = triggerPoint - elementTop;
-            let translateY = Math.min(startY, scrollDistance * 1.2); 
-            let opacity = Math.min(1, scrollDistance / 80); 
-            element.style.transform = `translateY(${startY - translateY}px)`;
-            element.style.opacity = opacity;
-        } else {
-            element.style.transform = `translateY(${startY}px)`;
-            element.style.opacity = '0';
-        }
-    };
-    
-    // --- 6. FUNCIÓN DE DEGRADADO DINÁMICO (SUTIL Y FLUIDO) ---
-    const animateBackgroundGradient = () => {
-        if (!midSection) return;
-        const scrollPos = window.scrollY;
-        const startPosition = midSection.offsetTop - (window.innerHeight / 2); 
-        let progress = 0;
-        if (scrollPos > startPosition) {
-            const scrollRange = 1000; 
-            progress = Math.min(1, (scrollPos - startPosition) / scrollRange);
-        }
-        const maxAlpha = 0.30; 
-        const currentAlpha = progress * maxAlpha;
-        document.body.style.backgroundImage = `
-            linear-gradient(to bottom, rgba(156, 31, 55, ${currentAlpha}) 0%, rgba(156, 31, 55, 0) 100%),
-            radial-gradient(circle at center, var(--color-background) 0%, var(--color-subtle-background) 100%)
-        `;
-    };
-
-    // --- 7. FUNCIÓN ENVOLTORIO PARA LLAMAR TODAS LAS ANIMACIONES ---
-    const handleScrollEffects = () => {
-        animateSectionOnScroll(midGrid, 50);
-        animateSectionOnScroll(projectsSectionTitle, 40);
-        animateSectionOnScroll(projectGrid, 20);
-        animateBackgroundGradient();
-    };
-
-    // --- 8. INICIALIZACIÓN Y EVENT LISTENERS ---
-    const elementsToAnimate = [
-        { element: midGrid, startY: 50, duration: 0.5 },
-        { element: projectsSectionTitle, startY: 40, duration: 0.5 },
-        { element: projectGrid, startY: 50, duration: 0.6 } 
-    ];
-    elementsToAnimate.forEach(({ element, startY, duration }) => {
-        if (element) {
-            element.style.transition = `opacity ${duration}s ease-out, transform ${duration}s ease-out`;
-            element.style.transform = `translateY(${startY}px)`;
-            element.style.opacity = '0';
-        }
-    });
-    
-    // Comprobamos si existe "hero-section", que solo está en index.html
-    if (document.getElementById('hero-section')) {
-        loadDataAndRender();
+    // Función al hacer clic en el botón mágico
+    if(magicBtn) {
+        magicBtn.onclick = () => {
+            step1.classList.add('hidden'); // Ocultar botón
+            step2.classList.remove('hidden'); // Mostrar QR Gigante
+        };
     }
-    
-    handleScrollEffects();
-    window.addEventListener('scroll', handleScrollEffects);
+
+    // Función global para cerrar
+    window.closeRewardModal = () => {
+        modalOverlay.classList.remove('active');
+        setTimeout(() => {
+            modalOverlay.classList.add('hidden');
+        }, 300);
+    };
+
+    window.showQR = (id, url) => {
+        document.getElementById(id).innerHTML = `<div class="qr-reveal-box"><img src="${url}"><span class="claim-text">¡CANJEADO!</span></div>`;
+    };
+
+    // Init
+    if(document.getElementById('hero-section')) loadData();
+    if(midGrid) { midGrid.style.transition='0.5s'; midGrid.style.transform='translateY(50px)'; midGrid.style.opacity=0; }
+    renderRewards();
+    window.addEventListener('scroll', animateScroll);
+    animateScroll();
 });

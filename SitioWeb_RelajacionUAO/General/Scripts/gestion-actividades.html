@@ -9,7 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Animación suave (Se mantiene) */
+        /* =========================================
+           ESTILOS ESPECÍFICOS PARA ESTA PÁGINA
+           ========================================= */
+
+        /* --- ANIMACIONES DE ENTRADA --- */
         @keyframes fadeGrow {
             from { opacity: 0; transform: scale(0.97); }
             to { opacity: 1; transform: scale(1); }
@@ -22,7 +26,7 @@
         .delay-2 { animation-delay: 0.3s; }
         .delay-3 { animation-delay: 0.5s; }
 
-        /* Estilos del Banner (Se mantiene) */
+        /* --- BANNER SUPERIOR --- */
         .subpage-banner-v6 {
             background-color: var(--color-dark-surface);
             color: var(--color-secondary);
@@ -30,129 +34,539 @@
             text-align: center;
             border-radius: 12px;
             margin: 0 1%; 
+            margin-bottom: 40px;
         }
-        .subpage-banner-v6 .title { font-size: 3rem; }
-
-        /* --- NUEVO CSS PARA GESTOR DE TAREAS --- */
-        /* Contenedor principal de la app de tareas */
-        .todo-app-container {
-            max-width: 900px;
+        
+        .subpage-banner-v6 .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        /* Línea decorativa debajo del título */
+        .subpage-banner-v6 .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-secondary);
+            border-radius: 2px;
+        }
+        
+        .subpage-banner-v6 .tagline {
+            font-size: 1.25rem;
+            color: #555;
+            max-width: 600px;
             margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- SLIDER DE ACTIVIDADES UAO --- */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            padding: 0 20px; /* Espacio para los botones */
+        }
+
+        .horizontal-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            padding: 20px 5px;
+        }
+        
+        .horizontal-scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .uni-activities-grid-v6 {
+            display: flex;
+            gap: 30px;
+            width: max-content; /* Permite que crezca horizontalmente */
+        }
+
+        /* Botones de navegación del Slider */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--color-background);
+            border: 1px solid #EAEAEA;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .slider-btn:hover {
+            background-color: var(--color-primary);
+            color: white;
+            box-shadow: 0 6px 15px rgba(156, 31, 55, 0.3);
+        }
+        
+        .slider-btn.left { left: 0; }
+        .slider-btn.right { right: 0; }
+
+        /* Tarjeta de Actividad del Slider */
+        .uni-activity-card {
+            flex: 0 0 320px; /* Ancho fijo */
+            background-color: var(--color-background);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f0f0f0;
+        }
+
+        .uni-activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(156, 31, 55, 0.15);
+        }
+
+        .card-image-container {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .card-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .uni-activity-card:hover .card-image-container img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h3 {
+            color: var(--color-primary);
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .card-date {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* --- LAYOUT PRINCIPAL (Calendario + Lista) --- */
+        .gestion-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* Calendario izquierda, Tareas derecha */
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 1024px) {
+            .gestion-layout {
+                grid-template-columns: 1fr; /* Columna única en móviles */
+            }
+        }
+
+        /* --- ESTILOS DEL CALENDARIO --- */
+        .calendar-container {
             background-color: var(--color-background);
             border: 1px solid #EAEAEA; 
             border-radius: 12px; 
             box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
-            padding: 30px;
+            padding: 25px;
+            align-self: start; 
         }
         
-        /* Barra de progreso */
-        .progress-bar-container {
-            margin-bottom: 25px;
-        }
-        .progress-bar-label {
+        .calendar-header {
             display: flex;
             justify-content: space-between;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .progress-bar-bg {
-            width: 100%;
-            height: 10px;
-            background-color: var(--color-dark-surface);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            width: 40%; /* Ejemplo de progreso */
-            height: 100%;
-            background-color: var(--color-primary);
-            border-radius: 10px;
-            transition: width 0.5s ease;
+            align-items: center;
+            margin-bottom: 20px;
         }
         
-        /* Formulario para añadir tareas */
-        .add-task-form {
-            display: flex;
-            gap: 15px;
+        .calendar-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-secondary);
+            margin: 0;
+        }
+        
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-primary);
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .calendar-nav button:hover {
+            background-color: var(--color-dark-surface);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px; 
+        }
+        
+        .calendar-day-name {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .calendar-day {
+            padding: 10px 5px; 
+            text-align: center;
+            border: 1px solid transparent; 
+            border-radius: 8px;
+            font-weight: 600;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .calendar-day:hover:not(.other-month) {
+            background-color: var(--color-subtle-background);
+            border-color: var(--color-primary);
+        }
+        
+        .calendar-day.other-month {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .calendar-day.today {
+            background-color: var(--color-primary);
+            color: var(--color-light-text);
+            border-color: var(--color-primary);
+        }
+        
+        .calendar-day.selected {
+            background-color: #1E1E1E;
+            color: var(--color-light-text);
+            border-color: #1E1E1E;
+        }
+        
+        /* Punto indicador de tarea */
+        .calendar-day .task-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .calendar-day.today .task-dot {
+            background-color: var(--color-light-text);
+        }
+
+        /* --- LISTA DE TAREAS --- */
+        .task-list-container h2 {
+            margin-bottom: 25px;
+        }
+
+        .add-task-button-container {
             margin-bottom: 30px;
         }
-        .add-task-form input[type="text"] {
+        
+        #open-task-modal-btn {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+        
+        .task-card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        /* Tarjeta de Tarea Individual */
+        .task-card {
+            background-color: var(--color-background);
+            border: 1px solid #EAEAEA; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(156, 31, 55, 0.1); 
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(156, 31, 55, 0.15);
+        }
+        
+        .task-card-content { padding: 20px; }
+        
+        .task-card-content h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+        
+        .task-card-content p {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        
+        .task-card-details {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .task-card-details span { margin-right: 5px; }
+        
+        .task-card-attachment {
+            padding: 5px 10px;
+            background: var(--color-dark-surface);
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .task-card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #EAEAEA;
+            background-color: var(--color-subtle-background);
+            border-radius: 0 0 12px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .task-card-footer .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .task-card-footer label {
             flex-grow: 1;
+            margin-left: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        /* Estilos del Checkbox personalizado */
+        .task-card-footer input[type="checkbox"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--color-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .task-card-footer input[type="checkbox"]:checked {
+            background-color: var(--color-primary);
+        }
+        
+        .task-card-footer input[type="checkbox"]:checked::before {
+            content: '✔';
+            color: white;
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            font-size: 16px;
+        }
+        
+        /* Botón Eliminar */
+        .delete-btn {
+            background: none;
+            border: 1px solid #ddd;
+            color: var(--color-primary);
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .delete-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-light-text);
+            border-color: var(--color-primary);
+        }
+        
+        /* Estado completado */
+        .task-card.completed { opacity: 0.7; }
+        
+        .task-card.completed h3,
+        .task-card.completed p,
+        .task-card.completed label,
+        .task-card.completed .task-card-details {
+            text-decoration: line-through;
+        }
+        
+        /* Contenedor desplegable de tareas */
+        .task-list-wrapper {
+            max-height: 500px;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .task-list-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .task-list-wrapper.collapsed {
+            max-height: 480px; 
+        }
+        
+        .task-list-wrapper.collapsed::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--color-background), transparent);
+            pointer-events: none;
+        }
+        
+        #toggle-tasks-btn { margin-top: 15px; }
+        .example-task { display: none; }
+
+        /* --- ESTILOS DEL MODAL (Ventana Emergente) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: none; 
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--color-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 800px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .modal-form-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .modal-form-col h2 {
+            color: var(--color-primary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .modal-form-col input[type="text"],
+        .modal-form-col textarea {
+            width: 100%;
             padding: 12px 15px;
             border: 1px solid #EAEAEA;
             border-radius: 8px;
             font-family: var(--font-family-main);
             font-size: 1rem;
         }
-        .add-task-form .cta-btn {
-            white-space: nowrap; /* Evita que el texto del botón se rompa */
+        
+        .modal-form-col textarea {
+            resize: vertical;
+            min-height: 80px;
         }
         
-        /* Lista de Tareas */
-        .task-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 10px;
-            border-bottom: 1px solid #EAEAEA;
-            transition: background-color 0.3s ease;
-        }
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        .task-item:hover {
-            background-color: var(--color-subtle-background);
-        }
-        .task-item label {
-            flex-grow: 1;
-            margin-left: 15px;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-        /* Checkbox personalizado */
-        .task-item input[type="checkbox"] {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--color-primary);
-            border-radius: 4px;
-            cursor: pointer;
-            position: relative;
-        }
-        .task-item input[type="checkbox"]:checked {
-            background-color: var(--color-primary);
-        }
-        .task-item input[type="checkbox"]:checked::before {
-            content: '✔';
-            color: white;
-            position: absolute;
-            top: -2px;
-            left: 2px;
-            font-size: 14px;
-        }
-        .task-item.completed label {
-            text-decoration: line-through;
-            opacity: 0.6;
+        .modal-form-col .cta-btn {
+            width: 100%;
+            margin-top: 10px;
         }
 
     </style>
 </head>
 <body>
     
-    <div id="data-card-container" class="hidden"></div>
+    <div id="data-card-container" class="hidden">
+        <div class="data-card">
+            <h3 class="card-title"></h3>
+            <p class="card-subtitle"></p>
+            <p class="card-description"></p>
+            <div class="card-stats"></div>
+        </div>
+    </div>
 
     <header id="main-header">
-        <div class="logo">UAO Stress App</div>
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; cursor: pointer;">
+                UAO Stress App
+            </a>
+        </div>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html" style="font-weight: 600;"><span>&larr; Regresar</span></a></li>
-            </ul>
+                </ul>
         </nav>
-        <button class="cta-btn"><span>Ingresar texto de boton</span></button>
+        <button class="cta-btn"><span>Perfil</span></button>
     </header>
 
     <main>
@@ -163,58 +577,415 @@
             </p>
         </section>
 
-        <section class="section-padding">
+        <section id="uni-activities-section" class="section-padding anim-fade-grow delay-3">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 50px;">
+                Actividades de Bienestar UAO
+                <span>— Reduce tu estrés —</span>
+            </h2>
             
-            <div class="todo-app-container anim-fade-grow delay-2">
-                <h2 class="section-title" style="margin-bottom: 20px;">Mi Progreso</h2>
+            <div class="slider-container">
+                <button class="slider-btn left" id="slide-left">❮</button>
+                
+                <div class="horizontal-scroll-wrapper" id="scroll-container">
+                    <div id="uni-activities-grid" class="uni-activities-grid-v6">
+                        </div>
+                </div>
+                
+                <button class="slider-btn right" id="slide-right">❯</button>
+            </div>
+        </section>
+        
+        <section class="section-padding">
+            <div class="gestion-layout anim-fade-grow delay-2">
 
-                <div class="progress-bar-container">
-                    <div class="progress-bar-label">
-                        <span>Tareas Completadas</span>
-                        <span>2 / 5</span>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="calendar-prev">&larr;</button>
+                        <h3 id="current-month-year">Cargando...</h3>
+                        <button id="calendar-next">&rarr;</button>
                     </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill"></div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
                     </div>
+                    <div class="calendar-grid" id="calendar-grid-body"></div>
                 </div>
 
-                <form class="add-task-form">
-                    <input type="text" placeholder="Ej: Entregar proyecto de ASM...">
-                    <button type="submit" class="cta-btn"><span>Añadir Tarea</span></button>
-                </form>
-
-                <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;">Tareas Pendientes</h2>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <input type="checkbox" id="task1">
-                        <label for="task1">Entregar proyecto de ASM</label>
-                    </li>
-                    <li class="task-item">
-                        <input type="checkbox" id="task2">
-                        <label for="task2">Estudiar para parcial de Cálculo</label>
-                    </li>
-                    <li class="task-item">
-                        <input type="checkbox" id="task3">
-                        <label for="task3">Hacer taller de física</label>
-                    </li>
-                </ul>
-
-                <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;">Tareas Completadas</h2>
-                <ul class="task-list">
-                    <li class="task-item completed">
-                        <input type="checkbox" id="task4" checked>
-                        <label for="task4">Ver primer módulo de inglés</label>
-                    </li>
-                    <li class="task-item completed">
-                        <input type="checkbox" id="task5" checked>
-                        <label for="task5">Responder correo a profesor</label>
-                    </li>
-                </ul>
+                <div class="task-list-container">
+                    <h2 class="section-title" style="margin-bottom: 25px;">Tareas Pendientes</h2>
+                    
+                    <div class="add-task-button-container">
+                        <button class="cta-btn" id="open-task-modal-btn">+ Añadir Tarea Nueva</button>
+                    </div>
+                    
+                    <div id="task-list-wrapper" class="task-list-wrapper collapsed"> 
+                        <div class="task-card-grid" id="task-grid">
+                            <div class="task-card example-task" data-id="task-example-1"></div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </section>
     </main>
+
+    <div class="modal-overlay" id="add-task-modal">
+        <div class="modal-content">
+            <div class="modal-form-col">
+                <h2>Añadir Nueva Tarea</h2>
+                <form id="modal-task-form">
+                    <label for="modal-task-title">Título de la Tarea</label>
+                    <input type="text" id="modal-task-title" placeholder="Ej: Entregar Proyecto 3" required>
+                    
+                    <label for="modal-task-desc">Descripción</label>
+                    <textarea id="modal-task-desc" placeholder="Detalles de la tarea..."></textarea>
+                    
+                    <label for="modal-task-time">Hora</label>
+                    <input type="text" id="modal-task-time" placeholder="Ej: 2:30 PM">
+                    
+                    <button type="submit" class="cta-btn"><span>Guardar Tarea</span></button>
+                </form>
+            </div>
+            <div class="modal-calendar-col">
+                <div class="calendar-container" style="box-shadow:none; padding:0; border:none;">
+                    <div class="calendar-header">
+                        <button id="modal-calendar-prev">&larr;</button>
+                        <h3 id="modal-month-year">Cargando...</h3>
+                        <button id="modal-calendar-next">&rarr;</button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
+                    </div>
+                    <div class="calendar-grid" id="modal-calendar-grid-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* =========================================
+               1. LÓGICA DEL SLIDER (Actividades UAO)
+               ========================================= */
+            const scrollContainer = document.getElementById('scroll-container');
+            const slideLeftBtn = document.getElementById('slide-left');
+            const slideRightBtn = document.getElementById('slide-right');
+
+            if (scrollContainer && slideLeftBtn && slideRightBtn) {
+                slideLeftBtn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: -350, behavior: 'smooth' });
+                });
+
+                slideRightBtn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: 350, behavior: 'smooth' });
+                });
+            }
+
+            /* =========================================
+               2. CONFIGURACIÓN GLOBAL Y FECHAS
+               ========================================= */
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            const today = new Date();
+            const taskGrid = document.getElementById('task-grid');
+            const STORAGE_KEY = 'uaoTasks';
+
+            // Variables para el estado de los calendarios
+            let mainCalYear = today.getFullYear();
+            let mainCalMonth = today.getMonth();
+            let modalCalYear = today.getFullYear();
+            let modalCalMonth = today.getMonth();
+            let selectedDate = new Date(); // Fecha seleccionada en el modal
+
+            /* =========================================
+               3. GESTIÓN DE DATOS (LocalStorage)
+               ========================================= */
+            function getTasks() {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            }
+
+            function saveTasks(tasks) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+                // Refrescamos el calendario principal para mostrar los nuevos puntos
+                renderMainCalendar(mainCalYear, mainCalMonth);
+            }
+
+            /* =========================================
+               4. RENDERIZADO DE TAREAS
+               ========================================= */
+            function createTaskCardElement(task) {
+                const card = document.createElement('div');
+                card.classList.add('task-card');
+                if (task.completed) card.classList.add('completed');
+                card.dataset.id = task.id; 
+
+                const formattedDate = task.date ? new Date(task.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '(Sin fecha)';
+                const time = task.time || '(Sin hora)';
+
+                // Inserción segura de HTML
+                card.innerHTML = `
+                    <div class="task-card-content">
+                        <h3>${task.title}</h3>
+                        <p><strong>Descripción:</strong> ${task.desc || '(Sin descripción)'}</p>
+                    </div>
+                    <div class="task-card-details">
+                        <div><span>📅</span>${formattedDate}</div>
+                        <div><span>🕒</span>${time}</div>
+                        <button class="task-card-attachment">Adjuntar Prueba</button>
+                    </div>
+                    <div class="task-card-footer">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="${task.id}" class="task-checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')">
+                            <label for="${task.id}">Completada</label>
+                        </div>
+                        <button class="delete-btn" onclick="deleteTask('${task.id}')">Eliminar</button>
+                    </div>
+                `;
+                return card;
+            }
+
+            function loadTasks() {
+                taskGrid.innerHTML = ''; // Limpiar grid
+                const tasks = getTasks();
+                
+                if (tasks.length === 0) {
+                    // Si no hay tareas, podríamos mostrar un mensaje o dejarlo vacío
+                } else {
+                    tasks.forEach(task => {
+                        taskGrid.appendChild(createTaskCardElement(task));
+                    });
+                }
+            }
+
+            /* =========================================
+               5. FUNCIONES GLOBALES (Para HTML inline)
+               ========================================= */
+            window.toggleTask = (id) => {
+                const tasks = getTasks();
+                const taskIndex = tasks.findIndex(task => task.id === id);
+                if (taskIndex > -1) {
+                    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                    saveTasks(tasks);
+                    // Volvemos a cargar para actualizar estilos (tachado)
+                    loadTasks();
+                }
+            };
+
+            window.deleteTask = (id) => {
+                if(confirm('¿Estás seguro de eliminar esta tarea?')) {
+                    let tasks = getTasks();
+                    tasks = tasks.filter(task => task.id !== id);
+                    saveTasks(tasks);
+                    loadTasks();
+                }
+            };
+
+            /* =========================================
+               6. LÓGICA DEL CALENDARIO (Reutilizable)
+               ========================================= */
+            const dataCardContainer = document.getElementById('data-card-container');
+            const cardTitle = dataCardContainer.querySelector('.card-title');
+            const cardSubtitle = dataCardContainer.querySelector('.card-subtitle');
+            const cardDescription = dataCardContainer.querySelector('.card-description');
+
+            function renderCalendar(year, month, monthYearElId, gridBodyId, isModalCalendar = false) {
+                const monthYearEl = document.getElementById(monthYearElId);
+                const gridBody = document.getElementById(gridBodyId);
+
+                gridBody.innerHTML = '';
+                monthYearEl.textContent = `${monthNames[month]} ${year}`;
+
+                const allTasks = getTasks();
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                // Días vacíos del mes anterior
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    gridBody.appendChild(document.createElement('div')).classList.add('calendar-day', 'other-month');
+                }
+
+                // Días del mes actual
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayEl = document.createElement('div');
+                    dayEl.classList.add('calendar-day');
+                    dayEl.textContent = i;
+                    
+                    const dayDate = new Date(year, month, i);
+
+                    // Marcar hoy
+                    if (!isModalCalendar && i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                        dayEl.classList.add('today');
+                    }
+                    
+                    // Marcar selección en modal
+                    if (isModalCalendar && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
+                        dayEl.classList.add('selected');
+                    }
+
+                    // Lógica de Puntos (Tasks Dots) en Calendario Principal
+                    if (!isModalCalendar) {
+                        const tasksForDay = allTasks.filter(task => {
+                            const taskDate = new Date(task.date);
+                            return taskDate.getDate() === i &&
+                                   taskDate.getMonth() === month &&
+                                   taskDate.getFullYear() === year;
+                        });
+
+                        if (tasksForDay.length > 0) {
+                            const dot = document.createElement('div');
+                            dot.classList.add('task-dot');
+                            dayEl.appendChild(dot);
+
+                            // Hover Card Logic
+                            const hoverTask = tasksForDay[0]; 
+                            dayEl.addEventListener('mouseover', (e) => {
+                                showTaskHoverCard(e, hoverTask);
+                            });
+                            dayEl.addEventListener('mouseleave', () => {
+                                hideTaskHoverCard();
+                            });
+                            dayEl.addEventListener('mousemove', (e) => {
+                                if (dataCardContainer.classList.contains('visible')) {
+                                    updateCardPosition(e.clientX, e.clientY);
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Click en Modal para seleccionar fecha
+                    if (isModalCalendar) {
+                        dayEl.addEventListener('click', () => {
+                            selectedDate = dayDate;
+                            renderModalCalendar(year, month);
+                        });
+                    }
+                    gridBody.appendChild(dayEl);
+                }
+            }
+
+            /* Helpers para Calendario */
+            function renderMainCalendar(y, m) {
+                renderCalendar(y, m, 'current-month-year', 'calendar-grid-body', false);
+            }
+            function renderModalCalendar(y, m) {
+                renderCalendar(y, m, 'modal-month-year', 'modal-calendar-grid-body', true);
+            }
+
+            // Listeners de navegación de calendarios
+            document.getElementById('calendar-prev').onclick = () => {
+                mainCalMonth--; if(mainCalMonth<0){mainCalMonth=11;mainCalYear--} renderMainCalendar(mainCalYear, mainCalMonth);
+            };
+            document.getElementById('calendar-next').onclick = () => {
+                mainCalMonth++; if(mainCalMonth>11){mainCalMonth=0;mainCalYear++} renderMainCalendar(mainCalYear, mainCalMonth);
+            };
+            document.getElementById('modal-calendar-prev').onclick = () => {
+                modalCalMonth--; if(modalCalMonth<0){modalCalMonth=11;modalCalYear--} renderModalCalendar(modalCalYear, modalCalMonth);
+            };
+            document.getElementById('modal-calendar-next').onclick = () => {
+                modalCalMonth++; if(modalCalMonth>11){modalCalMonth=0;modalCalYear++} renderModalCalendar(modalCalYear, modalCalMonth);
+            };
+
+            /* =========================================
+               7. FUNCIONES DE TARJETA FLOTANTE
+               ========================================= */
+            function updateCardPosition(mouseX, mouseY) {
+                if (!dataCardContainer) return;
+                const cardWidth = dataCardContainer.offsetWidth;
+                const cardHeight = dataCardContainer.offsetHeight;
+                
+                let newX = mouseX + 15;
+                let newY = mouseY - (cardHeight / 2);
+
+                if (newX + cardWidth > window.innerWidth) newX = mouseX - cardWidth - 15; 
+                if (newY + cardHeight > window.innerHeight) newY = window.innerHeight - cardHeight - 10;
+                if (newY < 10) newY = 10;
+
+                dataCardContainer.style.transform = `translate(${newX}px, ${newY}px)`;
+            }
+
+            function showTaskHoverCard(event, task) {
+                const formattedDate = new Date(task.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+                cardTitle.textContent = task.title;
+                cardSubtitle.textContent = `📅 ${formattedDate} - 🕒 ${task.time || 'Todo el día'}`;
+                cardDescription.textContent = task.desc || '(Sin descripción)';
+                dataCardContainer.classList.add('visible');
+                updateCardPosition(event.clientX, event.clientY);
+            }
+
+            function hideTaskHoverCard() {
+                dataCardContainer.classList.remove('visible');
+            }
+
+            /* =========================================
+               8. MODAL Y FORMULARIO
+               ========================================= */
+            const modal = document.getElementById('add-task-modal');
+            document.getElementById('open-task-modal-btn').onclick = () => { 
+                modal.style.display = 'flex'; 
+                selectedDate = new Date(); // Resetear fecha
+                renderModalCalendar(modalCalYear, modalCalMonth); 
+            };
+            modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+
+            document.getElementById('modal-task-form').onsubmit = (e) => {
+                e.preventDefault();
+                const tasks = getTasks();
+                const newTask = {
+                    id: 't' + Date.now(),
+                    title: document.getElementById('modal-task-title').value,
+                    desc: document.getElementById('modal-task-desc').value,
+                    time: document.getElementById('modal-task-time').value,
+                    date: selectedDate.toISOString(),
+                    completed: false
+                };
+                tasks.push(newTask);
+                saveTasks(tasks);
+                loadTasks();
+                modal.style.display = 'none';
+                e.target.reset();
+            };
+
+            /* =========================================
+               9. CARGA DE DATOS UAO (Data.json)
+               ========================================= */
+            fetch('Data.json').then(r => r.json()).then(d => {
+                if(d.university_activities) {
+                    const c = document.getElementById('uni-activities-grid');
+                    d.university_activities.forEach(a => {
+                        // Crear tarjeta del slider
+                        const cardDiv = document.createElement('div');
+                        cardDiv.className = 'uni-activity-card anim-fade-grow';
+                        cardDiv.innerHTML = `
+                        <div class="card-image-container"><img src="${a.image_url}" alt="${a.title}"></div>
+                        <div class="card-content">
+                            <h3>${a.title}</h3>
+                            <p class="card-date">📅 ${a.date}</p>
+                            <p>${a.description}</p>
+                            <a href="${a.url}" class="cta-btn buy-btn" style="text-align:center;display:block;margin-top:auto">Inscribirse</a>
+                        </div>`;
+                        c.appendChild(cardDiv);
+                    });
+                }
+            }).catch(e => console.error("Error cargando Data.json:", e));
+
+            // INICIALIZACIÓN FINAL
+            renderMainCalendar(mainCalYear, mainCalMonth);
+            loadTasks();
+
+        });
+    </script>
 </body>
 </html>
