@@ -57,7 +57,7 @@
             "id": "taller-gestion-tiempo",  
             "title": "Taller de Manejo del Tiempo",
             "description": "Aprende técnicas efectivas para organizar tu semana...",
-            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Gestion+Tiempo",
+            "image_url": "https://onefocusapp.com/es/blog/metodo-4-a-manejo-estres/cover.es_hu_bc6d9badb588c107.jpg",
             "date": "Miércoles, 10:00 AM",
             "url": "inscripcion-detalle.html?id=taller-gestion-tiempo"  
         },
@@ -65,7 +65,7 @@
             "id": "yoga-express", 
             "title": "Yoga y Estiramiento Express",
             "description": "Sesión corta de yoga enfocada en liberar la tensión...",
-            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Yoga+Relajacion",
+            "image_url": "/Recursos/yoga_uao.jpg",
             "date": "Martes y Jueves, 4:30 PM",
             "url": "inscripcion-detalle.html?id=yoga-express"  
         },
@@ -73,7 +73,7 @@
             "id": "club-lectura-estres",  
             "title": "Club de Lectura Anti-Estrés",
             "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias...",
-            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Club+Lectura",
+            "image_url": "/Recursos/club.avif",
             "date": "Viernes, 2:00 PM",
             "url": "inscripcion-detalle.html?id=club-lectura-estres" 
         },
@@ -81,7 +81,7 @@
             "id": "respiracion-guiada",
             "title": "Técnicas de Respiración Guiada",
             "description": "Sesión práctica para aprender ejercicios de respiración que calman el sistema nervioso en momentos de pánico o examen.",
-            "image_url": "https://via.placeholder.com/400x200/5C7C3E/FFFFFF?text=Respiracion",
+            "image_url": "/Recursos/res.jpg",
             "date": "Lunes, 3:00 PM",
             "url": "inscripcion-detalle.html?id=respiracion-guiada"
         },
@@ -89,7 +89,7 @@
             "id": "nutricion-antiestres",
             "title": "Taller: Nutrición Anti-Estrés",
             "description": "Descubre qué alimentos potencian la concentración y cuáles ayudan a reducir la ansiedad durante picos académicos.",
-            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Nutricion",
+            "image_url": "/Recursos/nutricion.jpg",
             "date": "Jueves, 1:00 PM",
             "url": "inscripcion-detalle.html?id=nutricion-antiestres"
         }
