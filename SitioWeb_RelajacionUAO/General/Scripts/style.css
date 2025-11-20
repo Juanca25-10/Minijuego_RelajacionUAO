@@ -996,3 +996,63 @@ a, button {
     background-color: #e0e0e0; 
     transform: scale(1.02);
 }
+
+/* style.css (Adición para el Selector de Color) */
+
+.color-picker-wrapper {
+    /* Mantenemos el contenedor limpio y centrado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100%;
+    margin-top: 5px;
+    padding: 3px; /* Reducimos un poco el padding */
+    border: 2px solid var(--color-dark-surface);
+    border-radius: 12px; /* Mantenemos los bordes redondeados */
+    background-color: var(--color-background);
+}
+
+/* style.css: Selector de Color Interno */
+#custom-color-picker {
+    /* 1. Eliminar la apariencia nativa */
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none;
+    
+    /* 2. Expansión: Ocupar todo el ancho y alto del wrapper (menos padding) */
+    width: 100%; 
+    height: 35px; /* Altura más cómoda */
+    
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+
+    transition: transform 0.2s, box-shadow 0.2s;
+    outline: none; 
+}
+
+/* 3. Estilos de Muestra de Color (Lo que se ve) */
+#custom-color-picker::-webkit-color-swatch-wrapper { 
+    padding: 0; 
+}
+
+#custom-color-picker::-webkit-color-swatch { 
+    border: none; /* Quitamos el borde para que sea el contenedor quien lo ponga */
+    border-radius: 9px; /* Bordes suaves, manteniendo la consistencia */
+}
+
+#custom-color-picker::-moz-color-swatch { 
+    border: none;
+    border-radius: 9px; 
+}
+
+/* 4. Efectos de Interacción (Opcional) */
+#custom-color-picker:hover {
+    transform: none; /* Eliminamos el scale para un control más grande */
+}
+
+#custom-color-picker:focus {
+    box-shadow: 0 0 0 2px var(--color-dark-surface); /* Sombra sutil al enfocar */
+}

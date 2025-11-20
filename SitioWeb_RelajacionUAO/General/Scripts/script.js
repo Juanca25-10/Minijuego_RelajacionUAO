@@ -2,6 +2,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Referencias
     const cardCont = document.getElementById('data-card-container');
     const midGrid = document.querySelector('#mid-section .mid-grid');
+
+    // =========================================
+    // NUEVA LÓGICA DE COLOR PERSONALIZADO
+    // =========================================
+    const colorPicker = document.getElementById('custom-color-picker');
+    const root = document.documentElement;
+    const defaultPrimaryColor = '#9C1F37'; // Tu color primario por defecto
+
+    // 1. Cargar Color Guardado al inicio
+    const savedColor = localStorage.getItem('pref-custom-color');
+    if (savedColor) {
+        applyCustomColor(savedColor); // Aplicar el color guardado
+        if (colorPicker) {
+            colorPicker.value = savedColor; // Sincronizar el selector
+        }
+    }
+
+    // 2. Listener de cambio (al mover el selector)
+    if (colorPicker) {
+        colorPicker.addEventListener('input', (event) => {
+            applyCustomColor(event.target.value);
+        });
+    }
+
+    // 3. Modificación del Botón Restablecer (Para resetear también el color)
+    const resetButton = document.getElementById('reset-settings-btn');
+    if (resetButton) {
+        // Asegúrate de añadir esta lógica al listener de click de reset
+        // si tienes uno. Si no lo tienes, puedes agregarlo así:
+        resetButton.addEventListener('click', () => {
+            // Eliminar la preferencia de color y restaurar el color por defecto
+            localStorage.removeItem('pref-custom-color');
+            applyCustomColor(defaultPrimaryColor);
+            if (colorPicker) {
+                colorPicker.value = defaultPrimaryColor; // Resetear selector visualmente
+            }
+            // Aquí iría el resto de la lógica de restablecer (fuentes, contraste, etc.)
+        });
+    }
     
     // Datos Mock para Hover
     const cardData = {
@@ -379,3 +418,15 @@ const initAccessibilityPanel = (data) => {
     animateScroll();
 });
 
+// script.js (Nueva función)
+
+/**
+ * Aplica un color hexadecimal como el nuevo --color-primary.
+ * También guarda la preferencia en localStorage.
+ * @param {string} colorHex - El código de color hexadecimal (ej. #FF0000).
+ */
+const applyCustomColor = (colorHex) => {
+    document.documentElement.style.setProperty('--color-primary', colorHex);
+    // Guardar en localStorage para recordar la elección
+    localStorage.setItem('pref-custom-color', colorHex);
+};
