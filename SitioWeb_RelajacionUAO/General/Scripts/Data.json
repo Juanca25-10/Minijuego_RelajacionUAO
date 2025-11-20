@@ -98,7 +98,7 @@
         "mode_buttons": [
             {"mode": "default", "text": "Normal"},
             {"mode": "high-contrast", "text": "Alto Contraste"},
-            {"mode": "dyslexia-color", "text": "Color Dislexia"}
+            {"mode": "dyslexia-color", "text": "Color Amarillo"}
         ],
         "new_toggles": [
             {"id": "saturation-toggle", "label": "Saturación de Color", "pref_key": "pref-saturation", "css_class": "high-saturation"},

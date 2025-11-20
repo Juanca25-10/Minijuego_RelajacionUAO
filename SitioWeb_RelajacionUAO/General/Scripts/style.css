@@ -941,3 +941,58 @@ a, button {
     --color-background: #FFFFAA !important;
     --color-secondary: #333 !important;
 }
+
+/* style.css (Añadir este código en la sección de Estilos de Opciones) */
+
+/* Estilo para el desplegable y el botón de restablecer */
+.setting-group select,
+#reset-settings-btn {
+    padding: 10px 15px;
+    border: 2px solid var(--color-dark-surface); /* Borde suave */
+    border-radius: 12px; /* Bordes redondeados */
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%; /* Ocupar todo el ancho disponible */
+    margin-top: 5px;
+}
+
+.setting-group select {
+    /* Mejoras para el desplegable de fuente */
+    appearance: none; /* Elimina el estilo nativo de la flecha */
+    background-color: var(--color-background);
+    color: var(--color-secondary);
+    /* Icono de flecha SVG codificado en base a --color-primary */
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%239C1F37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    padding-right: 40px; /* Espacio para la flecha */
+}
+
+.setting-group select:focus, 
+.setting-group select:hover {
+    outline: none;
+    border-color: var(--color-primary); /* Resaltar con color UAO al enfocar/hover */
+    box-shadow: 0 0 0 3px rgba(156, 31, 55, 0.1);
+}
+
+
+/* Estilo específico para el botón de Restablecer */
+#reset-settings-btn {
+    padding: 10px 20px;
+    border: 2px solid #ccc; /* Borde gris suave */
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: var(--color-secondary);
+    font-weight: 600;
+    margin-top: 20px; /* Mayor separación */
+    display: flex; /* Para centrar el contenido y el ícono */
+    align-items: center;
+    justify-content: center;
+}
+
+#reset-settings-btn:hover {
+    border-color: #999;
+    background-color: #e0e0e0; 
+    transform: scale(1.02);
+}
