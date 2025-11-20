@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAO | Sistema de Gestión de Estrés Estudiantil</title>
+    
+    <link rel="stylesheet" href="./style_copy.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <link rel="stylesheet" href="./fireflies.css"> 
+    </head>
+<body>
+    
+    <div id="scoreDisplay">0</div>
+
+    <canvas id="firefly-game-canvas"></canvas>
+    <div id="data-card-container" class="hidden">
+        <div class="data-card">
+            <h3 class="card-title"></h3>
+            <p class="card-subtitle"></p>
+            <p class="card-description"></p>
+            <div class="card-stats">
+                </div>
+            <button class="card-cta">Ver Detalles</button>
+        </div>
+    </div>
+    
+    <header id="main-header">
+        <div class="logo"></div>
+        <nav>
+            <ul class="nav-links">
+                </ul>
+        </nav>
+        <button class="cta-btn"></button>
+    </header>
+
+    <main>
+        <section id="hero-section" class="section-padding">
+            <div class="hero-content">
+                <div class="text-container">
+                    <p class="greeting"></p>
+                    <h1 class="title"></h1>
+                    <p class="tagline"></p>
+                    <div class="stats-grid">
+                        </div>
+                </div>
+                <div class="hero-image-overlay"></div>
+            </div>
+            <p class="trust-text"></p>
+        </section>
+
+        <section id="mid-section" class="section-padding">
+            <div class="mid-grid">
+                <div class="mid-text">
+                    <h2 class="section-title"></h2>
+                    <p class="bio"></p>
+                    <a href="sub_paginas.html" class="mid-cta-btn cta-btn"></a>
+                </div>
+                <div class="mid-images">
+                    <div class="image-box">
+                        <img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+UAO+1" alt="Estudiante trabajando">
+                    </div>
+                    <div class="image-box">
+                        <img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+UAO+2" alt="Estudiante relajándose">
+                    </div>
+                    <div class="image-box">
+                        <img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+UAO+3" alt="Gestión de tareas">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects-section" class="section-padding">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 50px;"></h2> 
+            <div class="project-grid">
+                </div>
+        </section>
+    </main>
+    
+    <button id="firefly-toggle-btn" title="Iniciar/Detener el Minijuego">
+        <img id="btn-icon-start" src="./Assets/Imagenes/Button_NoInteractua.png" class="w-full h-full object-contain">
+        <img id="btn-icon-hover" src="./Assets/Imagenes/Button_SiInteractua.png" class="w-full h-full object-contain hidden">
+        <img id="btn-icon-close" src="./Assets/Imagenes/X_Salir.png" class="w-full h-full object-contain hidden">
+        <span class="tooltip-text" id="tooltip-text">Iniciar Descanso Activo</span>
+    </button>
+
+    <div id="cta-bar" class="fixed bottom-0 left-0 w-full z-[1001] cursor-pointer shadow-xl transition-transform duration-500 transform translate-y-full">
+        <div class="flex items-center justify-center py-3 px-4 text-white text-lg font-semibold" 
+             style="background: linear-gradient(90deg, #ff9900, #ffcc33);">
+            Tomate un tiempo y deja la noche caer
+        </div>
+    </div>
+
+    <audio id="bg-music" src="./Assets/Audios/AudioFondoJuego.mp3" loop></audio>
+    <audio id="net-sound" src="./Assets/Audios/old-men-arm-move-97741.mp3"></audio>
+    <audio id="capture-sound" src="./Assets/Audios/notification-bell-sound-376888.mp3"></audio>
+    <script src="./script_copy.js"></script>
+    
+    <script type="module" src="./fireflies.js"></script> 
+</body>
+</html>
