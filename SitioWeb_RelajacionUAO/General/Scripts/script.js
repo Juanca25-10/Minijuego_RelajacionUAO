@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Aquí iría el resto de la lógica de restablecer (fuentes, contraste, etc.)
         });
     }
+
+    
     
     // Datos Mock para Hover
     const cardData = {
