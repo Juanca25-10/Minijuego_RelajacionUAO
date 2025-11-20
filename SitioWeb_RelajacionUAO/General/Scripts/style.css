@@ -175,6 +175,61 @@ a, button {
     gap: 40px;
 }
 
+.hero-image-container {
+    flex: 1;
+    max-width: 500px;
+    position: relative; /* Asegúrate de que position sea relative */
+    padding: 20px 0;
+    margin-right: -40px;
+    
+    top: 50px; /* <--- AÑADE ESTA LÍNEA o ajusta el valor */
+    /* Puedes ajustar '50px' al valor que necesites para moverla hacia abajo.
+       Valores negativos la moverían hacia arriba. */
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    
+    /* 1. EFECTO DE DESVANECIDO (El punto clave) */
+    /* Crea un gradiente lineal que va de transparente a opaco sobre la imagen,
+       logrando que se "funda" con el fondo. */
+    mask-image: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 1) 95%, /* Opaco hasta el 85% */
+        rgba(0, 0, 0, 0) 100%  /* Transparente al final */
+    );
+    /* Propiedad alternativa para navegadores (Webkit) */
+    -webkit-mask-image: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 1) 85%, 
+        rgba(0, 0, 0, 0) 100%
+    );
+
+    /* Otros estilos estéticos */
+    object-fit: cover;
+    transform: rotate(1deg); /* Ligera inclinación para un toque moderno */
+    transition: transform 0.5s ease;
+}
+
+/* --- RESPONSIVE: Ocultar o ajustar la imagen en móviles --- */
+@media (max-width: 900px) {
+    .hero-content {
+        flex-direction: column; /* Apila el texto y la imagen en pantallas pequeñas */
+        gap: 20px;
+    }
+    
+    .hero-image-container {
+        max-width: 100%; /* La imagen ocupa todo el ancho */
+        margin-right: 0;
+    }
+    
+    /* Opcional: Si quieres ocultar la imagen completamente en móviles */
+    /* .hero-image-container { display: none; } */
+}
 .hero-content {
     display: grid;
     grid-template-columns: 1fr 1fr;

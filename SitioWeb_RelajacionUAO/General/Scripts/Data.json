@@ -9,10 +9,10 @@
         "cta_button": "¡Comienza Ahora!"
     },
     "hero_section": {
-        "greeting": "UAO Stress App",
-        "title": "Estrés Estudiantil",
-        "tagline": "Una aplicación web diseñada para estudiantes de Ingeniería Multimedia de la UAO, enfocada en la gestión de actividades y la promoción de un ambiente de aprendizaje saludable.",
-        "trust_text": "Este proyecto aborda el problema del estrés experimentado por los estudiantes de Ingeniería Multimedia durante el periodo académico.",
+        "greeting": "Tu Aliado Anti-Estrés",
+        "title": "Domina tu Semestre. Vive sin Ansiedad.",
+        "tagline": "Herramientas de relajación, gestión de carga académica y mini-juegos para transformar el estrés en enfoque y rendimiento.",
+        "trust_text": "Diseñado por la UAO para ti: Convierte la presión académica en tu mayor motivación.",
         "stats": [
             {
                 "id": "01",
@@ -30,10 +30,10 @@
         ]
     },
     "mid_section": {
-        "title_part1": "El Contexto",
-        "title_part2": "del Problema",
-        "bio_text": "Se ha demostrado que los estudiantes de ingeniería están sometidos a niveles significativos de estrés. Nuestro objetivo es crear una solución adaptativa que mejore el rendimiento académico y el bienestar emocional.",
-        "mid_cta": "Ver Propuesta Teórica"
+        "title_part1": "Tu Éxito",
+        "title_part2": "Comienza Aquí",
+        "bio_text": "El alto nivel de exigencia no tiene por qué ser una fuente de agotamiento. Hemos creado un sistema modular que te permite tomar el control de tu carga académica, integrar pausas de relajación efectivas y recargar tu energía para cada proyecto. Mejora tu bienestar fisiológico y psicológico, transformando tu respuesta al estrés en una ventaja académica.",
+        "mid_cta": "Organizar Actividades"
     },
     "projects_section": {
         "title": "Prototipo & Modelo",
