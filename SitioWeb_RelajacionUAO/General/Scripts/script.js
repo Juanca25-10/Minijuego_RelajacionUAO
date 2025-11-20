@@ -153,6 +153,8 @@ const applyPreferences = () => {
 };
 
 
+
+
 // 2. Inicializa el panel, carga los textos del JSON y configura listeners
 const initAccessibilityPanel = (data) => {
     // Referencias
