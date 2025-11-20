@@ -1076,7 +1076,16 @@ a, button {
 }
 
 .banner-overlay {
-    background-color: rgba(0, 0, 0, 0.45); /* Capa oscura sobre la imagen */
+    /* 🚨 CÓDIGO ACTUALIZADO: Degradado moderno (Rojo y Blanco) 🚨 */
+    background: linear-gradient(
+        135deg, /* Ángulo diagonal para un look dinámico */
+        rgba(255, 255, 255, 0.2) 0%, /* Blanco muy transparente en la esquina superior izquierda */
+        var(--color-primary) 30%,    /* Vinotinto (Rojo UAO) en el 30% del banner */
+        rgba(156, 31, 55, 0.4) 70%,  /* Vinotinto semi-transparente en el 70% */
+        rgba(255, 255, 255, 0.3) 100% /* Blanco transparente en la esquina inferior derecha */
+    );
+    
+    /* Mantenemos el resto de propiedades para el posicionamiento */
     position: absolute;
     top: 0;
     left: 0;
