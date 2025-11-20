@@ -112,6 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             // Cargar el Header con los datos de Data.json
             loadHeader(data.header);
+
+            if (typeof initAccessibility === 'function') {
+                initAccessibility(data.accessibility_panel); 
+            }
             
             // Renderizar el contenido específico de la página de inscripción
             renderInscriptionPage(data);
