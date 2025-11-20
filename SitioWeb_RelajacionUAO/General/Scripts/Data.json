@@ -90,17 +90,23 @@
         "font_size_label": "Tamaño de Texto",
         "font_family_label": "Fuente de Lectura",
         "font_options": [
-            {"value": "Inter, sans-serif", "text": "Predeterminada (Inter)"},
+            {"value": "Inter, sans-serif", "text": "Predeterminada"},
             {"value": "Open Sans, sans-serif", "text": "Estándar Legible"},
-            {"value": "Dyslexic, sans-serif", "text": "Para Dislexia"}
+            {"value": "OpenDyslexic, sans-serif", "text": "Para Dislexia"}
         ],
         "contrast_mode_label": "Modo de Contraste",
         "mode_buttons": [
-            {"mode": "default", "text": "🎨 Normal"},
-            {"mode": "high-contrast", "text": "⚫ Alto Contraste"},
-            {"mode": "dyslexia-color", "text": "🟡 Fondo Amarillo"}
+            {"mode": "default", "text": "Normal"},
+            {"mode": "high-contrast", "text": "Alto Contraste"},
+            {"mode": "dyslexia-color", "text": "Color Dislexia"}
         ],
-        "reset_button": "Restablecer Configuración"
+        "new_toggles": [
+            {"id": "saturation-toggle", "label": "Saturación de Color", "pref_key": "pref-saturation", "css_class": "high-saturation"},
+            {"id": "spacing-toggle", "label": "Espaciado de Texto", "pref_key": "pref-spacing", "css_class": "increased-spacing"},
+            {"id": "highlight-links-toggle", "label": "Resaltar Enlaces", "pref_key": "pref-highlight", "css_class": "highlight-links"},
+            {"id": "cursor-toggle", "label": "Cursor Grande", "pref_key": "pref-cursor", "css_class": "large-cursor"}
+        ],
+        "reset_button": "Restablecer"
     }
 }
 
