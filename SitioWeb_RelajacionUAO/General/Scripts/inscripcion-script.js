@@ -1,9 +1,7 @@
-// inscripcion-script.js
+// inscripcion-script.js - COMPLETO
 
 /**
  * Función para obtener un parámetro de la URL (ej. el ID de la actividad).
- * @param {string} name - Nombre del parámetro a buscar.
- * @returns {string|null} - Valor del parámetro o null si no se encuentra.
  */
 const getUrlParameter = (name) => {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -13,20 +11,53 @@ const getUrlParameter = (name) => {
 };
 
 /**
+ * Carga el logo, links de navegación y CTA en el header.
+ */
+const loadHeader = (headerData) => {
+    const navLinksUl = document.getElementById('main-nav-links');
+    const logoLink = document.querySelector('#main-header .logo a'); // Selecciona el <a> dentro de .logo
+    const ctaButton = document.getElementById('header-cta-btn'); 
+    
+    if (!logoLink || !navLinksUl || !ctaButton) return;
+
+    // 1. Logo (el texto ya está en el HTML, pero se actualiza el texto)
+    logoLink.textContent = headerData.logo;
+
+    // 2. Botón CTA
+    ctaButton.textContent = headerData.cta_button;
+    // Opcional: Si el CTA va a una URL específica:
+    // ctaButton.onclick = () => { window.location.href = headerData.cta_url || '#'; };
+
+    // 3. Links de navegación
+    navLinksUl.innerHTML = ''; // Limpiar links existentes
+    headerData.nav_links.forEach(link => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${link.url}">${link.text}</a>`;
+        navLinksUl.appendChild(li);
+    });
+};
+
+/**
  * Carga y renderiza los detalles de la actividad y configura el formulario.
- * @param {object} allData - Todos los datos de Data.json.
  */
 const renderInscriptionPage = (allData) => {
     // 1. Obtener el ID de la URL
     const activityId = getUrlParameter('id');
     // Asumiendo que 'activity_details' está en el nivel superior del JSON
+    // ESTA LÍNEA DEBE ENCONTRAR activity_details en el JSON (Punto 1 de la respuesta anterior)
     const detailData = allData.activity_details ? allData.activity_details[activityId] : null;
 
     if (!activityId || !detailData) {
         // Manejar el caso de ID no encontrado o JSON incompleto
         document.getElementById('page-title').textContent = "Error: Actividad No Encontrada";
         document.getElementById('activity-title').textContent = "Actividad No Encontrada";
-        document.getElementById('activity-description').innerHTML = "<p>Lo sentimos, la actividad que buscas no está disponible.</p>";
+        document.getElementById('activity-location').textContent = ""; // Limpiar ubicación
+        document.getElementById('activity-description').innerHTML = "<p>Lo sentimos, la actividad que buscas no está disponible. Asegúrate de que el enlace es correcto y que el `Data.json` tiene la sección `activity_details`.</p>";
+        // Ocultar elementos irrelevantes en caso de error
+        const scheduleBox = document.querySelector('.schedule-box');
+        if (scheduleBox) scheduleBox.classList.add('hidden');
+        const formContainer = document.querySelector('.inscription-form-container');
+        if (formContainer) formContainer.classList.add('hidden');
         return;
     }
 
@@ -35,6 +66,8 @@ const renderInscriptionPage = (allData) => {
     document.getElementById('activity-title').textContent = detailData.title;
     document.getElementById('activity-location').textContent = `Ubicación: ${detailData.location}`;
     document.getElementById('activity-description').textContent = detailData.full_description;
+    
+    // El horario se toma de detailData.schedule, que es el valor completo
     document.getElementById('activity-schedule').textContent = detailData.schedule;
     document.getElementById('form-schedule-display').value = detailData.schedule;
     
@@ -57,9 +90,6 @@ const renderInscriptionPage = (allData) => {
             const code = document.getElementById('student-code').value;
             const email = document.getElementById('student-email').value;
             
-            // Lógica de simulación de registro
-            console.log(`Inscripción Recibida para: ${detailData.title}`);
-            
             // 4. Mostrar Mensaje de Éxito
             inscriptionForm.classList.add('hidden'); // Ocultar formulario
             successMessage.classList.remove('hidden'); // Mostrar mensaje de éxito
@@ -76,18 +106,21 @@ const renderInscriptionPage = (allData) => {
 
 // 5. INICIALIZACIÓN: Cargar el JSON cuando la página esté lista
 document.addEventListener('DOMContentLoaded', () => {
-    // Intentar cargar Data.json
-    fetch('Data.json')
-        .then(response => response.json())
-        .then(data => {
-            renderInscriptionPage(data);
-        })
-        .catch(error => {
-            console.error('Error cargando data:', error);
-            document.getElementById('activity-title').textContent = "Error de Conexión";
-            document.getElementById('activity-description').innerHTML = "<p>No se pudieron cargar los datos de la actividad.</p>";
-        });
-        
-    // NOTA: Si el script.js global maneja el initAccessibilityPanel(),
-    // debe estar cargado ANTES de este script en el HTML.
+    // Intentar cargar Data.json
+    fetch('Data.json')
+        .then(response => response.json())
+        .then(data => {
+            // Cargar el Header con los datos de Data.json
+            loadHeader(data.header);
+            
+            // Renderizar el contenido específico de la página de inscripción
+            renderInscriptionPage(data);
+        })
+        .catch(error => {
+            console.error('Error cargando data:', error);
+            document.getElementById('activity-title').textContent = "Error de Conexión";
+            document.getElementById('activity-description').innerHTML = "<p>No se pudieron cargar los datos del sistema. Verifica el archivo Data.json.</p>";
+        });
 });
+
+

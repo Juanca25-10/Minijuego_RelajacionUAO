@@ -57,34 +57,84 @@
     },
     "university_activities": [
         {
+            "id": "taller-gestion-tiempo",  
             "title": "Taller de Manejo del Tiempo",
-            "description": "Aprende técnicas efectivas para organizar tu semana y reducir la ansiedad por plazos de entrega.",
+            "description": "Aprende técnicas efectivas para organizar tu semana...",
             "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Gestion+Tiempo",
             "date": "Miércoles, 10:00 AM",
-            "url": "#inscripcion-tiempo"
+            "url": "inscripcion-detalle.html?id=taller-gestion-tiempo"  
         },
         {
+            "id": "yoga-express", 
             "title": "Yoga y Estiramiento Express",
-            "description": "Sesión corta de yoga enfocada en liberar la tensión de cuello y espalda después de largas horas de estudio.",
+            "description": "Sesión corta de yoga enfocada en liberar la tensión...",
             "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Yoga+Relajacion",
             "date": "Martes y Jueves, 4:30 PM",
-            "url": "#inscripcion-yoga"
+            "url": "inscripcion-detalle.html?id=yoga-express"  
         },
         {
+            "id": "club-lectura-estres",  
             "title": "Club de Lectura Anti-Estrés",
-            "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias en un ambiente de apoyo.",
+            "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias...",
             "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Club+Lectura",
             "date": "Viernes, 2:00 PM",
-            "url": "#inscripcion-lectura"
+            "url": "inscripcion-detalle.html?id=club-lectura-estres" 
         },
         {
-            "title": "Club de Lectura Anti-Estrés",
-            "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias en un ambiente de apoyo.",
-            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Club+Lectura",
-            "date": "Viernes, 2:00 PM",
-            "url": "#inscripcion-lectura"
+            "id": "respiracion-guiada",
+            "title": "Técnicas de Respiración Guiada",
+            "description": "Sesión práctica para aprender ejercicios de respiración que calman el sistema nervioso en momentos de pánico o examen.",
+            "image_url": "https://via.placeholder.com/400x200/5C7C3E/FFFFFF?text=Respiracion",
+            "date": "Lunes, 3:00 PM",
+            "url": "inscripcion-detalle.html?id=respiracion-guiada"
+        },
+        {
+            "id": "nutricion-antiestres",
+            "title": "Taller: Nutrición Anti-Estrés",
+            "description": "Descubre qué alimentos potencian la concentración y cuáles ayudan a reducir la ansiedad durante picos académicos.",
+            "image_url": "https://via.placeholder.com/400x200/9C1F37/FFFFFF?text=Nutricion",
+            "date": "Jueves, 1:00 PM",
+            "url": "inscripcion-detalle.html?id=nutricion-antiestres"
         }
     ],
+
+    "activity_details": {
+        "taller-gestion-tiempo": {
+            "title": "Inscripción: Taller de Manejo del Tiempo",
+            "full_description": "Este taller de gestión de tiempo te dará las herramientas para priorizar tareas y evitar el 'burnout'. Es esencial para un semestre exitoso.",
+            "banner_image": "https://via.placeholder.com/1200x300/1E1E1E/FFFFFF?text=TALLER+GESTION+TIEMPO",
+            "schedule": "Miércoles, 10:00 AM - 11:30 AM",
+            "location": "Bloque A, Salón 201 (Virtual por Teams)"
+        },
+        "yoga-express": {
+            "title": "Inscripción: Yoga y Estiramiento Express",
+            "full_description": "Una breve pausa activa para liberar la tensión acumulada en el cuerpo por el estudio constante. No se necesita experiencia previa.",
+            "banner_image": "https://via.placeholder.com/1200x300/9C1F37/FFFFFF?text=YOGA+INSCRIPCION",
+            "schedule": "Martes y Jueves, 4:30 PM - 5:00 PM",
+            "location": "Plaza Central (Cancha Múltiple)"
+        },
+        "respiracion-guiada": {
+            "title": "Inscripción: Técnicas de Respiración Guiada",
+            "full_description": "Aprende la técnica de respiración diafragmática y 4-7-8, probadas para reducir la frecuencia cardíaca y promover un estado de calma inmediata. Es perfecta antes de presentar un examen o una sustentación.",
+            "banner_image": "https://via.placeholder.com/1200x300/5C7C3E/FFFFFF?text=RESPIRACION+GUIADA",
+            "schedule": "Lunes, 3:00 PM - 3:45 PM",
+            "location": "Bloque P, Salón 405 (Presencial)"
+        },
+        "nutricion-antiestres": {
+            "title": "Inscripción: Taller de Nutrición Anti-Estrés",
+            "full_description": "Un dietista te guiará sobre los 'superalimentos' anti-estrés (como el cacao y los frutos secos) y cómo planificar comidas rápidas y saludables que mantengan tu energía y concentración estables.",
+            "banner_image": "https://via.placeholder.com/1200x300/9C1F37/FFFFFF?text=NUTRICION+ANTIESTRES",
+            "schedule": "Jueves, 1:00 PM - 2:00 PM",
+            "location": "Auditorio Central"
+        },
+        "club-lectura-estres": {
+            "title": "Inscripción: Club de Lectura Anti-Estrés",
+            "full_description": "Únete a este club para desconectar. Leemos un capítulo semanal y lo comentamos para fomentar un espacio de apoyo y relajación social.",
+            "banner_image": "https://via.placeholder.com/1200x300/1E1E1E/FFFFFF?text=CLUB+LECTURA+INSCRIPCION",
+            "schedule": "Viernes, 2:00 PM - 3:00 PM",
+            "location": "Biblioteca, Sala Multimedia"
+        }
+    },
     "accessibility_panel": {
         "title": "Personalización y Accesibilidad",
         "font_size_label": "Tamaño de Texto",
