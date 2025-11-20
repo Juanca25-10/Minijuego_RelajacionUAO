@@ -25,11 +25,8 @@
             {
                 "id": "03",
                 "description": "Mini Juego Anti-estrés" 
-            },
-            {
-                "id": "04",
-                "description": "Accesibilidad Web" 
             }
+            
         ]
     },
     "mid_section": {

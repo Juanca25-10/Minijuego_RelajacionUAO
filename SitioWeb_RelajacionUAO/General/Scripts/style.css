@@ -289,8 +289,8 @@ a, button {
 
 .mid-images {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr; /* Una columna para una sola imagen */
+    gap: 0px; /* Eliminar el espacio innecesario */
 }
 
 .image-box {
@@ -300,15 +300,16 @@ a, button {
 }
 
 .image-box img {
-    width: 100%;
+    width: 100%; /* Ocupa el 100% del contenedor */
     height: auto;
     display: block;
     object-fit: cover;
     transition: transform 0.5s ease-in-out;
+    transform: none; /* Opcional: si quieres eliminar todas las transformaciones iniciales */
 }
 
 .image-box img:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Opcional: mantener solo el zoom */
 }
 
 /* =========================================
@@ -1216,3 +1217,4 @@ a, button {
 }
 
 .hidden { display: none !important; }
+
