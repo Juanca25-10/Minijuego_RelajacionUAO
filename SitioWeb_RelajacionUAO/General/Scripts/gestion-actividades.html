@@ -9,24 +9,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
+        /* =========================================
+           ESTILOS ESPECÍFICOS PARA ESTA PÁGINA
+           ========================================= */
 
-        /* --- ESTILOS PARA LA NUEVA SECCIÓN DE ACTIVIDADES UAO --- */
-       .uni-activities-grid-v6 {
-            display: flex; /* CAMBIO CLAVE: Usa flexbox para flujo horizontal */
-            flex-wrap: nowrap; /* FUERZA A NO ROMPER LA LÍNEA */
-            gap: 30px; 
-            
-            /* Eliminamos límites para que crezca horizontalmente */
-            max-width: none; 
-            margin: 0;
-            padding: 0;
-            
-            /* Asegura que las tarjetas estén alineadas en el centro verticalmente (opcional) */
-            align-items: stretch;
-            height: 100%;
+        /* --- ANIMACIONES DE ENTRADA --- */
+        @keyframes fadeGrow {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .anim-fade-grow {
+            opacity: 0;
+            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+
+        /* --- BANNER SUPERIOR --- */
+        .subpage-banner-v6 {
+            background-color: var(--color-dark-surface);
+            color: var(--color-secondary);
+            padding: 80px 5%;
+            text-align: center;
+            border-radius: 12px;
+            margin: 0 1%; 
+            margin-bottom: 40px;
+        }
+        
+        .subpage-banner-v6 .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        /* Línea decorativa debajo del título */
+        .subpage-banner-v6 .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-secondary);
+            border-radius: 2px;
+        }
+        
+        .subpage-banner-v6 .tagline {
+            font-size: 1.25rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
+        /* --- SLIDER DE ACTIVIDADES UAO --- */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            padding: 0 20px; /* Espacio para los botones */
+        }
+
+        .horizontal-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            padding: 20px 5px;
+        }
+        
+        .horizontal-scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .uni-activities-grid-v6 {
+            display: flex;
+            gap: 30px;
+            width: max-content; /* Permite que crezca horizontalmente */
+        }
+
+        /* Botones de navegación del Slider */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--color-background);
+            border: 1px solid #EAEAEA;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .slider-btn:hover {
+            background-color: var(--color-primary);
+            color: white;
+            box-shadow: 0 6px 15px rgba(156, 31, 55, 0.3);
+        }
+        
+        .slider-btn.left { left: 0; }
+        .slider-btn.right { right: 0; }
+
+        /* Tarjeta de Actividad del Slider */
         .uni-activity-card {
+            flex: 0 0 320px; /* Ancho fijo */
             background-color: var(--color-background);
             border-radius: 15px;
             overflow: hidden;
@@ -34,11 +134,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
+            border: 1px solid #f0f0f0;
         }
 
         .uni-activity-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(156, 31, 55, 0.15); /* Sombra con toque UAO */
+            box-shadow: 0 8px 30px rgba(156, 31, 55, 0.15);
         }
 
         .card-image-container {
@@ -66,93 +167,43 @@
 
         .card-content h3 {
             color: var(--color-primary);
-            font-size: 1.4rem; /* Subimos ligeramente el tamaño, estaba en 1.3rem */
+            font-size: 1.3rem;
             margin-bottom: 5px;
-            
-            /* PROPIEDADES CLAVE PARA TRUNCAR EL TEXTO */
-            white-space: nowrap;          /* Fuerza el texto a una sola línea */
-            overflow: hidden;             /* Oculta el texto que se desborda */
-            text-overflow: ellipsis;      /* Muestra "..." al final de la línea */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .card-content p {
             font-size: 0.95rem;
             color: var(--color-secondary);
             margin-bottom: 15px;
-            flex-grow: 1; /* Para empujar el footer/botón hacia abajo */
+            flex-grow: 1;
         }
 
         .card-date {
             font-size: 0.85rem;
-            color: var(--color-primary);
+            color: #555;
             font-weight: 600;
             margin-bottom: 10px;
         }
-        /* Animación suave (Se mantiene) */
-        @keyframes fadeGrow {
-            from { opacity: 0; transform: scale(0.97); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .anim-fade-grow {
-            opacity: 0;
-            animation: fadeGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.3s; }
-        .delay-3 { animation-delay: 0.5s; }
 
-        /* --- ESTILOS DEL BANNER (ACTUALIZADOS) --- */
-        .subpage-banner-v6 {
-            background-color: var(--color-dark-surface);
-            color: var(--color-secondary);
-            padding: 100px 5%;
-            text-align: center;
-            border-radius: 12px;
-            margin: 0 1%; 
-        }
-        .subpage-banner-v6 .title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--color-primary);
-            margin-bottom: 25px;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-        .subpage-banner-v6 .title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--color-secondary);
-            border-radius: 2px;
-        }
-        .subpage-banner-v6 .tagline {
-            font-size: 1.25rem;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* --- LAYOUT DE 2 COLUMNAS (Se mantiene) --- */
+        /* --- LAYOUT PRINCIPAL (Calendario + Lista) --- */
         .gestion-layout {
             display: grid;
-            grid-template-columns: 1fr 1.5fr; 
+            grid-template-columns: 1fr 1.5fr; /* Calendario izquierda, Tareas derecha */
             gap: 40px;
             max-width: 1400px;
             margin: 0 auto;
         }
+        
         @media (max-width: 1024px) {
             .gestion-layout {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Columna única en móviles */
             }
         }
 
-        /* --- CSS PARA CALENDARIO (Se mantiene) --- */
+        /* --- ESTILOS DEL CALENDARIO --- */
         .calendar-container {
             background-color: var(--color-background);
             border: 1px solid #EAEAEA; 
@@ -161,18 +212,21 @@
             padding: 25px;
             align-self: start; 
         }
+        
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
+        
         .calendar-header h3 {
             font-size: 1.5rem;
             font-weight: 800;
             color: var(--color-secondary);
             margin: 0;
         }
+        
         .calendar-nav button {
             background: none;
             border: none;
@@ -183,14 +237,17 @@
             border-radius: 50%;
             transition: background-color 0.3s ease;
         }
+        
         .calendar-nav button:hover {
             background-color: var(--color-dark-surface);
         }
+        
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 5px; 
         }
+        
         .calendar-day-name {
             font-weight: 600;
             font-size: 0.8rem;
@@ -198,6 +255,7 @@
             color: #555;
             margin-bottom: 5px;
         }
+        
         .calendar-day {
             padding: 10px 5px; 
             text-align: center;
@@ -208,24 +266,30 @@
             cursor: pointer;
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
+        
         .calendar-day:hover:not(.other-month) {
             background-color: var(--color-subtle-background);
             border-color: var(--color-primary);
         }
+        
         .calendar-day.other-month {
             opacity: 0.3;
             pointer-events: none;
         }
+        
         .calendar-day.today {
             background-color: var(--color-primary);
             color: var(--color-light-text);
             border-color: var(--color-primary);
         }
+        
         .calendar-day.selected {
             background-color: #1E1E1E;
             color: var(--color-light-text);
             border-color: #1E1E1E;
         }
+        
+        /* Punto indicador de tarea */
         .calendar-day .task-dot {
             width: 6px;
             height: 6px;
@@ -236,26 +300,33 @@
             left: 50%;
             transform: translateX(-50%);
         }
+        
         .calendar-day.today .task-dot {
             background-color: var(--color-light-text);
         }
 
-        /* --- CSS PARA TARJETAS DE TAREA (Se mantiene) --- */
-        .task-list-container { }
-        
+        /* --- LISTA DE TAREAS --- */
+        .task-list-container h2 {
+            margin-bottom: 25px;
+        }
+
         .add-task-button-container {
             margin-bottom: 30px;
         }
+        
         #open-task-modal-btn {
             width: 100%;
             font-size: 1.2rem;
             padding: 15px;
         }
+        
         .task-card-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
         }
+        
+        /* Tarjeta de Tarea Individual */
         .task-card {
             background-color: var(--color-background);
             border: 1px solid #EAEAEA; 
@@ -265,23 +336,28 @@
             display: flex;
             flex-direction: column;
         }
+        
         .task-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(156, 31, 55, 0.15);
         }
+        
         .task-card-content { padding: 20px; }
+        
         .task-card-content h3 {
             font-size: 1.5rem;
             font-weight: 800;
             color: var(--color-primary);
             margin-bottom: 10px;
         }
+        
         .task-card-content p {
             font-size: 1rem;
             color: var(--color-secondary);
             margin-bottom: 5px;
             line-height: 1.5;
         }
+        
         .task-card-details {
             padding: 0 20px 20px;
             display: flex;
@@ -291,7 +367,9 @@
             font-weight: 600;
             color: #333;
         }
+        
         .task-card-details span { margin-right: 5px; }
+        
         .task-card-attachment {
             padding: 5px 10px;
             background: var(--color-dark-surface);
@@ -299,6 +377,7 @@
             border-radius: 6px;
             cursor: pointer;
         }
+        
         .task-card-footer {
             padding: 15px 20px;
             border-top: 1px solid #EAEAEA;
@@ -308,10 +387,12 @@
             align-items: center;
             justify-content: space-between;
         }
+        
         .task-card-footer .checkbox-container {
             display: flex;
             align-items: center;
         }
+        
         .task-card-footer label {
             flex-grow: 1;
             margin-left: 15px;
@@ -320,6 +401,8 @@
             cursor: pointer;
             color: #333;
         }
+        
+        /* Estilos del Checkbox personalizado */
         .task-card-footer input[type="checkbox"] {
             appearance: none;
             width: 22px;
@@ -329,9 +412,11 @@
             cursor: pointer;
             position: relative;
         }
+        
         .task-card-footer input[type="checkbox"]:checked {
             background-color: var(--color-primary);
         }
+        
         .task-card-footer input[type="checkbox"]:checked::before {
             content: '✔';
             color: white;
@@ -340,6 +425,8 @@
             left: 2px;
             font-size: 16px;
         }
+        
+        /* Botón Eliminar */
         .delete-btn {
             background: none;
             border: 1px solid #ddd;
@@ -351,20 +438,54 @@
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
         .delete-btn:hover {
             background-color: var(--color-primary);
             color: var(--color-light-text);
             border-color: var(--color-primary);
         }
+        
+        /* Estado completado */
         .task-card.completed { opacity: 0.7; }
+        
         .task-card.completed h3,
         .task-card.completed p,
         .task-card.completed label,
         .task-card.completed .task-card-details {
             text-decoration: line-through;
         }
+        
+        /* Contenedor desplegable de tareas */
+        .task-list-wrapper {
+            max-height: 500px;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .task-list-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .task-list-wrapper.collapsed {
+            max-height: 480px; 
+        }
+        
+        .task-list-wrapper.collapsed::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--color-background), transparent);
+            pointer-events: none;
+        }
+        
+        #toggle-tasks-btn { margin-top: 15px; }
+        .example-task { display: none; }
 
-        /* --- CSS PARA EL MODAL DE AÑADIR TAREA (Se mantiene) --- */
+        /* --- ESTILOS DEL MODAL (Ventana Emergente) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -377,6 +498,7 @@
             align-items: center;
             justify-content: center;
         }
+        
         .modal-content {
             background: var(--color-background);
             border-radius: 12px;
@@ -388,29 +510,20 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
+        
         .modal-form-col {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
+        
         .modal-form-col h2 {
             color: var(--color-primary);
             font-size: 2rem;
             margin-bottom: 10px;
         }
-        .modal-form-col label {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: -5px;
-        }
-        .modal-form-col input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #EAEAEA;
-            border-radius: 8px;
-            font-family: var(--font-family-main);
-            font-size: 1rem;
-        }
+        
+        .modal-form-col input[type="text"],
         .modal-form-col textarea {
             width: 100%;
             padding: 12px 15px;
@@ -418,90 +531,18 @@
             border-radius: 8px;
             font-family: var(--font-family-main);
             font-size: 1rem;
+        }
+        
+        .modal-form-col textarea {
             resize: vertical;
             min-height: 80px;
         }
+        
         .modal-form-col .cta-btn {
             width: 100%;
             margin-top: 10px;
         }
 
-        /* --- ESTILOS PARA LIMITAR LA LISTA DE TAREAS --- */
-        .task-list-container {
-            position: relative;
-            /* Asegura que el contenedor de la lista de tareas tenga espacio */
-        }
-        
-        .task-list-wrapper {
-           max-height: 500px; /* Límite de altura. Si hay más, aparece el scroll. */
-            overflow-y: auto; /* Habilita el scroll vertical */
-            position: relative;
-            
-            /* CAMBIO CLAVE 1: Ocultar barra de scroll para WebKit (Chrome, Safari, Edge) */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-        }
-        /* CAMBIO CLAVE 2: Ocultar barra de scroll para navegadores WebKit */
-        .task-list-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* La clase 'collapsed' es la que limita la altura para el modo inicial */
-        .task-list-wrapper.collapsed {
-            max-height: 480px; 
-        }
-
-        /* Efecto de desvanecimiento para indicar que hay más contenido */
-        .task-list-wrapper.collapsed::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px; /* Altura del degradado */
-            background: linear-gradient(to top, var(--color-background), transparent);
-            pointer-events: none; /* Permite hacer clic en el botón de abajo */
-        }
-
-        /* Estilo para el botón de despliegue */
-        #toggle-tasks-btn {
-            margin-top: 15px;
-        }
-
-        /* --- ESTILOS PARA SCROLL HORIZONTAL DE ACTIVIDADES UAO --- */
-        /* --- ESTILOS PARA SCROLL HORIZONTAL DE ACTIVIDADES UAO --- */
-        .horizontal-scroll-wrapper {
-    overflow-x: auto; /* ¡CLAVE! Habilita el scroll horizontal */
-    overflow-y: hidden; 
-    scroll-snap-type: x mandatory; /* Hace que el scroll se "ancle" en las tarjetas */
-    padding-bottom: 20px; /* Para que la barra de scroll no se pegue al borde */
-}
-        .horizontal-scroll-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-        
-        /* Modificamos el contenedor interno para que sus hijos estén en línea */
-        .uni-activities-grid-v6 {
-    display: flex; /* ¡CLAVE! Cambia de Grid a Flexbox */
-    gap: 30px;
-    width: max-content; /* Asegura que el contenedor sea tan ancho como el total de las tarjetas */
-    padding: 0 50px; /* Espacio en los costados */
-}
-
-        /* Ajustamos el tamaño de la tarjeta para que tenga un ancho fijo y se deslice */
-       /* Ajustamos el tamaño de la tarjeta para que tenga un ancho fijo y se deslice */
-       .uni-activity-card {
-    flex: 0 0 320px; /* Fija el ancho de cada tarjeta (ejemplo: 320px) */
-    scroll-snap-align: center; /* Centra la tarjeta al detener el scroll */
-    /* ... otros estilos de la tarjeta (box-shadow, border-radius, etc.) */
-}
-
-        /* Opcional: Estilo de la barra de scroll (solo para navegadores WebKit como Chrome/Safari) */
-        
-       
-
-        /* CSS para Tareas de Ejemplo (Ocultar) */
-        .example-task { display: none; }
     </style>
 </head>
 <body>
@@ -512,78 +553,86 @@
             <p class="card-subtitle"></p>
             <p class="card-description"></p>
             <div class="card-stats"></div>
-            </div>
+        </div>
     </div>
 
     <header id="main-header">
-        <div class="logo">UAO Stress App</div>
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; cursor: pointer;">
+                UAO Stress App
+            </a>
+        </div>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html" style="font-weight: 600;"><span>&larr; Regresar</span></a></li>
-            </ul>
+                </ul>
         </nav>
-        <button class="cta-btn"><span>Ingresar texto de boton</span></button>
+        <button class="cta-btn"><span>Perfil</span></button>
     </header>
 
     <main>
-    <section class="subpage-banner-v6 anim-fade-grow delay-1">
-        <h1 class="title">Gestión de Actividades</h1>
-        <p class="tagline">
-            Organiza tus tareas, gestiona tu tiempo y reduce el estrés académico.
-        </p>
-    </section>
+        <section class="subpage-banner-v6 anim-fade-grow delay-1">
+            <h1 class="title">Gestión de Actividades</h1>
+            <p class="tagline">
+                Organiza tus tareas, gestiona tu tiempo y reduce el estrés académico.
+            </p>
+        </section>
 
-    <section id="uni-activities-section" class="section-padding anim-fade-grow delay-3">
+        <section id="uni-activities-section" class="section-padding anim-fade-grow delay-3">
             <h2 class="section-title" style="text-align: center; margin-bottom: 50px;">
                 Actividades de Bienestar UAO
                 <span>— Reduce tu estrés —</span>
             </h2>
             
-            <div class="horizontal-scroll-wrapper">
-                <div id="uni-activities-grid" class="uni-activities-grid-v6">
-                    </div>
-            </div>
-            </section>
-    
-    <section class="section-padding">
-        <div class="gestion-layout anim-fade-grow delay-2">
-
-            <div class="calendar-container">
-                <div class="calendar-header">
-                    <button id="calendar-prev">&larr;</button>
-                    <h3 id="current-month-year">Cargando...</h3>
-                    <button id="calendar-next">&rarr;</button>
-                </div>
-                <div class="calendar-grid">
-                    <div class="calendar-day-name">Dom</div>
-                    <div class="calendar-day-name">Lun</div>
-                    <div class="calendar-day-name">Mar</div>
-                    <div class="calendar-day-name">Mié</div>
-                    <div class="calendar-day-name">Jue</div>
-                    <div class="calendar-day-name">Vie</div>
-                    <div class="calendar-day-name">Sáb</div>
-                </div>
-                <div class="calendar-grid" id="calendar-grid-body"></div>
-            </div>
-
-            <div class="task-list-container">
-                <h2 class="section-title" style="margin-bottom: 25px;">Tareas Pendientes</h2>
+            <div class="slider-container">
+                <button class="slider-btn left" id="slide-left">❮</button>
                 
-                <div class="add-task-button-container">
-                    <button class="cta-btn" id="open-task-modal-btn">+ Añadir Tarea Nueva</button>
+                <div class="horizontal-scroll-wrapper" id="scroll-container">
+                    <div id="uni-activities-grid" class="uni-activities-grid-v6">
+                        </div>
                 </div>
                 
-                <div id="task-list-wrapper" class="task-list-wrapper collapsed"> 
-                    <div class="task-card-grid" id="task-grid">
-                        <div class="task-card example-task" data-id="task-example-1"></div>
-                        <div class="task-card completed example-task" data-id="task-example-2"></div>
+                <button class="slider-btn right" id="slide-right">❯</button>
+            </div>
+        </section>
+        
+        <section class="section-padding">
+            <div class="gestion-layout anim-fade-grow delay-2">
+
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="calendar-prev">&larr;</button>
+                        <h3 id="current-month-year">Cargando...</h3>
+                        <button id="calendar-next">&rarr;</button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid-body"></div>
+                </div>
+
+                <div class="task-list-container">
+                    <h2 class="section-title" style="margin-bottom: 25px;">Tareas Pendientes</h2>
+                    
+                    <div class="add-task-button-container">
+                        <button class="cta-btn" id="open-task-modal-btn">+ Añadir Tarea Nueva</button>
+                    </div>
+                    
+                    <div id="task-list-wrapper" class="task-list-wrapper collapsed"> 
+                        <div class="task-card-grid" id="task-grid">
+                            <div class="task-card example-task" data-id="task-example-1"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-    </section>
-</main>
+            </div>
+        </section>
+    </main>
 
     <div class="modal-overlay" id="add-task-modal">
         <div class="modal-content">
@@ -592,15 +641,18 @@
                 <form id="modal-task-form">
                     <label for="modal-task-title">Título de la Tarea</label>
                     <input type="text" id="modal-task-title" placeholder="Ej: Entregar Proyecto 3" required>
+                    
                     <label for="modal-task-desc">Descripción</label>
-                    <textarea id="modal-task-desc" placeholder="Ej: Subir propuesta y prototipo..."></textarea>
+                    <textarea id="modal-task-desc" placeholder="Detalles de la tarea..."></textarea>
+                    
                     <label for="modal-task-time">Hora</label>
                     <input type="text" id="modal-task-time" placeholder="Ej: 2:30 PM">
+                    
                     <button type="submit" class="cta-btn"><span>Guardar Tarea</span></button>
                 </form>
             </div>
             <div class="modal-calendar-col">
-                <div class="calendar-container">
+                <div class="calendar-container" style="box-shadow:none; padding:0; border:none;">
                     <div class="calendar-header">
                         <button id="modal-calendar-prev">&larr;</button>
                         <h3 id="modal-month-year">Cargando...</h3>
@@ -626,41 +678,54 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Referencias DOM para el nuevo Desplegable
-            const taskListWrapper = document.getElementById('task-list-wrapper');
-            const toggleTasksBtn = document.getElementById('toggle-tasks-btn');
-            
-            // --- NUEVA FUNCIÓN: Toggle para Mostrar/Ocultar Tareas ---
-            if (toggleTasksBtn && taskListWrapper) {
-                toggleTasksBtn.addEventListener('click', () => {
-                    // Alterna la clase 'collapsed'
-                    taskListWrapper.classList.toggle('collapsed');
-                    
-                    // Actualiza el texto del botón
-                    if (taskListWrapper.classList.contains('collapsed')) {
-                        toggleTasksBtn.textContent = 'Mostrar todas las tareas';
-                    } else {
-                        toggleTasksBtn.textContent = 'Ocultar tareas';
-                    }
+            /* =========================================
+               1. LÓGICA DEL SLIDER (Actividades UAO)
+               ========================================= */
+            const scrollContainer = document.getElementById('scroll-container');
+            const slideLeftBtn = document.getElementById('slide-left');
+            const slideRightBtn = document.getElementById('slide-right');
+
+            if (scrollContainer && slideLeftBtn && slideRightBtn) {
+                slideLeftBtn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: -350, behavior: 'smooth' });
+                });
+
+                slideRightBtn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: 350, behavior: 'smooth' });
                 });
             }
 
+            /* =========================================
+               2. CONFIGURACIÓN GLOBAL Y FECHAS
+               ========================================= */
             const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             const today = new Date();
             const taskGrid = document.getElementById('task-grid');
-
-            // --- 1. LÓGICA DE DATOS (localStorage) ---
             const STORAGE_KEY = 'uaoTasks';
+
+            // Variables para el estado de los calendarios
+            let mainCalYear = today.getFullYear();
+            let mainCalMonth = today.getMonth();
+            let modalCalYear = today.getFullYear();
+            let modalCalMonth = today.getMonth();
+            let selectedDate = new Date(); // Fecha seleccionada en el modal
+
+            /* =========================================
+               3. GESTIÓN DE DATOS (LocalStorage)
+               ========================================= */
             function getTasks() {
                 return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
             }
+
             function saveTasks(tasks) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-                // *** NUEVO ***: Refresca el calendario principal después de guardar
+                // Refrescamos el calendario principal para mostrar los nuevos puntos
                 renderMainCalendar(mainCalYear, mainCalMonth);
             }
 
-            // --- 2. LÓGICA DE RENDERIZADO DE TAREAS ---
+            /* =========================================
+               4. RENDERIZADO DE TAREAS
+               ========================================= */
             function createTaskCardElement(task) {
                 const card = document.createElement('div');
                 card.classList.add('task-card');
@@ -670,6 +735,7 @@
                 const formattedDate = task.date ? new Date(task.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '(Sin fecha)';
                 const time = task.time || '(Sin hora)';
 
+                // Inserción segura de HTML
                 card.innerHTML = `
                     <div class="task-card-content">
                         <h3>${task.title}</h3>
@@ -682,24 +748,21 @@
                     </div>
                     <div class="task-card-footer">
                         <div class="checkbox-container">
-                            <input type="checkbox" id="${task.id}" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                            <input type="checkbox" id="${task.id}" class="task-checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')">
                             <label for="${task.id}">Completada</label>
                         </div>
-                        <button class="delete-btn">Eliminar</button>
+                        <button class="delete-btn" onclick="deleteTask('${task.id}')">Eliminar</button>
                     </div>
                 `;
                 return card;
             }
 
             function loadTasks() {
-                taskGrid.innerHTML = ''; 
+                taskGrid.innerHTML = ''; // Limpiar grid
                 const tasks = getTasks();
                 
                 if (tasks.length === 0) {
-                    document.querySelectorAll('.example-task').forEach(taskEl => {
-                        taskEl.style.display = 'flex'; 
-                        taskGrid.appendChild(taskEl); 
-                    });
+                    // Si no hay tareas, podríamos mostrar un mensaje o dejarlo vacío
                 } else {
                     tasks.forEach(task => {
                         taskGrid.appendChild(createTaskCardElement(task));
@@ -707,59 +770,37 @@
                 }
             }
 
-            // --- 3. LÓGICA DEL MODAL ---
-            const modal = document.getElementById('add-task-modal');
-            const openModalBtn = document.getElementById('open-task-modal-btn');
-            const taskForm = document.getElementById('modal-task-form');
-            let selectedDate = new Date(); 
-            
-            openModalBtn.addEventListener('click', () => {
-                modal.style.display = 'flex';
-                selectedDate = new Date(); 
-                renderModalCalendar(selectedDate.getFullYear(), selectedDate.getMonth());
-            });
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.style.display = 'none';
-            });
-
-            taskForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+            /* =========================================
+               5. FUNCIONES GLOBALES (Para HTML inline)
+               ========================================= */
+            window.toggleTask = (id) => {
                 const tasks = getTasks();
-                const newTask = {
-                    id: `task-${Date.now()}`,
-                    title: document.getElementById('modal-task-title').value,
-                    desc: document.getElementById('modal-task-desc').value,
-                    time: document.getElementById('modal-task-time').value,
-                    date: selectedDate.toISOString(), 
-                    completed: false
-                };
+                const taskIndex = tasks.findIndex(task => task.id === id);
+                if (taskIndex > -1) {
+                    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                    saveTasks(tasks);
+                    // Volvemos a cargar para actualizar estilos (tachado)
+                    loadTasks();
+                }
+            };
 
-                tasks.push(newTask);
-                saveTasks(tasks); // Esto también refrescará el calendario (ver Lógica 1)
-                loadTasks(); 
-                
-                modal.style.display = 'none';
-                taskForm.reset();
-            });
+            window.deleteTask = (id) => {
+                if(confirm('¿Estás seguro de eliminar esta tarea?')) {
+                    let tasks = getTasks();
+                    tasks = tasks.filter(task => task.id !== id);
+                    saveTasks(tasks);
+                    loadTasks();
+                }
+            };
 
-            // --- 4. LÓGICA DE CALENDARIO (REUTILIZABLE) ---
-            
-            // *** NUEVO ***: Referencias a la tarjeta flotante
+            /* =========================================
+               6. LÓGICA DEL CALENDARIO (Reutilizable)
+               ========================================= */
             const dataCardContainer = document.getElementById('data-card-container');
             const cardTitle = dataCardContainer.querySelector('.card-title');
             const cardSubtitle = dataCardContainer.querySelector('.card-subtitle');
             const cardDescription = dataCardContainer.querySelector('.card-description');
-            const cardStats = dataCardContainer.querySelector('.card-stats');
 
-            /**
-             * Renderiza un calendario en un contenedor específico.
-             * @param {number} year - El año a renderizar.
-             * @param {number} month - El mes a renderizar (0-indexado).
-             * @param {string} monthYearElId - ID del elemento <h3> para el título.
-             * @param {string} gridBodyId - ID del <div> para los días.
-             * @param {boolean} isModalCalendar - True si es el calendario del modal.
-             */
             function renderCalendar(year, month, monthYearElId, gridBodyId, isModalCalendar = false) {
                 const monthYearEl = document.getElementById(monthYearElId);
                 const gridBody = document.getElementById(gridBodyId);
@@ -767,16 +808,16 @@
                 gridBody.innerHTML = '';
                 monthYearEl.textContent = `${monthNames[month]} ${year}`;
 
-                // *** NUEVO ***: Carga las tareas *antes* del bucle
                 const allTasks = getTasks();
-
                 const firstDayOfMonth = new Date(year, month, 1).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+                // Días vacíos del mes anterior
                 for (let i = 0; i < firstDayOfMonth; i++) {
                     gridBody.appendChild(document.createElement('div')).classList.add('calendar-day', 'other-month');
                 }
 
+                // Días del mes actual
                 for (let i = 1; i <= daysInMonth; i++) {
                     const dayEl = document.createElement('div');
                     dayEl.classList.add('calendar-day');
@@ -784,17 +825,18 @@
                     
                     const dayDate = new Date(year, month, i);
 
+                    // Marcar hoy
                     if (!isModalCalendar && i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                         dayEl.classList.add('today');
                     }
                     
+                    // Marcar selección en modal
                     if (isModalCalendar && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
                         dayEl.classList.add('selected');
                     }
 
-                    // *** NUEVO: LÓGICA DE PUNTO DE TAREA Y HOVER ***
+                    // Lógica de Puntos (Tasks Dots) en Calendario Principal
                     if (!isModalCalendar) {
-                        // Compara la fecha ignorando la hora
                         const tasksForDay = allTasks.filter(task => {
                             const taskDate = new Date(task.date);
                             return taskDate.getDate() === i &&
@@ -803,14 +845,12 @@
                         });
 
                         if (tasksForDay.length > 0) {
-                            // 1. Añade el punto
                             const dot = document.createElement('div');
                             dot.classList.add('task-dot');
                             dayEl.appendChild(dot);
 
-                            // 2. Añade los listeners de hover
-                            const hoverTask = tasksForDay[0]; // Muestra la primera tarea
-                            
+                            // Hover Card Logic
+                            const hoverTask = tasksForDay[0]; 
                             dayEl.addEventListener('mouseover', (e) => {
                                 showTaskHoverCard(e, hoverTask);
                             });
@@ -825,6 +865,7 @@
                         }
                     }
                     
+                    // Click en Modal para seleccionar fecha
                     if (isModalCalendar) {
                         dayEl.addEventListener('click', () => {
                             selectedDate = dayDate;
@@ -835,106 +876,51 @@
                 }
             }
 
-            // Calendario Principal
-            let mainCalYear = today.getFullYear();
-            let mainCalMonth = today.getMonth();
-            document.getElementById('calendar-prev').addEventListener('click', () => {
-                mainCalMonth--;
-                if (mainCalMonth < 0) { mainCalMonth = 11; mainCalYear--; }
-                renderMainCalendar(mainCalYear, mainCalMonth);
-            });
-            document.getElementById('calendar-next').addEventListener('click', () => {
-                mainCalMonth++;
-                if (mainCalMonth > 11) { mainCalMonth = 0; mainCalYear++; }
-                renderMainCalendar(mainCalYear, mainCalMonth);
-            });
+            /* Helpers para Calendario */
             function renderMainCalendar(y, m) {
                 renderCalendar(y, m, 'current-month-year', 'calendar-grid-body', false);
             }
-            
-            // Calendario del Modal
-            let modalCalYear = selectedDate.getFullYear();
-            let modalCalMonth = selectedDate.getMonth();
-            document.getElementById('modal-calendar-prev').addEventListener('click', () => {
-                modalCalMonth--;
-                if (modalCalMonth < 0) { modalCalMonth = 11; modalCalYear--; }
-                renderModalCalendar(modalCalYear, modalCalMonth);
-            });
-            document.getElementById('modal-calendar-next').addEventListener('click', () => {
-                modalCalMonth++;
-                if (modalCalMonth > 11) { modalCalMonth = 0; modalCalYear++; }
-                renderModalCalendar(modalCalYear, modalCalMonth);
-            });
             function renderModalCalendar(y, m) {
-                modalCalYear = y;
-                modalCalMonth = m;
                 renderCalendar(y, m, 'modal-month-year', 'modal-calendar-grid-body', true);
             }
-            
-            // --- 5. EVENT DELEGATION (Completar y Eliminar) ---
-            taskGrid.addEventListener('click', (e) => {
-                if (e.target.classList.contains('delete-btn')) {
-                    const card = e.target.closest('.task-card');
-                    const taskId = card.dataset.id;
-                    let tasks = getTasks();
-                    tasks = tasks.filter(task => task.id !== taskId);
-                    saveTasks(tasks); // Esto también refrescará el calendario
-                    
-                    card.style.transform = 'scale(0.8)';
-                    card.style.opacity = '0';
-                    setTimeout(() => card.remove(), 300);
-                }
-            });
-            taskGrid.addEventListener('change', (e) => {
-                if (e.target.classList.contains('task-checkbox')) {
-                    const card = e.target.closest('.task-card');
-                    const taskId = card.dataset.id;
-                    const isCompleted = e.target.checked;
-                    let tasks = getTasks();
-                    const taskIndex = tasks.findIndex(task => task.id === taskId);
-                    if (taskIndex > -1) {
-                        tasks[taskIndex].completed = isCompleted;
-                        saveTasks(tasks); // No refresca el calendario, solo guarda
-                    }
-                    card.classList.toggle('completed', isCompleted);
-                }
-            });
-            
-            // --- 6. *** NUEVO *** FUNCIONES DE TARJETA FLOTANTE ---
-            
+
+            // Listeners de navegación de calendarios
+            document.getElementById('calendar-prev').onclick = () => {
+                mainCalMonth--; if(mainCalMonth<0){mainCalMonth=11;mainCalYear--} renderMainCalendar(mainCalYear, mainCalMonth);
+            };
+            document.getElementById('calendar-next').onclick = () => {
+                mainCalMonth++; if(mainCalMonth>11){mainCalMonth=0;mainCalYear++} renderMainCalendar(mainCalYear, mainCalMonth);
+            };
+            document.getElementById('modal-calendar-prev').onclick = () => {
+                modalCalMonth--; if(modalCalMonth<0){modalCalMonth=11;modalCalYear--} renderModalCalendar(modalCalYear, modalCalMonth);
+            };
+            document.getElementById('modal-calendar-next').onclick = () => {
+                modalCalMonth++; if(modalCalMonth>11){modalCalMonth=0;modalCalYear++} renderModalCalendar(modalCalYear, modalCalMonth);
+            };
+
+            /* =========================================
+               7. FUNCIONES DE TARJETA FLOTANTE
+               ========================================= */
             function updateCardPosition(mouseX, mouseY) {
                 if (!dataCardContainer) return;
                 const cardWidth = dataCardContainer.offsetWidth;
                 const cardHeight = dataCardContainer.offsetHeight;
                 
-                let newX = mouseX + 15; // Ligeramente a la derecha del cursor
-                let newY = mouseY - (cardHeight / 2); // Centrado verticalmente
+                let newX = mouseX + 15;
+                let newY = mouseY - (cardHeight / 2);
 
-                // Evita que se salga por la derecha
-                if (newX + cardWidth > window.innerWidth) {
-                    newX = mouseX - cardWidth - 15; // Mueve a la izquierda
-                }
-                
-                // Evita que se salga por abajo
-                if (newY + cardHeight > window.innerHeight) {
-                    newY = window.innerHeight - cardHeight - 10;
-                }
-                // Evita que se salga por arriba
-                if (newY < 10) {
-                    newY = 10;
-                }
+                if (newX + cardWidth > window.innerWidth) newX = mouseX - cardWidth - 15; 
+                if (newY + cardHeight > window.innerHeight) newY = window.innerHeight - cardHeight - 10;
+                if (newY < 10) newY = 10;
 
                 dataCardContainer.style.transform = `translate(${newX}px, ${newY}px)`;
             }
 
             function showTaskHoverCard(event, task) {
                 const formattedDate = new Date(task.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                
                 cardTitle.textContent = task.title;
                 cardSubtitle.textContent = `📅 ${formattedDate} - 🕒 ${task.time || 'Todo el día'}`;
                 cardDescription.textContent = task.desc || '(Sin descripción)';
-                cardStats.innerHTML = ''; // Limpia los stats de "Impacto"
-                
                 dataCardContainer.classList.add('visible');
                 updateCardPosition(event.clientX, event.clientY);
             }
@@ -942,60 +928,62 @@
             function hideTaskHoverCard() {
                 dataCardContainer.classList.remove('visible');
             }
-            // --- 6. FUNCIÓN DE RENDERIZADO DE ACTIVIDADES UAO ---
-            const renderUniversityActivities = (activities) => {
-                const gridContainer = document.getElementById('uni-activities-grid');
-                if (!gridContainer) return; // Aseguramos que el contenedor exista
 
-                activities.forEach((activity, index) => {
-                    const card = document.createElement('div');
-                    card.classList.add('uni-activity-card', 'anim-fade-grow');
-                    card.style.animationDelay = `${0.4 + index * 0.15}s`; // Pequeño retraso secuencial
+            /* =========================================
+               8. MODAL Y FORMULARIO
+               ========================================= */
+            const modal = document.getElementById('add-task-modal');
+            document.getElementById('open-task-modal-btn').onclick = () => { 
+                modal.style.display = 'flex'; 
+                selectedDate = new Date(); // Resetear fecha
+                renderModalCalendar(modalCalYear, modalCalMonth); 
+            };
+            modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
 
-                    card.innerHTML = `
-                        <div class="card-image-container">
-                            <img src="${activity.image_url}" alt="${activity.title}">
-                        </div>
+            document.getElementById('modal-task-form').onsubmit = (e) => {
+                e.preventDefault();
+                const tasks = getTasks();
+                const newTask = {
+                    id: 't' + Date.now(),
+                    title: document.getElementById('modal-task-title').value,
+                    desc: document.getElementById('modal-task-desc').value,
+                    time: document.getElementById('modal-task-time').value,
+                    date: selectedDate.toISOString(),
+                    completed: false
+                };
+                tasks.push(newTask);
+                saveTasks(tasks);
+                loadTasks();
+                modal.style.display = 'none';
+                e.target.reset();
+            };
+
+            /* =========================================
+               9. CARGA DE DATOS UAO (Data.json)
+               ========================================= */
+            fetch('Data.json').then(r => r.json()).then(d => {
+                if(d.university_activities) {
+                    const c = document.getElementById('uni-activities-grid');
+                    d.university_activities.forEach(a => {
+                        // Crear tarjeta del slider
+                        const cardDiv = document.createElement('div');
+                        cardDiv.className = 'uni-activity-card anim-fade-grow';
+                        cardDiv.innerHTML = `
+                        <div class="card-image-container"><img src="${a.image_url}" alt="${a.title}"></div>
                         <div class="card-content">
-                            <h3>${activity.title}</h3>
-                            <p class="card-date">📅 ${activity.date}</p>
-                            <p>${activity.description}</p>
-                            <a href="${activity.url}" class="cta-btn buy-btn" style="text-align: center;">
-                                <span>Inscribirse</span>
-                            </a>
-                        </div>
-                    `;
-                    gridContainer.appendChild(card);
-                });
-            };
-
-            
-
-            // --- 6. FUNCIÓN PRINCIPAL PARA CARGAR Y RENDERIZAR LOS DATOS ---
-            const loadDataAndRender = async () => {
-                try {
-                    // Carga el archivo JSON
-                    const response = await fetch('Data.json');
-                    const data = await response.json();
-                    
-                    // Llama a la función que renderiza las nuevas actividades de la UAO
-                    if (data.university_activities) {
-                        renderUniversityActivities(data.university_activities);
-                    }
-                    
-                    // NOTA: Si tienes lógica para el header o footer, iría aquí.
-                    
-                } catch (error) {
-                    console.error('Fallo al cargar las actividades UAO:', error);
+                            <h3>${a.title}</h3>
+                            <p class="card-date">📅 ${a.date}</p>
+                            <p>${a.description}</p>
+                            <a href="${a.url}" class="cta-btn buy-btn" style="text-align:center;display:block;margin-top:auto">Inscribirse</a>
+                        </div>`;
+                        c.appendChild(cardDiv);
+                    });
                 }
-            };
-            
-            // --- 7. INICIALIZACIÓN ---
+            }).catch(e => console.error("Error cargando Data.json:", e));
 
-            // --- 7. INICIALIZACIÓN ---
+            // INICIALIZACIÓN FINAL
             renderMainCalendar(mainCalYear, mainCalMonth);
-            loadTasks(); 
-            loadDataAndRender();
+            loadTasks();
 
         });
     </script>

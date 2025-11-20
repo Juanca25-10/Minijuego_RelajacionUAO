@@ -14,18 +14,18 @@
             <h3 class="card-title"></h3>
             <p class="card-subtitle"></p>
             <p class="card-description"></p>
-            <div class="card-stats">
-                </div>
+            <div class="card-stats"></div>
             <button class="card-cta">Ver Detalles</button>
         </div>
     </div>
+
     <header id="main-header">
-        <div class="logo"></div>
+        <div class="logo">UAO Stress App</div>
         <nav>
             <ul class="nav-links">
                 </ul>
         </nav>
-        <button class="cta-btn"></button>
+        <button class="cta-btn">¡Comienza Ahora!</button>
     </header>
 
     <main>
@@ -35,8 +35,7 @@
                     <p class="greeting"></p>
                     <h1 class="title"></h1>
                     <p class="tagline"></p>
-                    <div class="stats-grid">
-                        </div>
+                    <div class="stats-grid"></div>
                 </div>
                 <div class="hero-image-overlay"></div>
             </div>
@@ -48,29 +47,171 @@
                 <div class="mid-text">
                     <h2 class="section-title"></h2>
                     <p class="bio"></p>
-                    <a href="sub_paginas.html" class="mid-cta-btn cta-btn"></a>
+                    <a href="gestion-actividades.html" class="mid-cta-btn cta-btn"></a>
                 </div>
                 <div class="mid-images">
-                    <div class="image-box">
-                        <img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+UAO+1" alt="Estudiante trabajando">
-                    </div>
-                    <div class="image-box">
-                        <img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+UAO+2" alt="Estudiante relajándose">
-                    </div>
-                    <div class="image-box">
-                        <img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+UAO+3" alt="Gestión de tareas">
-                    </div>
+                    <div class="image-box"><img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+1" alt="Estudiante"></div>
+                    <div class="image-box"><img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+2" alt="Relajación"></div>
+                    <div class="image-box"><img src="https://via.placeholder.com/300x450/1E1E1E/FFFFFF?text=Estudiante+3" alt="Tareas"></div>
                 </div>
             </div>
         </section>
         
-        <section id="projects-section" class="section-padding">
-            <h2 class="section-title" style="text-align: center; margin-bottom: 50px;"></h2> 
-            <div class="project-grid">
+        <section id="rewards-section" class="section-padding" style="background-color: var(--color-subtle-background);">
+            <div class="text-container" style="text-align: center; margin-bottom: 40px; padding-bottom: 0;">
+                <h2 class="section-title" style="color: var(--color-secondary);">Tu Progreso y Recompensas</h2>
+                <p class="tagline" style="margin: 0 auto; max-width: 600px;">
+                    Completa tareas en la sección de <strong>Gestión de Actividades</strong> para desbloquear niveles y canjear premios sorpresa.
+                </p>
+            </div>
+        
+            <div class="royal-pass-container">
+                <div class="pass-header">
+                    <div class="crown-counter">
+                        <span class="crown-icon">👑</span>
+                        <span id="total-completed-tasks">0</span>
+                        <span class="crown-label">/ 20 Tareas</span>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" id="global-progress-bar"></div>
+                    </div>
                 </div>
+        
+                <div class="rewards-track" id="rewards-track-list">
+                    </div>
+            </div>
         </section>
     </main>
 
+    <div id="reward-fullscreen-modal" class="reward-modal-overlay hidden">
+        <div class="reward-modal-content">
+            <div id="reward-step-1" class="reward-step">
+                <h2 class="reward-title">¡Nivel Completado!</h2>
+                <p class="reward-subtitle">Tienes una recompensa pendiente</p>
+                
+                <button id="magic-claim-btn" class="magic-chest-btn">
+                    <span class="chest-icon">🎁</span>
+                    <span>CLIC PARA ABRIR</span>
+                </button>
+            </div>
+
+            <div id="reward-step-2" class="reward-step hidden">
+                <h2 class="reward-title" id="reward-name-display">Premio</h2>
+                <div class="qr-zoom-container">
+                    <img id="zoomed-qr-image" src="" alt="QR Code">
+                </div>
+                <p class="reward-instruction">Escanea este código para reclamar tu premio.</p>
+                <button class="close-modal-btn" onclick="closeRewardModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('rewards-track-list');
+            if (!container) return;
+
+            // 1. Leer progreso desde LocalStorage
+            const tasks = JSON.parse(localStorage.getItem('uaoTasks') || '[]');
+            const completed = tasks.filter(t => t.completed).length;
+
+            // 2. Actualizar UI (Barra y Contador)
+            document.getElementById('total-completed-tasks').textContent = completed;
+            document.getElementById('global-progress-bar').style.width = `${Math.min(100, (completed/20)*100)}%`;
+
+            // 3. Definir premios
+            const rewards = [
+                { req: 3, item: "Botella de Agua", icon: "💧" }, 
+                { req: 6, item: "Manzana Roja", icon: "🍎" },
+                { req: 9, item: "Barra de Cereal", icon: "🍫" }, 
+                { req: 12, item: "Jugo de Naranja", icon: "🧃" },
+                { req: 15, item: "Café del Campus", icon: "☕" }, 
+                { req: 18, item: "Sandwich", icon: "🥪" },
+                { req: 20, item: "Kit Anti-Estrés", icon: "🎁" }
+            ];
+
+            // 4. Renderizar lista de niveles
+            container.innerHTML = '';
+            rewards.forEach((r, i) => {
+                const unlocked = completed >= r.req;
+                // QR aleatorio visual
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Premio-${r.item.replace(/ /g,'-')}`;
+                
+                container.innerHTML += `
+                <div class="reward-tier ${unlocked?'unlocked':''}">
+                    <div class="tier-goal"><span class="tier-number">${r.req}</span><span class="tier-label">Tareas</span></div>
+                    <div class="tier-info"><div class="reward-img-placeholder">${r.icon}</div><div class="reward-text"><h4>Nivel ${i+1}</h4><p>${r.item}</p></div></div>
+                    <div class="tier-action" id="act-${i}">
+                        ${unlocked 
+                            ? `<button class="claim-btn" onclick="openRewardModal('${r.item}', '${qrUrl}')">RECLAMAR</button>` 
+                            : `<div class="lock-icon">🔒</div>`}
+                    </div>
+                </div>`;
+            });
+
+            // --- LÓGICA DEL MODAL DE PANTALLA COMPLETA ---
+            const modalOverlay = document.getElementById('reward-fullscreen-modal');
+            const step1 = document.getElementById('reward-step-1');
+            const step2 = document.getElementById('reward-step-2');
+            const rewardNameDisplay = document.getElementById('reward-name-display');
+            const zoomedQrImg = document.getElementById('zoomed-qr-image');
+            const magicBtn = document.getElementById('magic-claim-btn');
+
+            // Función global para abrir el modal
+            window.openRewardModal = (rewardName, qrUrl) => {
+                step1.classList.remove('hidden'); // Muestra el cofre
+                step2.classList.add('hidden');    // Oculta el QR
+                
+                rewardNameDisplay.textContent = rewardName;
+                zoomedQrImg.src = qrUrl;
+
+                modalOverlay.classList.remove('hidden');
+                setTimeout(() => { modalOverlay.classList.add('active'); }, 10); // Efecto Fade In
+            };
+
+            // Función al hacer clic en el botón mágico (Cofre)
+            if(magicBtn) {
+                magicBtn.onclick = () => {
+                    step1.classList.add('hidden'); // Ocultar cofre
+                    step2.classList.remove('hidden'); // Mostrar QR Gigante con animación
+                };
+            }
+
+            // Función global para cerrar
+            window.closeRewardModal = () => {
+                modalOverlay.classList.remove('active');
+                setTimeout(() => { modalOverlay.classList.add('hidden'); }, 300);
+            };
+        });
+        
+    </script>
+    <div id="reward-fullscreen-modal" class="reward-modal-overlay hidden">
+        <div class="reward-modal-content">
+            <div id="reward-step-1" class="reward-step">
+                <h2 class="reward-title">¡Nivel Completado!</h2>
+                <p class="reward-subtitle">Tienes una recompensa pendiente</p>
+                
+                <button id="magic-claim-btn" class="magic-chest-btn">
+                    <span class="chest-icon">🎁</span>
+                    <span>CLIC PARA ABRIR</span>
+                </button>
+            </div>
+
+            <div id="reward-step-2" class="reward-step hidden">
+                <h2 class="reward-title" id="reward-name-display">Premio</h2>
+                <div class="qr-zoom-container">
+                    <img id="zoomed-qr-image" src="" alt="QR Code">
+                </div>
+                <p class="reward-instruction">Escanea este código para reclamar tu premio.</p>
+                <button class="close-modal-btn" onclick="closeRewardModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 </body>
 </html>
