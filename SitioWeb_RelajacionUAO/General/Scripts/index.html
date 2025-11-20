@@ -187,6 +187,35 @@
         });
         
     </script>
+    <div id="accessibility-panel-container">
+        
+        <button id="access-btn" class="floating-action-btn">
+            ⚙️
+        </button>
+
+        <div id="settings-panel" class="settings-panel-hidden">
+            <h3></h3> 
+            <hr>
+
+            <div class="setting-group">
+                <label for="font-size-slider"></label>
+                <input type="range" id="font-size-slider" min="100" max="150" value="100" step="10">
+                <span id="font-size-value">100%</span>
+            </div>
+
+            <div class="setting-group">
+                <label for="font-family-select"></label>
+                <select id="font-family-select"></select>
+            </div>
+            
+            <div class="setting-group">
+                <label></label>
+                </div>
+
+            <button id="reset-settings-btn" class="reset-btn"></button>
+
+        </div>
+    </div>
     <div id="reward-fullscreen-modal" class="reward-modal-overlay hidden">
         <div class="reward-modal-content">
             <div id="reward-step-1" class="reward-step">
@@ -209,9 +238,6 @@
             </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+ <script src="script.js"></script>
 </body>
 </html>

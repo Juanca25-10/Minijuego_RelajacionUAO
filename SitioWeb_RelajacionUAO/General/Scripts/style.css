@@ -752,3 +752,192 @@ a, button {
         grid-template-columns: 1fr;
     }
 }
+
+/* =========================================
+   ESTILOS PARA LA TARJETA FLOTANTE (HOVER CARD)
+   ========================================= */
+
+/* 1. Contenedor Principal (Oculto por defecto) */
+#data-card-container {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    pointer-events: none; 
+    opacity: 0; 
+    z-index: 1000;
+    
+    /* 🔑 CAMBIO CLAVE: Agregamos transición para 'transform' */
+    /* La tarjeta aparecerá (opacity) en 0.2s, pero el movimiento (transform) será más rápido (0.15s) y con una curva suave. */
+    transition: opacity 0.5s ease-in-out, transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+}
+
+/* 2. Estilo de la Tarjeta Interna */
+.data-card {
+    /* Apariencia */
+    background-color: var(--color-background); /* Blanco Puro */
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    padding: 15px;
+    border-radius: 12px;
+    max-width: 260px; /* Ancho para el contenido */
+}
+
+/* 3. Estilos de Contenido (Asegura la tipografía) */
+.data-card .card-title {
+    font-size: 1.1em;
+    font-weight: 800; /* Extra Bold */
+    color: var(--color-primary); /* Rojo UAO */
+    margin-bottom: 3px;
+}
+
+.data-card .card-subtitle {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.data-card .card-description {
+    font-size: 0.8em;
+    color: var(--color-secondary);
+    margin-bottom: 10px;
+}
+
+.data-card .card-stats {
+    font-size: 0.75em;
+    color: #333;
+    padding-top: 5px;
+    border-top: 1px solid #eee;
+}
+
+/* 4. Clase para Mostrar (Añadida por JS) */
+#data-card-container.visible {
+    opacity: 1;
+    pointer-events: auto; /* Permite interacciones si la tarjeta tuviera botones */
+}
+
+/* =========================================
+   ESTILOS DEL PANEL DE PERSONALIZACIÓN (ACCESIBILIDAD)
+   ========================================= */
+
+/* --- 1. Botón Flotante --- */
+.floating-action-btn {
+    position: fixed;
+    bottom: 30px; 
+    right: 30px; 
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: var(--color-primary); 
+    color: var(--color-light-text);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1100; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color var(--transition-speed);
+}
+
+.floating-action-btn:hover {
+    background-color: #A33345; 
+    transform: scale(1.05);
+}
+
+
+/* --- 2. Panel Desplegable --- */
+#settings-panel {
+    position: fixed;
+    bottom: 100px; 
+    right: 30px;
+    width: 300px;
+    padding: 20px;
+    background-color: var(--color-background);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    z-index: 1099;
+    
+    /* Estado Oculto */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s;
+}
+
+/* Estado Visible (Clase añadida por JS) */
+#settings-panel.settings-panel-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#settings-panel h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+/* --- 3. Estilos de Opciones --- */
+.setting-group {
+    margin-bottom: 15px;
+    padding-top: 5px;
+}
+
+.setting-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.mode-btn {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: var(--color-dark-surface);
+    cursor: pointer;
+    border-radius: 8px;
+    margin-right: 5px;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 0.85em;
+}
+
+.mode-btn:hover, .mode-btn.active {
+    border-color: var(--color-primary);
+    background-color: #ffeff2; /* Fondo sutil al hacer hover o activo */
+}
+
+/* --- 4. CLASES DE ACCESIBILIDAD APLICADAS AL BODY --- */
+
+/* A. Tamaño de Texto (Aplicado a body) */
+.text-large * { 
+    font-size: 1.2em !important; 
+    line-height: 1.8 !important; 
+}
+.text-larger * { 
+    font-size: 1.4em !important; 
+    line-height: 2.0 !important; 
+}
+
+/* B. Tipografía (Asegúrate de importar OpenDyslexic si la usas) */
+.font-dyslexic {
+    /* Establece la fuente principal del body */
+    font-family: 'OpenDyslexic', 'Segoe UI', Arial, sans-serif !important; 
+}
+
+/* C. Alto Contraste (Cambiamos el fondo y colores principales) */
+.high-contrast {
+    background-color: #000 !important;
+    color: #FFF !important;
+    /* Ajusta variables CSS para que los elementos usen estos colores */
+    --color-secondary: #FFF !important; 
+    --color-background: #000 !important;
+    --color-primary: #FFFF00 !important; /* Resaltar elementos importantes en Amarillo */
+}
+
+/* D. Fondo Amarillo */
+.dyslexia-color {
+    background-color: #FFFFAA !important;
+    color: #333 !important;
+    --color-background: #FFFFAA !important;
+    --color-secondary: #333 !important;
+}

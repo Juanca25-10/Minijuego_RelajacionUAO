@@ -4,7 +4,7 @@
         "nav_links": [
         {"text": "Inicio", "url": "index.html"}, 
         {"text": "El Problema", "url": "#mid-section"},
-        {"text": "Funcionalidades", "url": "#projects-section"}
+        {"text": "Técnicas de Relajación", "url": "tecnicas-relajacion.html"}
     ],
         "cta_button": "¡Comienza Ahora!"
     },
@@ -84,5 +84,23 @@
             "date": "Viernes, 2:00 PM",
             "url": "#inscripcion-lectura"
         }
-    ]
+    ],
+    "accessibility_panel": {
+        "title": "Personalización y Accesibilidad",
+        "font_size_label": "Tamaño de Texto",
+        "font_family_label": "Fuente de Lectura",
+        "font_options": [
+            {"value": "Inter, sans-serif", "text": "Predeterminada (Inter)"},
+            {"value": "Open Sans, sans-serif", "text": "Estándar Legible"},
+            {"value": "Dyslexic, sans-serif", "text": "Para Dislexia"}
+        ],
+        "contrast_mode_label": "Modo de Contraste",
+        "mode_buttons": [
+            {"mode": "default", "text": "🎨 Normal"},
+            {"mode": "high-contrast", "text": "⚫ Alto Contraste"},
+            {"mode": "dyslexia-color", "text": "🟡 Fondo Amarillo"}
+        ],
+        "reset_button": "Restablecer Configuración"
+    }
 }
+
