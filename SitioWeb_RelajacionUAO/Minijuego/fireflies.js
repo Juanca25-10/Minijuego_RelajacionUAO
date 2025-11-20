@@ -365,9 +365,11 @@ document.addEventListener("DOMContentLoaded", async ()=>{
             if(ctaBar) ctaBar.classList.add("cta-hidden");
 
             // El canvas tiene su propio control de pointer-events dentro de game.start()
+            document.body.classList.add("dark-mode");
             await game.start();
 
         } else {
+                document.body.classList.remove("dark-mode");
             game.stop();
             // ELIMINADO: darkOverlay.classList.remove("active");
 

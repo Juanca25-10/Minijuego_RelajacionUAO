@@ -2,21 +2,42 @@
 
 /* RESET BÁSICO Y CONFIGURACIÓN GLOBAL */
 :root {
-    /* --- COLORES BASADOS EN EL DISEÑO UAO --- */
-    --color-primary: #9C1F37; /* Rojo Institucional / Maroon */
-    --color-secondary: #1E1E1E; /* Negro casi puro para el texto */
-    --color-background: #FFFFFF; /* Blanco puro para elementos que flotan (card) */
-    --color-dark-surface: #F5F5F5; /* Superficie gris claro/blanco roto para contraste (mid-section) */
-    --color-subtle-background: #F9F9F9; /* Gris muy claro para el fondo principal */
+    /* --- COLORES BASADOS EN EL DISEÑO UAO (TEMA CLARO) --- */
+    --color-primary: #9C1F37;
+    --color-secondary: #1E1E1E;
+    --color-background: #FFFFFF;
+    --color-dark-surface: #F5F5F5;
+    --color-subtle-background: #F9F9F9;
     --color-light-text: #FFFFFF;
+
     --font-family-main: 'Inter', sans-serif;
     --transition-speed: 0.4s;
+}
+
+/* ============================
+   TEMA OSCURO DEL MINIJUEGO  
+============================ */
+body.dark-mode {
+    --color-primary: #E2556E;         /* Rojo más claro para destacar mejor */
+    --color-secondary: #EDEDED;       /* Antes era negro, ahora claro */
+    --color-background: #121212;      /* Fondo oscuro principal */
+    --color-dark-surface: #1E1E1E;    /* Para tarjetas y secciones medias */
+    --color-subtle-background: #0D0D0D;
+    --color-light-text: #FFFFFF;      /* Texto claro */
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+* {
+    transition: 
+        background-color var(--transition-speed) ease,
+        color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        background-image var(--transition-speed) ease;
 }
 
 body {
