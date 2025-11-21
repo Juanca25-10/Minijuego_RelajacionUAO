@@ -8,10 +8,16 @@ function getDocumentHeight() {
     return Math.max(b.scrollHeight, b.offsetHeight, h.clientHeight, h.scrollHeight, h.offsetHeight);
 }
 
-// Paths
-const ASSET_IMG = "./Assets/Imagenes/";
-const ASSET_AUDIO = "./Assets/Audios/";
-const ASSET_VIDEO = "./Assets/Videos/";
+// Rutas Corregidas (Asumiendo que index.html está en General/Scripts/)
+const PATH_ROOT = "../../Minijuego/"; // Sube 2 niveles, baja a Minijuego/
+const ASSET_IMG = PATH_ROOT + "Assets/Imagenes/";
+const ASSET_AUDIO = PATH_ROOT + "Assets/Audios/";
+const ASSET_VIDEO = PATH_ROOT + "Assets/Videos/";
+
+// *** CORRECCIÓN CRÍTICA DE RUTA PARA EL JSON ***
+// Si Data.json está en la misma carpeta que index.html (General/Scripts/),
+// usamos la ruta relativa "./" (misma carpeta) y el nombre de archivo correcto.
+const ASSET_DATA_JSON = "./Data.json"; // Apunta directamente al archivo local.
 
 // ---------------------------
 // ASSETS MANAGER

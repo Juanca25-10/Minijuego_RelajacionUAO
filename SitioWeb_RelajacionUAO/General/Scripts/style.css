@@ -17,10 +17,30 @@
     --transition-speed: 0.4s;
 }
 
+/* ============================
+   TEMA OSCURO DEL MINIJUEGO  
+============================ */
+body.dark-mode {
+    --color-primary: #E2556E;         /* Rojo más claro para destacar mejor */
+    --color-secondary: #EDEDED;       /* Antes era negro, ahora claro */
+    --color-background: #121212;      /* Fondo oscuro principal */
+    --color-dark-surface: #1E1E1E;    /* Para tarjetas y secciones medias */
+    --color-subtle-background: #0D0D0D;
+    --color-light-text: #FFFFFF;      /* Texto claro */
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+* {
+    transition: 
+        background-color var(--transition-speed) ease,
+        color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        background-image var(--transition-speed) ease;
 }
 
 body {

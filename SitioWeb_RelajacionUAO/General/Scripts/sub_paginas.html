@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
+
+    <!-- Inicio -->
+    <link rel="stylesheet" href="./fireflies.css">
+    <!-- Fin -->
+
     <style>
         /* 1. ANIMACIÓN (Fundido y Escalado Suave) */
         @keyframes fadeGrow {
@@ -126,6 +131,11 @@
     </style>
     </head>
 <body>
+
+    <!-- Inicio -->
+    <div id="scoreDisplay">0</div>
+    <canvas id="firefly-game-canvas"></canvas>
+    <!-- Fin -->
     
     <div id="data-card-container" class="hidden"></div>
 
@@ -213,6 +223,29 @@
 
     </main>
     
+
+    <!-- Inicio -->
+    <button id="firefly-toggle-btn" title="Iniciar/Detener el Minijuego">
+        <img id="btn-icon-start" src="../../Minijuego/Assets/Imagenes/Button_NoInteractua.png" class="w-full h-full object-contain">
+        <img id="btn-icon-hover" src="../../Minijuego/Assets/Imagenes/Button_SiInteractua.png" class="w-full h-full object-contain hidden">
+        <img id="btn-icon-close" src="../../Minijuego/Assets/Imagenes/X_Salir.png" class="w-full h-full object-contain hidden">
+        <span class="tooltip-text" id="tooltip-text">Iniciar Descanso Activo</span>
+    </button>
+
+    <div id="cta-bar" class="fixed bottom-0 left-0 w-full z-[1001] cursor-pointer shadow-xl transition-transform duration-500 transform translate-y-full">
+        <div class="flex items-center justify-center py-3 px-4 text-white text-lg font-semibold" 
+             style="background: linear-gradient(90deg, #ff9900, #ffcc33);">
+            Tomate un tiempo y deja la noche caer
+        </div>
+    </div>
+
+    <audio id="bg-music" src="../../Minijuego/Assets/Audios/AudioFondoJuego.mp3" loop></audio>
+    <audio id="net-sound" src="../../Minijuego/Assets/Audios/old-men-arm-move-97741.mp3"></audio>
+    <audio id="capture-sound" src="../../Minijuego/Assets/Audios/notification-bell-sound-376888.mp3"></audio>
+    <!-- <script src="../../Minijuego/script_copy.js"></script> -->
+    
+    <script type="module" src="../../Minijuego/fireflies.js"></script>
+    <!-- Fin -->
     <script src="script.js"></script>
 </body>
 </html>
