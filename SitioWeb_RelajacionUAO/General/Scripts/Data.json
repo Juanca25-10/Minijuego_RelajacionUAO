@@ -65,7 +65,7 @@
             "id": "yoga-express", 
             "title": "Yoga y Estiramiento Express",
             "description": "Sesión corta de yoga enfocada en liberar la tensión...",
-            "image_url": "/Recursos/yoga_uao.jpg",
+            "image_url": "../Recursos/yoga_uao.jpg",
             "date": "Martes y Jueves, 4:30 PM",
             "url": "inscripcion-detalle.html?id=yoga-express"  
         },
@@ -73,7 +73,7 @@
             "id": "club-lectura-estres",  
             "title": "Club de Lectura Anti-Estrés",
             "description": "Reunión semanal para discutir lecturas ligeras y compartir experiencias...",
-            "image_url": "/Recursos/club.avif",
+            "image_url": "../Recursos/club.avif",
             "date": "Viernes, 2:00 PM",
             "url": "inscripcion-detalle.html?id=club-lectura-estres" 
         },
@@ -81,7 +81,7 @@
             "id": "respiracion-guiada",
             "title": "Técnicas de Respiración Guiada",
             "description": "Sesión práctica para aprender ejercicios de respiración que calman el sistema nervioso en momentos de pánico o examen.",
-            "image_url": "/Recursos/res.jpg",
+            "image_url": "../Recursos/res.jpg",
             "date": "Lunes, 3:00 PM",
             "url": "inscripcion-detalle.html?id=respiracion-guiada"
         },
@@ -89,7 +89,7 @@
             "id": "nutricion-antiestres",
             "title": "Taller: Nutrición Anti-Estrés",
             "description": "Descubre qué alimentos potencian la concentración y cuáles ayudan a reducir la ansiedad durante picos académicos.",
-            "image_url": "/Recursos/nutricion.jpg",
+            "image_url": "../Recursos/nutricion.jpg",
             "date": "Jueves, 1:00 PM",
             "url": "inscripcion-detalle.html?id=nutricion-antiestres"
         }
