@@ -3,7 +3,7 @@
         "logo": "UAO Stress App",
         "nav_links": [
         {"text": "Inicio", "url": "index.html"}, 
-        {"text": "El Problema", "url": "#mid-section"},
+        {"text": "Actividades", "url": "#mid-section"},
         {"text": "Técnicas de Relajación", "url": "tecnicas-relajacion.html"}
     ],
         "cta_button": "¡Comienza Ahora!"
