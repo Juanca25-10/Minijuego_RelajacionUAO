@@ -91,6 +91,7 @@ class GameAudio {
 // ---------------------------
 // FIREFLY
 // ---------------------------
+//--
 class Firefly {
     constructor(id, docW, docH, image) {
         this.id = id;
